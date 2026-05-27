@@ -11,14 +11,14 @@ export const metadata = pageMetadata(
 
 const valueCards = [
   {
-    service: "Saavi SOC",
+    service: "SaaviSOC",
     heading: "Onboarded in weeks, not months",
     body: "Most organisations expect SOC deployment to take quarters. SaaviSOC's structured onboarding gets you from zero to active 24×7 security coverage in weeks — zero CAPEX, no hiring surge, no months of setup.",
   },
   {
-    service: "Saavi AIDR",
+    service: "SaaviAIDR",
     heading: "Visibility into a threat surface",
-    body: "AI has introduced an entirely new attack surface — prompts, agents, tool calls, model behaviour — that your firewall, SIEM, and DLP were never built to see. Saavi AIDR gives you eyes on that surface for the first time.",
+    body: "AI has introduced an entirely new attack surface — prompts, agents, tool calls, model behaviour — that your firewall, SIEM, and DLP were never built to see. SaaviAIDR gives you eyes on that surface for the first time.",
   },
   {
     service: "AI Upskilling",
