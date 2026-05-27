@@ -14,7 +14,7 @@ import { pageMetadata } from "@/lib/metadata";
 import { basePath } from "@/lib/site";
 
 export const metadata = pageMetadata(
-  "Saavi SOC | SaaviGenAI",
+  "SaaviSOC | SaaviGenAI",
   "Enterprise-grade threat monitoring and incident response — without the cost or complexity of building it in-house.",
   "/services/managed-soc",
 );
@@ -88,7 +88,7 @@ export default function ManagedSocPage() {
   return (
     <>
       <HeroSection
-        label="Saavi SOC"
+        label="SaaviSOC"
         heading="Your Security. Always On. Always Watching."
         subheading="Enterprise-grade threat monitoring and incident response — without the cost or complexity of building it in-house."
         image={`${basePath}/images/newSaaviSOC.png`}

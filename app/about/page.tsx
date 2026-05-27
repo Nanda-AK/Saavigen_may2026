@@ -140,15 +140,15 @@ export default function AboutPage() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={`${basePath}/images/geetanshintern.png`}
-                  alt="Gitansh"
+                  alt="Gitansh S"
                   className="h-full w-full object-cover"
                 />
               </div>
               <div>
-                <p className="font-semibold text-primary">Gitansh</p>
+                <p className="font-semibold text-primary">Gitansh A</p>
                 <p className="mb-1 text-sm text-secondary">Intern, SaaviGenAI</p>
                 <a
-                  href="https://www.linkedin.com/in/gitansh"
+                  href="https://www.linkedin.com/in/geetansh-aditya/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-xs font-medium text-teal transition-colors hover:text-teal-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"

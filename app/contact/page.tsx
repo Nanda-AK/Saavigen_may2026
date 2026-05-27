@@ -5,7 +5,7 @@ import { CONTACT_EMAIL } from "@/lib/site";
 
 export const metadata = pageMetadata(
   "Contact | SaaviGenAI",
-  "Get in touch with SaaviGenAI about Saavi SOC, Saavi AIDR, or AI upskilling for your organisation.",
+  "Get in touch with SaaviGenAI about SaaviSOC, SaaviAIDR, or AI upskilling for your organisation.",
   "/contact",
 );
 
