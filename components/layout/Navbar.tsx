@@ -16,6 +16,7 @@ function isActive(pathname: string, href: string) {
 export function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
 
   return (
     <nav
@@ -50,46 +51,57 @@ export function Navbar() {
         <div className="hidden items-center gap-7 md:flex">
           <Link
             className={cn(
-              "border-b-2 border-transparent py-7 text-sm font-medium text-secondary transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2",
-              pathname === "/" && "border-gold font-semibold text-primary",
+              "py-7 text-sm font-medium text-secondary transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2",
+              pathname === "/" && "font-semibold text-primary",
             )}
             href="/"
           >
-            Home
+            <span className={cn("border-b-2 pb-0.5", pathname === "/" ? "border-gold" : "border-transparent")}>
+              Home
+            </span>
           </Link>
-          <div className="group relative">
+          <div className="relative">
             <button
               className={cn(
-                "border-b-2 border-transparent py-7 text-sm font-medium text-secondary transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2",
-                pathname.startsWith("/services") &&
-                  "border-gold font-semibold text-primary",
+                "py-7 text-sm font-medium text-secondary transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2",
+                pathname.startsWith("/services") && "font-semibold text-primary",
               )}
+              onClick={() => setServicesOpen((v) => !v)}
             >
-              Services
+              <span className={cn("border-b-2 pb-0.5", pathname.startsWith("/services") ? "border-gold" : "border-transparent")}>
+                Services
+              </span>
             </button>
-            <div className="invisible absolute left-0 top-full w-64 rounded-xl border border-default bg-base p-2 opacity-0 shadow-md transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-              {services.map((service) => (
-                <Link
-                  key={service.href}
-                  className="block rounded-xl px-4 py-3 text-sm font-medium text-secondary transition-colors hover:bg-surface hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal"
-                  href={service.href}
-                >
-                  {service.title}
-                </Link>
-              ))}
-            </div>
+            {servicesOpen && (
+              <div className="absolute left-0 top-full w-64 rounded-xl border border-default bg-base p-2 shadow-md">
+                {services.map((service) => (
+                  <Link
+                    key={service.href}
+                    className={cn(
+                      "block rounded-xl px-4 py-3 text-sm font-medium text-secondary transition-colors hover:bg-surface hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal",
+                      pathname === service.href && "bg-surface font-semibold text-primary",
+                    )}
+                    href={service.href}
+                    onClick={() => setServicesOpen(false)}
+                  >
+                    {service.title}
+                  </Link>
+                ))}
+              </div>
+            )}
           </div>
           {navigation.slice(3).map((item) => (
             <Link
               key={item.href}
               className={cn(
-                "border-b-2 border-transparent py-7 text-sm font-medium text-secondary transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2",
-                isActive(pathname, item.href) &&
-                  "border-gold font-semibold text-primary",
+                "py-7 text-sm font-medium text-secondary transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2",
+                isActive(pathname, item.href) && "font-semibold text-primary",
               )}
               href={item.href}
             >
-              {item.label}
+              <span className={cn("border-b-2 pb-0.5", isActive(pathname, item.href) ? "border-gold" : "border-transparent")}>
+                {item.label}
+              </span>
             </Link>
           ))}
         </div>

@@ -9,7 +9,7 @@ type HeroSectionProps = {
 
 export function HeroSection({ label, heading, subheading, image }: HeroSectionProps) {
   return (
-    <section className="bg-navy py-14 md:py-20">
+    <section className="bg-navy py-8 md:py-12">
       <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
         <div className={image ? "grid items-center gap-10 lg:grid-cols-2" : undefined}>
           <div>

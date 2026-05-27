@@ -4,6 +4,7 @@ import { HeroSection } from "@/components/sections/HeroSection";
 import { DifferentiatorCard } from "@/components/ui/DifferentiatorCard";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { pageMetadata } from "@/lib/metadata";
+import { basePath } from "@/lib/site";
 
 export const metadata = pageMetadata(
   "About | SaaviGenAI",
@@ -61,12 +62,32 @@ export default function AboutPage() {
               </p>
             </blockquote>
             <div className="rounded-2xl border border-default bg-base p-6 md:p-8">
-              <p className="mb-1 font-mono text-xs uppercase tracking-widest text-gold">
-                Nanda Kumar
-              </p>
-              <h3 className="mb-4 font-display text-2xl font-bold text-primary">
-                Founder &amp; CEO, SaaviGenAI
-              </h3>
+              <div className="mb-5 flex items-center gap-4">
+                <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-full ring-2 ring-gold ring-offset-2">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={`${basePath}/images/nanda_founder.jpg`}
+                    alt="Nanda Kumar"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <div>
+                  <p className="mb-0.5 font-mono text-xs uppercase tracking-widest text-gold">
+                    Nanda Kumar
+                  </p>
+                  <h3 className="font-display text-2xl font-bold text-primary">
+                    Founder &amp; CEO, SaaviGenAI
+                  </h3>
+                  <a
+                    href="https://www.linkedin.com/in/nandakumar80"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs font-medium text-teal transition-colors hover:text-teal-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
+                  >
+                    LinkedIn →
+                  </a>
+                </div>
+              </div>
               <p className="mb-4 text-sm leading-relaxed text-secondary">
                 23 years of enterprise experience across Cisco, HPE, and Aruba Networks,
                 spanning engineering, security architecture, enterprise AI adoption, and
@@ -86,6 +107,61 @@ export default function AboutPage() {
       </section>
 
       <section className="bg-base py-12 md:py-16">
+        <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
+          <SectionLabel
+            label="The Team"
+            heading="The people behind SaaviGenAI."
+          />
+          <div className="mt-8 grid gap-6 md:grid-cols-2">
+            <div className="flex items-center gap-4 rounded-2xl border border-default bg-surface p-6">
+              <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-full ring-2 ring-gold ring-offset-2">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`${basePath}/images/deepakintern.png`}
+                  alt="Deepak Singh Rajput C"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div>
+                <p className="font-semibold text-primary">Deepak Singh Rajput C</p>
+                <p className="mb-1 text-sm text-secondary">Intern, SaaviGenAI</p>
+                <a
+                  href="https://www.linkedin.com/in/deepak-singh-rajput-c"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs font-medium text-teal transition-colors hover:text-teal-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
+                >
+                  LinkedIn →
+                </a>
+              </div>
+            </div>
+            <div className="flex items-center gap-4 rounded-2xl border border-default bg-base p-6">
+              <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-full ring-2 ring-gold ring-offset-2">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`${basePath}/images/geetanshintern.png`}
+                  alt="Gitansh"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div>
+                <p className="font-semibold text-primary">Gitansh</p>
+                <p className="mb-1 text-sm text-secondary">Intern, SaaviGenAI</p>
+                <a
+                  href="https://www.linkedin.com/in/gitansh"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs font-medium text-teal transition-colors hover:text-teal-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
+                >
+                  LinkedIn →
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-surface py-12 md:py-16">
         <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
           <SectionLabel
             label="Values"
@@ -111,7 +187,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="bg-surface py-12 md:py-16">
+      <section className="bg-base py-12 md:py-16">
         <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
           <SectionLabel
             label="Who We Help"
