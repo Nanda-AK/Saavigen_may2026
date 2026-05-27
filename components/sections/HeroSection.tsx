@@ -13,7 +13,7 @@ export function HeroSection({ label, heading, subheading, image }: HeroSectionPr
       <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
         <div className={image ? "grid items-center gap-10 lg:grid-cols-2" : undefined}>
           <div>
-            <p className="mb-5 font-mono text-xs uppercase tracking-widest text-gold">
+            <p className="mb-5 font-mono text-s uppercase tracking-widest text-gold">
               {label}
             </p>
             <h1 className="mb-5 max-w-3xl font-display text-4xl font-bold leading-tight text-white md:text-5xl">
@@ -33,6 +33,9 @@ export function HeroSection({ label, heading, subheading, image }: HeroSectionPr
                 src={image}
                 alt="SaaviGenAI Hero Section Image"
                 aria-hidden="true"
+                width={512}
+                height={320}
+                fetchPriority="high"
                 className="max-h-80 w-full max-w-lg rounded-4xl object-contain drop-shadow-2xl"
               />
             </div>
