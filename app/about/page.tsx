@@ -63,7 +63,7 @@ export default function AboutPage() {
             </blockquote>
             <div className="rounded-2xl border border-default bg-base p-6 md:p-8">
               <div className="mb-5 flex items-center gap-4">
-                <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-full ring-2 ring-gold ring-offset-2">
+                <div className="h-16 w-16 shrink-0 overflow-hidden rounded-full ring-2 ring-gold ring-offset-2">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={`${basePath}/images/nanda_founder.jpg`}
@@ -114,7 +114,7 @@ export default function AboutPage() {
           />
           <div className="mt-8 grid gap-6 md:grid-cols-2">
             <div className="flex items-center gap-4 rounded-2xl border border-default bg-surface p-6">
-              <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-full ring-2 ring-gold ring-offset-2">
+              <div className="h-16 w-16 shrink-0 overflow-hidden rounded-full ring-2 ring-gold ring-offset-2">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={`${basePath}/images/deepakintern.png`}
@@ -145,10 +145,10 @@ export default function AboutPage() {
                 />
               </div>
               <div>
-                <p className="font-semibold text-primary">Geetansh Aditya</p>
+                <p className="font-semibold text-primary">Geettansh Aditya</p>
                 <p className="mb-1 text-sm text-secondary">Intern, SaaviGenAI</p>
                 <a
-                  href="https://www.linkedin.com/in/gitansh"
+                  href="https://www.linkedin.com/in/geetansh-aditya/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-xs font-medium text-teal transition-colors hover:text-teal-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"

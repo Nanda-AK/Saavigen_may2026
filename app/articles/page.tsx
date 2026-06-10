@@ -62,6 +62,8 @@ export default function ArticlesPage() {
                   <img
                     src={article.image}
                     alt={article.title}
+                    loading="lazy"
+                    decoding="async"
                     className="h-full w-full object-cover"
                   />
                 </div>

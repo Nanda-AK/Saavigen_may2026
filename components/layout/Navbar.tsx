@@ -60,7 +60,11 @@ export function Navbar() {
               Home
             </span>
           </Link>
-          <div className="relative">
+          <div
+            className="relative"
+            onMouseEnter={() => setServicesOpen(true)}
+            onMouseLeave={() => setServicesOpen(false)}
+          >
             <button
               className={cn(
                 "py-7 text-sm font-medium text-secondary transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2",
@@ -78,8 +82,10 @@ export function Navbar() {
                   <Link
                     key={service.href}
                     className={cn(
-                      "block rounded-xl px-4 py-3 text-sm font-medium text-secondary transition-colors hover:bg-surface hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal",
-                      pathname === service.href && "bg-surface font-semibold text-primary",
+                      "block rounded-xl border-l-2 px-4 py-3 text-sm font-medium transition-colors hover:bg-surface hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal",
+                      pathname === service.href
+                        ? "border-gold bg-surface font-semibold text-primary"
+                        : "border-transparent text-secondary",
                     )}
                     href={service.href}
                     onClick={() => setServicesOpen(false)}
