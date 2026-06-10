@@ -31,11 +31,12 @@ export default function AboutPage() {
             />
             <div className="rounded-2xl border border-default bg-surface p-6 md:p-8">
               <p className="leading-relaxed text-secondary">
-                SaaviGenAI supports mid-market and enterprise teams that need a steady
-                partner across security operations, AI detection and response, and
-                practical workforce enablement. Every engagement is grounded in
-                operational reality so the business can move forward confidently,
-                without the complexity of building everything in-house.
+                SaaviGenAI supports mid-market and enterprise teams that need a
+                steady partner across security operations, AI detection and
+                response, and practical workforce enablement. Every engagement
+                is grounded in operational reality so the business can move
+                forward confidently, without the complexity of building
+                everything in-house.
               </p>
             </div>
           </div>
@@ -52,10 +53,11 @@ export default function AboutPage() {
             <blockquote className="rounded-2xl border border-default bg-base p-6 md:p-8">
               <div className="mb-4 h-0.5 w-8 bg-gold" />
               <p className="mb-6 font-display text-xl italic leading-relaxed text-primary">
-                &ldquo;Most enterprises deploying AI today are doing so without any
-                visibility into what those systems are actually doing at runtime. We
-                built SaaviGenAI to change that and to make security and AI
-                governance accessible to the organisations that need it most.&rdquo;
+                &ldquo;Most enterprises deploying AI today are doing so without
+                any visibility into what those systems are actually doing at
+                runtime. We built SaaviGenAI to change that and to make security
+                and AI governance accessible to the organisations that need it
+                most.&rdquo;
               </p>
               <p className="font-mono text-xs uppercase tracking-widest text-gold">
                 Nanda Kumar — Founder &amp; CEO
@@ -89,17 +91,19 @@ export default function AboutPage() {
                 </div>
               </div>
               <p className="mb-4 text-sm leading-relaxed text-secondary">
-                23 years of enterprise experience across Cisco, HPE, and Aruba Networks,
-                spanning engineering, security architecture, enterprise AI adoption, and
-                LLM security. Nanda has designed and operated real systems at scale
-                and brings that depth to every SaaviGenAI engagement and programme.
+                23 years of enterprise experience across Cisco, HPE, and Aruba
+                Networks, spanning engineering, security architecture,
+                enterprise AI adoption, and LLM security. Nanda has designed and
+                operated real systems at scale and brings that depth to every
+                SaaviGenAI engagement and programme.
               </p>
               <p className="text-sm leading-relaxed text-secondary">
-                Every SaaviGenAI service and course is built from firsthand experience
-                of what breaks in practice not from industry frameworks recycled into
-                advisory outputs. That practitioner perspective is what separates
-                SaaviGenAI from managed service providers and training vendors who have
-                never had to operate what they recommend.
+                Every SaaviGenAI service and course is built from firsthand
+                experience of what breaks in practice not from industry
+                frameworks recycled into advisory outputs. That practitioner
+                perspective is what separates SaaviGenAI from managed service
+                providers and training vendors who have never had to operate
+                what they recommend.
               </p>
             </div>
           </div>
@@ -123,8 +127,12 @@ export default function AboutPage() {
                 />
               </div>
               <div>
-                <p className="font-semibold text-primary">Deepak Singh Rajput C</p>
-                <p className="mb-1 text-sm text-secondary">Product Engineer Intern, SaaviGenAI</p>
+                <p className="font-semibold text-primary">
+                  Deepak Singh Rajput C
+                </p>
+                <p className="mb-1 text-sm text-secondary">
+                  Product Engineer Intern, SaaviGenAI
+                </p>
                 <a
                   href="https://www.linkedin.com/in/deepak-singh-rajput-c"
                   target="_blank"
@@ -140,13 +148,15 @@ export default function AboutPage() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={`${basePath}/images/geetanshintern.png`}
-                  alt="Geetansh"
+                  alt="Geetansh Aditya"
                   className="h-full w-full object-cover"
                 />
               </div>
               <div>
-                <p className="font-semibold text-primary">Geettansh Aditya</p>
-                <p className="mb-1 text-sm text-secondary">Intern, SaaviGenAI</p>
+                <p className="font-semibold text-primary">Geetansh Aditya</p>
+                <p className="mb-1 text-sm text-secondary">
+                  Intern, SaaviGenAI
+                </p>
                 <a
                   href="https://www.linkedin.com/in/geetansh-aditya/"
                   target="_blank"
