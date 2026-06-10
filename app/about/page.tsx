@@ -124,7 +124,7 @@ export default function AboutPage() {
               </div>
               <div>
                 <p className="font-semibold text-primary">Deepak Singh Rajput C</p>
-                <p className="mb-1 text-sm text-secondary">Intern, SaaviGenAI</p>
+                <p className="mb-1 text-sm text-secondary">Product Engineer Intern, SaaviGenAI</p>
                 <a
                   href="https://www.linkedin.com/in/deepak-singh-rajput-c"
                   target="_blank"
@@ -140,12 +140,12 @@ export default function AboutPage() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={`${basePath}/images/geetanshintern.png`}
-                  alt="Gitansh"
+                  alt="Geetansh"
                   className="h-full w-full object-cover"
                 />
               </div>
               <div>
-                <p className="font-semibold text-primary">Gitansh</p>
+                <p className="font-semibold text-primary">Geetansh Aditya</p>
                 <p className="mb-1 text-sm text-secondary">Intern, SaaviGenAI</p>
                 <a
                   href="https://www.linkedin.com/in/gitansh"
