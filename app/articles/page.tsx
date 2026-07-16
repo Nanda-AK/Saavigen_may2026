@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { FooterCTABand } from "@/components/sections/FooterCTABand";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { SectionLabel } from "@/components/ui/SectionLabel";
@@ -11,6 +12,17 @@ export const metadata = pageMetadata(
 );
 
 const articles = [
+  {
+    title:
+      "SaaviGenAI Sponsors Anthropic CCCL AI Security Event in Bengaluru",
+    description:
+      "70+ security professionals, engineers, and AI enthusiasts gathered for an evening of deep-tech learning on Constitutional AI, threat models, and the future of AI security in India.",
+    author: "SaaviGenAI Team",
+    date: "July 12, 2026",
+    source: "SaaviGenAI Blog",
+    image: `${basePath}/images/ThumbnailArticle3.jpeg`,
+    href: "/articles/cccl-ai-security-event",
+  },
   {
     title:
       "Claude Mythos & Project Glasswing: The Moment AI Crossed Into Cyber Offense Reality",
@@ -88,14 +100,23 @@ export default function ArticlesPage() {
 
                   <div className="flex items-center justify-between gap-4">
                     <span className="text-xs text-muted">{article.author}</span>
-                    <a
-                      href={article.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-sm font-semibold text-teal transition-colors duration-150 hover:text-teal-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
-                    >
-                      Read article →
-                    </a>
+                    {article.href.startsWith("/") ? (
+                      <Link
+                        href={article.href}
+                        className="inline-flex items-center gap-1 text-sm font-semibold text-teal transition-colors duration-150 hover:text-teal-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
+                      >
+                        Read article →
+                      </Link>
+                    ) : (
+                      <a
+                        href={article.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-sm font-semibold text-teal transition-colors duration-150 hover:text-teal-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
+                      >
+                        Read article →
+                      </a>
+                    )}
                   </div>
                 </div>
               </article>

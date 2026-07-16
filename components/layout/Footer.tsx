@@ -22,7 +22,7 @@ export function Footer() {
                 className="rounded-full"
               />
               <span className="font-display text-xl font-bold text-white">
-                SaaviGenAI
+                SaaviGenAI<sup className="text-xs font-semibold">&trade;</sup>
               </span>
             </Link>
             <p className="text-sm leading-relaxed">

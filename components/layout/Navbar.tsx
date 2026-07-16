@@ -39,7 +39,7 @@ export function Navbar() {
           />
           <div className="hidden flex-col gap-0.5 sm:flex">
             <span className="flex items-end gap-1 font-display text-xl font-bold text-primary">
-              SaaviGenAI{" "}
+              SaaviGenAI<sup className="text-xs font-semibold">&trade;</sup>{" "}
               <span className="mb-1.5 h-1.5 w-1.5 rounded-full bg-gold" />
             </span>
             <span className="font-semibold text-gold font-serif italic text-[11px] uppercase tracking-0.02em">
