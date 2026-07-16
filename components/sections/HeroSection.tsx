@@ -1,5 +1,3 @@
-import { Button } from "@/components/ui/Button";
-
 type HeroSectionProps = {
   label: string;
   heading: string;
@@ -19,12 +17,9 @@ export function HeroSection({ label, heading, subheading, image }: HeroSectionPr
             <h1 className="mb-5 max-w-3xl font-display text-4xl font-bold leading-tight text-white md:text-5xl">
               {heading}
             </h1>
-            <p className="mb-8 max-w-2xl leading-relaxed text-on-dark md:text-lg">
+            <p className="max-w-2xl leading-relaxed text-on-dark md:text-lg">
               {subheading}
             </p>
-            <Button href="/contact" variant="teal">
-              Contact Us
-            </Button>
           </div>
           {image && (
             <div className="hidden justify-center lg:flex">

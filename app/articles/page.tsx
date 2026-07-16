@@ -67,7 +67,7 @@ export default function ArticlesPage() {
             {articles.map((article) => (
               <article
                 key={article.title}
-                className="flex flex-col overflow-hidden rounded-2xl border border-default bg-surface transition-transform duration-200 hover:-translate-y-1.5"
+                className="relative flex flex-col overflow-hidden rounded-2xl border border-default bg-surface transition-transform duration-200 hover:-translate-y-1.5"
               >
                 <div className="aspect-video w-full overflow-hidden bg-navy/5">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -100,25 +100,30 @@ export default function ArticlesPage() {
 
                   <div className="flex items-center justify-between gap-4">
                     <span className="text-xs text-muted">{article.author}</span>
-                    {article.href.startsWith("/") ? (
-                      <Link
-                        href={article.href}
-                        className="inline-flex items-center gap-1 text-sm font-semibold text-teal transition-colors duration-150 hover:text-teal-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
-                      >
-                        Read article →
-                      </Link>
-                    ) : (
-                      <a
-                        href={article.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-sm font-semibold text-teal transition-colors duration-150 hover:text-teal-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
-                      >
-                        Read article →
-                      </a>
-                    )}
+                    <span
+                      aria-hidden="true"
+                      className="inline-flex items-center gap-1 text-sm font-semibold text-teal"
+                    >
+                      Read article →
+                    </span>
                   </div>
                 </div>
+
+                {article.href.startsWith("/") ? (
+                  <Link
+                    href={article.href}
+                    className="absolute inset-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
+                    aria-label={article.title}
+                  />
+                ) : (
+                  <a
+                    href={article.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="absolute inset-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
+                    aria-label={article.title}
+                  />
+                )}
               </article>
             ))}
           </div>

@@ -1,6 +1,7 @@
 import { Bot, ExternalLink, Linkedin, ShieldCheck } from "lucide-react";
 import { FooterCTABand } from "@/components/sections/FooterCTABand";
 import { HeroSection } from "@/components/sections/HeroSection";
+import { PhotoGallery } from "@/components/ui/PhotoGallery";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { pageMetadata } from "@/lib/metadata";
 import { basePath } from "@/lib/site";
@@ -10,6 +11,37 @@ export const metadata = pageMetadata(
   "70+ security professionals, engineers, and AI enthusiasts gathered in Bengaluru for the Anthropic CCCL AI Security event, sponsored by SaaviGenAI.",
   "/articles/cccl-ai-security-event",
 );
+
+const turnoutPhotos = [
+  {
+    src: "/images/blog3/blog3imag.jpeg",
+    alt: "Audience and speaker during a session at the Anthropic CCCL AI Security event in Bengaluru",
+  },
+  {
+    src: "/images/blog3/blog3imag2.jpg",
+    alt: "Dr. Chinmay Hegde presenting at the Anthropic CCCL AI Security event",
+  },
+  {
+    src: "/images/blog3/blog3img3.jpeg",
+    alt: "Speakers exchanging a token of appreciation at the event",
+  },
+  {
+    src: "/images/blog3/blog3img4.jpeg",
+    alt: "Speakers exchanging gifts at the Anthropic CCCL AI Security event",
+  },
+  {
+    src: "/images/blog3/blog3img5.jpg",
+    alt: "Attendees posing with the SaaviGenAI and Contentstack banners at the event",
+  },
+  {
+    src: "/images/blog3/blog3speakers.jpg",
+    alt: "Speakers, organizers, and attendees at the Anthropic CCCL AI Security event in Bengaluru",
+  },
+  {
+    src: "/images/blog3/blog3founder.jpg",
+    alt: "Nanda, Founder of SaaviGenAI, presenting on Anthropic's Constitutional AI (CAI)",
+  },
+];
 
 const speakers = [
   {
@@ -57,7 +89,7 @@ export default function CcclAiSecurityEventArticle() {
         label="SaaviGenAI Community"
         heading="SaaviGenAI Sponsors Anthropic CCCL AI Security Event in Bengaluru"
         subheading="On a Sunday evening when most people were winding down their weekend, over 70 security professionals, engineers, and AI enthusiasts chose instead to spend their time learning."
-        image={`${basePath}/images/ThumbnailArticle3.jpeg`}
+        image={`${basePath}/images/blog3/FirstBlog3.jpg`}
       />
 
       <section className="bg-base py-8">
@@ -102,8 +134,8 @@ export default function CcclAiSecurityEventArticle() {
             has become in India&apos;s tech community.
           </p>
           <p className="mt-4 text-[15px] leading-relaxed text-secondary">
-            The event was organized in support of <strong className="text-primary">Vikram</strong>,
-            Ambassador for CCCL, with the support of Anthropic — continuing
+            The event was organized in support of <a className="text-primary font-bold" href="https://www.linkedin.com/in/vikrammpawar" >Vikram Pawar</a>,
+            Claude Community Ambassador and Founder CCCL.ai, with the support of Anthropic — continuing
             CCCL&apos;s mission of building a grounded, technically rigorous
             AI community in India.
           </p>
@@ -122,7 +154,7 @@ export default function CcclAiSecurityEventArticle() {
               <div className="mt-8 overflow-hidden rounded-2xl border border-default">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={`${basePath}/images/blog3collage.jpg`}
+                  src={`${basePath}/images/blog3/blog3collage.jpg`}
                   alt="Collage of speakers presenting at the Anthropic CCCL AI Security event"
                   loading="lazy"
                   decoding="async"
@@ -162,67 +194,15 @@ export default function CcclAiSecurityEventArticle() {
 
       <section className="bg-base py-12 md:py-16">
         <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
-          <SectionLabel
-            label="Turnout"
-            heading="A community that shows up."
-            subheading="What stood out most was not just the turnout, but who showed up."
-          />
-          <div className="mt-10 max-w-4xl space-y-4 text-[15px] leading-relaxed text-secondary">
-            <p>
-              Attendees traveled significant distances to be part of the
-              session — including <strong className="text-primary">Manu Francis</strong>,
-              who came all the way from Kerala solely to attend this event.
-              It was also an evening of reconnection, with several long-time
-              industry professionals — including former Cisco colleagues
-              reuniting after nearly a decade — using the event as a chance
-              to rebuild old networks around a shared, current interest: AI
-              Security.
-            </p>
-            <p>
-              The event was further supported by{" "}
-              <strong className="text-primary">Ravi Kandaswamy</strong>,
-              Founder of Quana, a recurring collaborator and supporter of
-              SaaviGenAI&apos;s community initiatives.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-surface py-12 md:py-16">
-        <div className="mx-auto max-w-4xl px-6 md:px-8 lg:px-12">
-          <div className="overflow-hidden rounded-2xl border border-default">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={`${basePath}/images/blog3speakers.jpg`}
-              alt="Speakers, organizers, and attendees at the Anthropic CCCL AI Security event in Bengaluru"
-              loading="lazy"
-              decoding="async"
-              className="w-full object-cover"
+          <SectionLabel label="Turnout" heading="A community that shows up." />
+          <div className="mt-10">
+            <PhotoGallery
+              photos={turnoutPhotos.map((photo) => ({
+                ...photo,
+                src: `${basePath}${photo.src}`,
+              }))}
             />
           </div>
-          <p className="mt-4 text-center text-sm italic text-muted">
-            Speakers, organizers, and attendees at the CCCL AI Security event
-            in Bengaluru.
-          </p>
-        </div>
-      </section>
-
-      <section className="bg-base py-12 md:py-16">
-        <div className="mx-auto max-w-4xl px-6 md:px-8 lg:px-12">
-          <div className="overflow-hidden rounded-2xl border border-default">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={`${basePath}/images/blog3founder.jpg`}
-              alt="Nanda, Founder of SaaviGenAI, presenting on Anthropic's Constitutional AI (CAI)"
-              loading="lazy"
-              decoding="async"
-              className="w-full object-cover"
-            />
-          </div>
-          <p className="mt-4 text-center text-sm italic text-muted">
-            Nanda, Founder of SaaviGenAI, presenting on Anthropic&apos;s
-            Constitutional AI (CAI).
-          </p>
         </div>
       </section>
 
