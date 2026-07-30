@@ -45,6 +45,17 @@ const articles = [
     image: `${basePath}/images/blog2.png`,
     href: "https://medium.com/@nandakumar_89332/llms-are-trained-on-only-5-of-the-internet-heres-why-that-matters-24f8dbfbe5a4",
   },
+  {
+    title:
+      "The Cost of Unchecked Ai Deloittes 440k And Reputation Reminder For Every Leader",
+    description:
+      "Deloitte’s $440k AI hallucination error highlights why business leaders must rigorously verify automated outputs to protect credibility.",
+    author: "Nanda Kumar",
+    date: "Oct 10, 2025",
+    source: "Medium",
+    image: `${basePath}/images/blog4.png`,
+    href: "https://medium.com/@nandakumar_89332/the-cost-of-unchecked-ai-deloittes-440k-and-reputation-reminder-for-every-leader-7a91ca5738df",
+  },
 ];
 
 export default function ArticlesPage() {

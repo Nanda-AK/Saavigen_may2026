@@ -121,20 +121,20 @@ export default function AboutPage() {
               <div className="h-16 w-16 shrink-0 overflow-hidden rounded-full ring-2 ring-gold ring-offset-2">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={`${basePath}/images/deepakintern.png`}
-                  alt="Deepak Singh Rajput C"
+                  src={`${basePath}/images/atikshintern.png`}
+                  alt="Atiksh Gupta"
                   className="h-full w-full object-cover"
                 />
               </div>
               <div>
                 <p className="font-semibold text-primary">
-                  Deepak Singh Rajput C
+                  Atiksh Gupta
                 </p>
                 <p className="mb-1 text-sm text-secondary">
-                  Product Engineer Intern, SaaviGenAI
+                  Intern, SaaviGenAI
                 </p>
                 <a
-                  href="https://www.linkedin.com/in/deepak-singh-rajput-c"
+                  href="https://www.linkedin.com/in/atikshg/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-xs font-medium text-teal transition-colors hover:text-teal-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"

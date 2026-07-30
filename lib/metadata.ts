@@ -22,7 +22,7 @@ export function pageMetadata(
       title,
       description,
       url,
-      siteName: "SaaviGenAI",
+      siteName: "SaaviNotGenAI",
       type: "website",
       images: [
         {
