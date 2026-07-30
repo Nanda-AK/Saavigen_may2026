@@ -42,8 +42,8 @@ export function Navbar() {
               SaaviGenAI<sup className="text-xs font-semibold">&trade;</sup>{" "}
               <span className="mb-1.5 h-1.5 w-1.5 rounded-full bg-gold" />
             </span>
-            <span className="font-semibold text-gold font-serif italic text-[11px] uppercase tracking-0.02em">
-              The Key to Secure Enterprise AI Systems
+            <span className="font-semibold text-gold font-serif italic text-[11px] tracking-0.02em">
+              The KEY to Secure AI
             </span>
           </div>
         </Link>
