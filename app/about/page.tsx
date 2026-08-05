@@ -143,22 +143,24 @@ export default function AboutPage() {
                 </a>
               </div>
             </div>
-            <div className="flex items-center gap-4 rounded-2xl border border-default bg-base p-6">
-              <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-full ring-2 ring-gold ring-offset-2">
+            <div className="flex items-center gap-4 rounded-2xl border border-default bg-surface p-6">
+              <div className="h-16 w-16 shrink-0 overflow-hidden rounded-full ring-2 ring-gold ring-offset-2">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={`${basePath}/images/geetanshintern.png`}
-                  alt="Geetansh Aditya"
+                  src={`${basePath}/images/naveenintern.png`}
+                  alt="Atiksh Gupta"
                   className="h-full w-full object-cover"
                 />
               </div>
               <div>
-                <p className="font-semibold text-primary">Geetansh Aditya</p>
+                <p className="font-semibold text-primary">
+                  Naveen Kumar
+                </p>
                 <p className="mb-1 text-sm text-secondary">
                   Intern, SaaviGenAI
                 </p>
                 <a
-                  href="https://www.linkedin.com/in/geetansh-aditya/"
+                  href="https://www.linkedin.com/in/naveenkumar54321/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-xs font-medium text-teal transition-colors hover:text-teal-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"

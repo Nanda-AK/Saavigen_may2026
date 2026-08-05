@@ -14,6 +14,28 @@ export const metadata = pageMetadata(
 const articles = [
   {
     title:
+      "Will Indian Banks Trust Claude with Their Core Banking Data?",
+    description:
+      "Anthropic's India-hosted Claude addresses data residency requirements, but trust in enterprise AI goes beyond where data is processed. For highly regulated sectors like banking, governance, control, auditability and data sovereignty will likely shape AI adoption, driving a hybrid approach where closed models power general workloads while self-hosted models handle mission critical systems.",
+    author: "Nanda Kumar Kirubakaran",
+    date: "August 4, 2026",
+    source: "LinkedIn Pulse",
+    image: `${basePath}/images/will_indian_banks_trust_claude.jpg`,
+    href: "https://www.linkedin.com/posts/nandakumar80_anthropic-claudeai-aws-share-7490289895429640192-gcQX/",
+  },
+  {
+    title:
+      "Claude Went Rogue? Or Did the Sandbox Fail?",
+    description:
+      "Anthropic's recent findings show that the biggest AI security risks may not come from the model itself, but from the environments in which AI agents operate. As agents gain greater autonomy, organizations need end-to-end visibility into AI behavior, tool usage, credentials and runtime activity - making AI Detection & Response (AIDR) the next critical layer of enterprise AI security.",
+    author: "Nanda Kumar Kirubakaran",
+    date: "August 3, 2026",
+    source: "LinkedIn Pulse",
+    image: `${basePath}/images/claude_went_rogue.jpg`,
+    href: "https://www.linkedin.com/posts/nandakumar80_ai-cybersecurity-aiagents-share-7489982114205978624-coqn/",
+  },
+  {
+    title:
       "SaaviGenAI Sponsors Anthropic CCCL AI Security Event in Bengaluru",
     description:
       "70+ security professionals, engineers, and AI enthusiasts gathered for an evening of deep-tech learning on Constitutional AI, threat models, and the future of AI security in India.",
