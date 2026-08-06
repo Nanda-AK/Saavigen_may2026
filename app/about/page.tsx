@@ -65,7 +65,7 @@ export default function AboutPage() {
             </blockquote>
             <div className="rounded-2xl border border-default bg-base p-6 md:p-8">
               <div className="mb-5 flex items-center gap-4">
-                <div className="h-16 w-16 shrink-0 overflow-hidden rounded-full ring-2 ring-gold ring-offset-2">
+                <div className="h-24 w-24 shrink-0 overflow-hidden rounded-full ring-2 ring-gold ring-offset-2">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={`${basePath}/images/nanda_founder.jpg`}
@@ -118,7 +118,7 @@ export default function AboutPage() {
           />
           <div className="mt-8 grid gap-6 md:grid-cols-2">
             <div className="flex items-center gap-4 rounded-2xl border border-default bg-surface p-6">
-              <div className="h-16 w-16 shrink-0 overflow-hidden rounded-full ring-2 ring-gold ring-offset-2">
+              <div className="h-24 w-24 shrink-0 overflow-hidden rounded-full ring-2 ring-gold ring-offset-2">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={`${basePath}/images/atikshintern.png`}
@@ -144,7 +144,7 @@ export default function AboutPage() {
               </div>
             </div>
             <div className="flex items-center gap-4 rounded-2xl border border-default bg-surface p-6">
-              <div className="h-16 w-16 shrink-0 overflow-hidden rounded-full ring-2 ring-gold ring-offset-2">
+              <div className="h-24 w-24 shrink-0 overflow-hidden rounded-full ring-2 ring-gold ring-offset-2">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={`${basePath}/images/naveenintern.png`}
