@@ -38,6 +38,7 @@ yarn-error.log*
 next-env.d.ts
 
 CLAUDE.md
+AGENTS.md
 .claude
 
 # saavigen
@@ -47,3 +48,5 @@ SaaviGenAI_Service_Copy.md
 features
 
 oldPhotos
+
+*.stackdump

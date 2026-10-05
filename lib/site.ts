@@ -3,14 +3,14 @@ export const CONTACT_EMAIL = "contact@saavigen.ai";
 export const services = [
   {
     number: "01",
-    title: "Saavi SOC",
+    title: "SaaviSOC",
     href: "/services/managed-soc",
     description:
       "Enterprise-grade threat monitoring and incident response — without the cost or complexity of building it in-house. 24×7 coverage, zero CAPEX, compliance-ready from day one.",
   },
   {
     number: "02",
-    title: "Saavi AIDR",
+    title: "SaaviAIDR",
     href: "/services/aidr",
     description:
       "Purpose-built managed detection and response for AI-powered applications. Because firewalls don't inspect prompts and SIEMs don't understand agent behaviour.",

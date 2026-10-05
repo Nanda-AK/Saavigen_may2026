@@ -15,7 +15,7 @@ import { pageMetadata } from "@/lib/metadata";
 import { basePath } from "@/lib/site";
 
 export const metadata = pageMetadata(
-  "Saavi AIDR | SaaviGenAI",
+  "SaaviAIDR | SaaviGenAI",
   "Purpose-built threat detection and response for AI-powered applications — because traditional security tools weren't designed for this.",
   "/services/aidr",
 );
@@ -105,7 +105,7 @@ export default function AidrPage() {
   return (
     <>
       <HeroSection
-        label="Saavi AIDR"
+        label="SaaviAIDR"
         heading="Your AI Is Running. Do You Know What It's Doing?"
         subheading="Purpose-built threat detection and response for AI-powered applications — because traditional security tools weren't designed for this."
         image={`${basePath}/images/newSaaviAIdr.png`}
@@ -115,7 +115,7 @@ export default function AidrPage() {
         <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
           <SectionLabel
             label="Detection Coverage"
-            heading="What Saavi AIDR detects."
+            heading="What SaaviAIDR detects."
             subheading="Where traditional tools see a network packet, SaaviAIDR sees a prompt. Where traditional tools see an API call, SaaviAIDR sees a tool invocation by an agent and asks: was that expected? Was it authorised? What data did it touch?"
           />
           <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -137,7 +137,7 @@ export default function AidrPage() {
             <SectionLabel
               label="The AIDR Audit Trail"
               heading="Security without visibility is just hope."
-              subheading="Saavi AIDR gives you a complete, queryable audit trail of every AI interaction in your environment — the foundation of AI governance and demonstrating to auditors, boards, and regulators that your AI systems are operating within defined boundaries."
+              subheading="SaaviAIDR gives you a complete, queryable audit trail of every AI interaction in your environment — the foundation of AI governance and demonstrating to auditors, boards, and regulators that your AI systems are operating within defined boundaries."
             />
             <div className="rounded-2xl border border-default bg-base p-6 md:p-8">
               {auditTrail.map((item, index) => (
@@ -163,7 +163,7 @@ export default function AidrPage() {
           <SectionLabel
             label="Why Traditional Tools Fall Short"
             heading="Your existing security stack was built for a pre-AI world."
-            subheading="Firewalls don't inspect prompts. SIEMs don't understand agent behaviour. DLP tools can't detect when a model has been manipulated into leaking data it was never supposed to touch. AI attacks are different in kind — not just degree. Saavi AIDR fills that gap and integrates with your existing SOC and SIEM where relevant."
+            subheading="Firewalls don't inspect prompts. SIEMs don't understand agent behaviour. DLP tools can't detect when a model has been manipulated into leaking data it was never supposed to touch. AI attacks are different in kind — not just degree. SaaviAIDR fills that gap and integrates with your existing SOC and SIEM where relevant."
           />
           <div className="mt-8 overflow-x-auto rounded-2xl border border-default">
             <table className="w-full text-sm">
@@ -179,7 +179,7 @@ export default function AidrPage() {
                     DLP
                   </th>
                   <th className="px-6 py-4 text-center font-mono text-xs uppercase tracking-widest text-gold">
-                    Saavi AIDR
+                    SaaviAIDR
                   </th>
                 </tr>
               </thead>

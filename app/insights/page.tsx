@@ -1,8 +1,12 @@
+import dynamic from "next/dynamic";
 import { FooterCTABand } from "@/components/sections/FooterCTABand";
 import { HeroSection } from "@/components/sections/HeroSection";
-import { WaitlistForm } from "@/components/sections/WaitlistForm";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { pageMetadata } from "@/lib/metadata";
+
+const WaitlistForm = dynamic(
+  () => import("@/components/sections/WaitlistForm").then((m) => m.WaitlistForm),
+);
 
 export const metadata = pageMetadata(
   "Insights | SaaviGenAI",

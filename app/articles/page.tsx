@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { FooterCTABand } from "@/components/sections/FooterCTABand";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { SectionLabel } from "@/components/ui/SectionLabel";
@@ -11,6 +12,39 @@ export const metadata = pageMetadata(
 );
 
 const articles = [
+  {
+    title:
+      "Will Indian Banks Trust Claude with Their Core Banking Data?",
+    description:
+      "Anthropic's India-hosted Claude addresses data residency requirements, but trust in enterprise AI goes beyond where data is processed. For highly regulated sectors like banking, governance, control, auditability and data sovereignty will likely shape AI adoption, driving a hybrid approach where closed models power general workloads while self-hosted models handle mission critical systems.",
+    author: "Nanda Kumar Kirubakaran",
+    date: "August 4, 2026",
+    source: "LinkedIn Pulse",
+    image: `${basePath}/images/will_indian_banks_trust_claude.jpg`,
+    href: "https://www.linkedin.com/posts/nandakumar80_anthropic-claudeai-aws-share-7490289895429640192-gcQX/",
+  },
+  {
+    title:
+      "Claude Went Rogue? Or Did the Sandbox Fail?",
+    description:
+      "Anthropic's recent findings show that the biggest AI security risks may not come from the model itself, but from the environments in which AI agents operate. As agents gain greater autonomy, organizations need end-to-end visibility into AI behavior, tool usage, credentials and runtime activity - making AI Detection & Response (AIDR) the next critical layer of enterprise AI security.",
+    author: "Nanda Kumar Kirubakaran",
+    date: "August 3, 2026",
+    source: "LinkedIn Pulse",
+    image: `${basePath}/images/claude_went_rogue.jpg`,
+    href: "https://www.linkedin.com/posts/nandakumar80_ai-cybersecurity-aiagents-share-7489982114205978624-coqn/",
+  },
+  {
+    title:
+      "SaaviGenAI Sponsors Anthropic CCCL AI Security Event in Bengaluru",
+    description:
+      "70+ security professionals, engineers, and AI enthusiasts gathered for an evening of deep-tech learning on Constitutional AI, threat models, and the future of AI security in India.",
+    author: "SaaviGenAI Team",
+    date: "July 12, 2026",
+    source: "SaaviGenAI Blog",
+    image: `${basePath}/images/ThumbnailArticle3.jpeg`,
+    href: "/articles/cccl-ai-security-event",
+  },
   {
     title:
       "Claude Mythos & Project Glasswing: The Moment AI Crossed Into Cyber Offense Reality",
@@ -32,6 +66,17 @@ const articles = [
     source: "Medium",
     image: `${basePath}/images/blog2.png`,
     href: "https://medium.com/@nandakumar_89332/llms-are-trained-on-only-5-of-the-internet-heres-why-that-matters-24f8dbfbe5a4",
+  },
+  {
+    title:
+      "The Cost of Unchecked Ai Deloittes 440k And Reputation Reminder For Every Leader",
+    description:
+      "Deloitte’s $440k AI hallucination error highlights why business leaders must rigorously verify automated outputs to protect credibility.",
+    author: "Nanda Kumar",
+    date: "Oct 10, 2025",
+    source: "Medium",
+    image: `${basePath}/images/blog4.png`,
+    href: "https://medium.com/@nandakumar_89332/the-cost-of-unchecked-ai-deloittes-440k-and-reputation-reminder-for-every-leader-7a91ca5738df",
   },
 ];
 
@@ -55,13 +100,15 @@ export default function ArticlesPage() {
             {articles.map((article) => (
               <article
                 key={article.title}
-                className="flex flex-col overflow-hidden rounded-2xl border border-default bg-surface transition-transform duration-200 hover:-translate-y-1.5"
+                className="relative flex flex-col overflow-hidden rounded-2xl border border-default bg-surface transition-transform duration-200 hover:-translate-y-1.5"
               >
                 <div className="aspect-video w-full overflow-hidden bg-navy/5">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={article.image}
                     alt={article.title}
+                    loading="lazy"
+                    decoding="async"
                     className="h-full w-full object-cover"
                   />
                 </div>
@@ -86,16 +133,30 @@ export default function ArticlesPage() {
 
                   <div className="flex items-center justify-between gap-4">
                     <span className="text-xs text-muted">{article.author}</span>
-                    <a
-                      href={article.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-sm font-semibold text-teal transition-colors duration-150 hover:text-teal-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
+                    <span
+                      aria-hidden="true"
+                      className="inline-flex items-center gap-1 text-sm font-semibold text-teal"
                     >
                       Read article →
-                    </a>
+                    </span>
                   </div>
                 </div>
+
+                {article.href.startsWith("/") ? (
+                  <Link
+                    href={article.href}
+                    className="absolute inset-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
+                    aria-label={article.title}
+                  />
+                ) : (
+                  <a
+                    href={article.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="absolute inset-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
+                    aria-label={article.title}
+                  />
+                )}
               </article>
             ))}
           </div>
