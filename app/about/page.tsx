@@ -121,20 +121,16 @@ export default function AboutPage() {
               <div className="h-24 w-24 shrink-0 overflow-hidden rounded-full ring-2 ring-gold ring-offset-2">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={`${basePath}/images/atikshintern.png`}
-                  alt="Atiksh Gupta"
+                  src={`${basePath}/images/aamir_hamza.jpeg`}
+                  alt="Aamir Hamza"
                   className="h-full w-full object-cover"
                 />
               </div>
               <div>
-                <p className="font-semibold text-primary">
-                  Atiksh Gupta
-                </p>
-                <p className="mb-1 text-sm text-secondary">
-                  Intern, SaaviGenAI
-                </p>
+                <p className="font-semibold text-primary">Aamir Hamza</p>
+                <p className="mb-1 text-sm text-secondary">Intern, SaaviGenAI</p>
                 <a
-                  href="https://www.linkedin.com/in/atikshg/"
+                  href="https://www.linkedin.com/in/aamir-hamza-tabani/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-xs font-medium text-teal transition-colors hover:text-teal-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
@@ -147,20 +143,60 @@ export default function AboutPage() {
               <div className="h-24 w-24 shrink-0 overflow-hidden rounded-full ring-2 ring-gold ring-offset-2">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={`${basePath}/images/naveenintern.png`}
-                  alt="Atiksh Gupta"
+                  src={`${basePath}/images/atharv_chouhan.jpeg`}
+                  alt="Atharv Chouhan"
                   className="h-full w-full object-cover"
                 />
               </div>
               <div>
-                <p className="font-semibold text-primary">
-                  Naveen Kumar
-                </p>
-                <p className="mb-1 text-sm text-secondary">
-                  Intern, SaaviGenAI
-                </p>
+                <p className="font-semibold text-primary">Atharv Chouhan</p>
+                <p className="mb-1 text-sm text-secondary">Intern, SaaviGenAI</p>
                 <a
-                  href="https://www.linkedin.com/in/naveenkumar54321/"
+                  href="https://www.linkedin.com/in/atharv-chouhan-94a074384"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs font-medium text-teal transition-colors hover:text-teal-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
+                >
+                  LinkedIn →
+                </a>
+              </div>
+            </div>
+            <div className="flex items-center gap-4 rounded-2xl border border-default bg-surface p-6">
+              <div className="h-24 w-24 shrink-0 overflow-hidden rounded-full ring-2 ring-gold ring-offset-2">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`${basePath}/images/tulasi_patil.jpeg`}
+                  alt="Tulasi Patil"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div>
+                <p className="font-semibold text-primary">Tulasi Patil</p>
+                <p className="mb-1 text-sm text-secondary">Intern, SaaviGenAI</p>
+                <a
+                  href="https://www.linkedin.com/in/tulasi-patil-728216441?utm_source=share_via&utm_content=profile&utm_medium=member_android"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs font-medium text-teal transition-colors hover:text-teal-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
+                >
+                  LinkedIn →
+                </a>
+              </div>
+            </div>
+            <div className="flex items-center gap-4 rounded-2xl border border-default bg-surface p-6">
+              <div className="h-24 w-24 shrink-0 overflow-hidden rounded-full ring-2 ring-gold ring-offset-2">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`${basePath}/images/yasar.png`}
+                  alt="Yasar Ameen H N"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div>
+                <p className="font-semibold text-primary">Yasar Ameen H N</p>
+                <p className="mb-1 text-sm text-secondary">Intern, SaaviGenAI</p>
+                <a
+                  href="https://www.linkedin.com/in/yasar-ameen-965385201?utm_source=share_via&utm_content=profile&utm_medium=member_android"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-xs font-medium text-teal transition-colors hover:text-teal-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
