@@ -113,11 +113,79 @@ export default function AboutPage() {
       <section className="bg-base py-12 md:py-16">
         <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
           <SectionLabel
+            label="Advisory &amp; Mentorship"
+            heading="Strategic guidance rooted in four decades of enterprise governance."
+          />
+          <div className="mt-8 rounded-2xl border border-default bg-surface p-6 md:p-8">
+            <div className="flex flex-col gap-6 md:flex-row md:items-start md:gap-8">
+              <div className="h-28 w-28 shrink-0 overflow-hidden rounded-full ring-2 ring-gold ring-offset-2">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`${basePath}/images/jamuna_swamy.jpeg`}
+                  alt="Jamuna Swamy"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div className="flex-1">
+                <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+                  <div>
+                    <p className="mb-0.5 font-mono text-xs uppercase tracking-widest text-gold">
+                      Jamuna Swamy
+                    </p>
+                    <h3 className="font-display text-2xl font-bold text-primary">
+                      Senior Advisor &amp; Mentor
+                    </h3>
+                  </div>
+                  <a
+                    href="https://www.linkedin.com/in/jamuna-swamy-27a5a46/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs font-medium text-teal transition-colors hover:text-teal-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
+                  >
+                    LinkedIn →
+                  </a>
+                </div>
+                <div className="mb-4 flex flex-wrap gap-2">
+                  <span className="rounded-full border border-gold/30 bg-gold/10 px-2.5 py-0.5 font-mono text-xs text-gold">
+                    43+ Years GRC
+                  </span>
+                  <span className="rounded-full border border-teal/30 bg-teal/10 px-2.5 py-0.5 font-mono text-xs text-teal">
+                    CISA
+                  </span>
+                  <span className="rounded-full border border-teal/30 bg-teal/10 px-2.5 py-0.5 font-mono text-xs text-teal">
+                    PMP
+                  </span>
+                  <span className="rounded-full border border-teal/30 bg-teal/10 px-2.5 py-0.5 font-mono text-xs text-teal">
+                    ISO 27001 LA
+                  </span>
+                  <span className="rounded-full border border-default bg-base px-2.5 py-0.5 font-mono text-xs text-secondary">
+                    ISACA
+                  </span>
+                </div>
+                <p className="mb-4 text-sm leading-relaxed text-secondary">
+                  Over 43 years of distinguished enterprise experience across Governance, Risk, and Compliance (GRC),
+                  information security, and IT management. Jamuna served as Chief Information Security Officer (CISO)
+                  at Hexaware Technologies and is an esteemed leader and active contributor within the ISACA community.
+                </p>
+                <p className="text-sm leading-relaxed text-secondary">
+                  Holding CISA, PMP, and ISO 27001 Lead Auditor certifications, she brings deep institutional expertise
+                  in audit readiness, enterprise risk mitigation, and security compliance to mentor and guide SaaviGenAI&apos;s
+                  operational security frameworks and AI governance strategy.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-surface py-12 md:py-16">
+        <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
+          <SectionLabel
             label="The Team"
             heading="The people behind SaaviGenAI."
           />
           <div className="mt-8 grid gap-6 md:grid-cols-2">
-            <div className="flex items-center gap-4 rounded-2xl border border-default bg-surface p-6">
+            <div className="flex items-center gap-4 rounded-2xl border border-default bg-base p-6">
               <div className="h-24 w-24 shrink-0 overflow-hidden rounded-full ring-2 ring-gold ring-offset-2">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -139,7 +207,7 @@ export default function AboutPage() {
                 </a>
               </div>
             </div>
-            <div className="flex items-center gap-4 rounded-2xl border border-default bg-surface p-6">
+            <div className="flex items-center gap-4 rounded-2xl border border-default bg-base p-6">
               <div className="h-24 w-24 shrink-0 overflow-hidden rounded-full ring-2 ring-gold ring-offset-2">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -161,7 +229,7 @@ export default function AboutPage() {
                 </a>
               </div>
             </div>
-            <div className="flex items-center gap-4 rounded-2xl border border-default bg-surface p-6">
+            <div className="flex items-center gap-4 rounded-2xl border border-default bg-base p-6">
               <div className="h-24 w-24 shrink-0 overflow-hidden rounded-full ring-2 ring-gold ring-offset-2">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -183,7 +251,7 @@ export default function AboutPage() {
                 </a>
               </div>
             </div>
-            <div className="flex items-center gap-4 rounded-2xl border border-default bg-surface p-6">
+            <div className="flex items-center gap-4 rounded-2xl border border-default bg-base p-6">
               <div className="h-24 w-24 shrink-0 overflow-hidden rounded-full ring-2 ring-gold ring-offset-2">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -209,7 +277,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="bg-surface py-12 md:py-16">
+      <section className="bg-base py-12 md:py-16">
         <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
           <SectionLabel
             label="Values"
@@ -235,7 +303,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="bg-base py-12 md:py-16">
+      <section className="bg-surface py-12 md:py-16">
         <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
           <SectionLabel
             label="Who We Help"
