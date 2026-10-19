@@ -1,7 +1,7 @@
 import { Building2, MessageSquare, Network, SquareCode, UserRound } from "lucide-react";
 import { ComposedIcon } from "@/components/ui/ComposedIcon";
 import { Icon } from "@/components/ui/Icon";
-import { LogoOrbit } from "@/components/ui/LogoOrbit";
+import { LogoCarousel } from "@/components/ui/LogoCarousel";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { Tile } from "@/components/ui/Tile";
 
@@ -39,8 +39,8 @@ export function WhatWeSecure({ headline, id = "what-we-secure" }: { headline: st
         ))}
       </div>
       <div data-reveal className="mt-20 lg:mt-28">
-        <p className="text-center text-[0.875rem] font-medium text-ink-muted">Works with</p>
-        <LogoOrbit />
+        <p className="mb-8 text-center text-[0.875rem] font-medium text-ink-muted">Works with</p>
+        <LogoCarousel />
       </div>
     </Section>
   );

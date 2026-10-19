@@ -17,7 +17,8 @@ export type PipelineStep = {
   the section is taller than the screen and its content stays pinned while you
   scroll; the line fills and each step lights up as you go. No JavaScript: the
   progress value --p comes from a CSS view-timeline (".pipeline" in globals.css).
-  Mobile, Firefox and reduced motion: a normal section with every step lit.
+  It also runs for reduced-motion visitors (it only moves when they scroll).
+  Mobile and Firefox: a normal section with every step lit.
 */
 export function ScrollPipeline({
   id,
@@ -35,7 +36,7 @@ export function ScrollPipeline({
       <div className="pipeline-sticky">
         <Container className="py-20 md:py-28">
           <SectionHeader id={id} title={title} />
-          <div className="pipeline-progress relative mt-16 md:mt-24" style={{ "--n": steps.length } as React.CSSProperties}>
+          <div className="pipeline-progress motion-ok relative mt-16 md:mt-24" style={{ "--n": steps.length } as React.CSSProperties}>
             <span aria-hidden="true" className="pipeline-track hidden md:block">
               <span className="pipeline-fill" />
               <span className="pipeline-head" />

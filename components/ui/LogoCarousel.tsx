@@ -1,0 +1,58 @@
+"use client";
+
+import { Pause, Play } from "lucide-react";
+import { useState } from "react";
+import { Icon } from "@/components/ui/Icon";
+import { vendors } from "@/content/vendors";
+
+// Plan 2.2 "Works with": logo cards drifting left in a seamless loop.
+// The list is repeated COPIES times so the loop never shows a gap; screen
+// readers only get the first copy. Hover / focus pause it, and there is a
+// pause button (auto-moving content must be pausable). CSS: ".logo-carousel".
+const COPIES = 4;
+
+export function LogoCarousel() {
+  const [paused, setPaused] = useState(false);
+
+  return (
+    <div className="relative">
+      <div className="logo-carousel overflow-hidden py-2" data-paused={paused}>
+        <div
+          className="logo-carousel-track motion-ok"
+          style={{ "--copies": COPIES, "--duration": `${vendors.length * 8}s` } as React.CSSProperties}
+        >
+          {Array.from({ length: COPIES }, (_, copy) => (
+            <ul
+              key={copy}
+              aria-label={copy === 0 ? "Works with" : undefined}
+              aria-hidden={copy === 0 ? undefined : true}
+              className="flex shrink-0 gap-4 pr-4"
+            >
+              {vendors.map((v) => (
+                <li
+                  key={`${copy}-${v.name}`}
+                  className="group/logo flex h-28 w-52 shrink-0 flex-col items-center justify-center gap-3 rounded-[1.125rem] bg-sunken text-ink-muted transition-[background-color,color,box-shadow] duration-300 hover:bg-raised hover:text-ink hover:shadow-[0_14px_34px_-18px_rgb(0_0_0/0.3)] sm:h-32 sm:w-60"
+                >
+                  {v.logo ? (
+                    <span aria-hidden="true" className="logo-mask size-8 sm:size-9" style={{ "--logo": `url(${v.logo})` } as React.CSSProperties} />
+                  ) : null}
+                  <span className="text-[1rem] font-semibold tracking-[-0.02em]">{v.name}</span>
+                </li>
+              ))}
+            </ul>
+          ))}
+        </div>
+      </div>
+      <div className="mt-6 flex justify-center">
+        <button
+          type="button"
+          onClick={() => setPaused((p) => !p)}
+          aria-label={paused ? "Play logo carousel" : "Pause logo carousel"}
+          className="inline-flex size-9 items-center justify-center rounded-[8px] border border-line text-ink-muted transition-colors hover:border-ink-muted hover:text-ink"
+        >
+          <Icon icon={paused ? Play : Pause} size={15} />
+        </button>
+      </div>
+    </div>
+  );
+}

@@ -1,7 +1,7 @@
 "use client";
 
 import { Pause, Play } from "lucide-react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/Eyebrow";
@@ -10,51 +10,42 @@ import { cn } from "@/lib/utils";
 
 /*
   Home hero (plan 2.1), styled after mynctech.com: full-screen background video
-  with one large title on top.
-
-  Two independent rhythms (as requested):
-    - VIDEO_MS: the background cuts to the next short clip (with a slow zoom)
-    - TITLE_MS: the title changes
-  The slide pills follow the titles; clicking one jumps both title and video.
-
-  Titles: the first is the plan's hero headline (the real <h1>). The others are
-  headlines taken word for word from the plan's own sections, so no new copy.
+  under a fixed headline and subheadline (exactly as in the plan). Only the video
+  changes, every VIDEO_MS, cross-fading to the next AI-themed clip.
 
   Interaction: on desktop the video layer drifts slightly against the pointer
   (parallax). It is driven by CSS variables set directly on the element, so the
   pointer never causes a React re-render.
 
-  Videos: free Mixkit clips, 4 s 720p loops in public/videos/ (sources in
-  content/media-credits.md). Only the current and the next clip are loaded.
+  Videos: free Pexels clips (AI / neural network / AI chip visuals), 6 s 720p
+  loops in public/videos/ai-*.mp4 (sources in content/media-credits.md). Only the
+  current and the next clip are loaded.
 
   Accessibility and performance
-  - Pause / play button (auto-rotating content must be pausable).
+  - Pause / play button (auto-changing content must be pausable).
   - Everything stops while the hero is off screen or the tab is hidden.
-  - prefers-reduced-motion: video still plays, but no zoom, no parallax, no sliding titles.
-  - Save-Data: still poster image, no rotation.
-  - Only the <h1> is read by screen readers; the rotating copies are aria-hidden.
+  - Reduced motion (agreed with SaaviGenAI): video still plays, but no zoom and no
+    parallax. Windows "best performance" mode switches reduced motion on silently.
+  - Save-Data: still poster image only.
 */
 
-export const VIDEO_MS = 3000;
-export const TITLE_MS = 4500;
+export const VIDEO_MS = 5000;
 
-const VIDEOS = ["hero-01-datacenter", "hero-02-circuit", "hero-03-network", "hero-04-code", "hero-05-engineers", "hero-06-world"];
-
-const TITLES = [
-  ["Your AI is running.", "Do you know what it's doing?"], // 2.1 (the h1)
-  ["One platform for every AI", "in your enterprise"], // 2.2
-  ["From blind spot", "to control"], // 2.3
-  ["Detection and response for", "the AI in your enterprise"], // 3.1
-  ["Built for how", "security teams work"], // 2.4
+const VIDEOS = [
+  "ai-01-neural-nodes",
+  "ai-02-chip-data",
+  "ai-03-threat-interface",
+  "ai-04-neural-field",
+  "ai-05-data-flow",
+  "ai-06-processor",
 ];
 
 const src = (name: string, ext: "mp4" | "jpg") => `/videos/${name}.${ext}`;
 
 export function HeroVideo() {
   const [video, setVideo] = useState(0);
-  const [title, setTitle] = useState(0);
   const [playing, setPlaying] = useState(true); // the visitor's pause / play choice
-  const [stillOnly, setStillOnly] = useState(false); // reduced motion or Save-Data
+  const [stillOnly, setStillOnly] = useState(false); // Save-Data
   const [visible, setVisible] = useState(true);
   const rootRef = useRef<HTMLElement>(null);
   const mediaRef = useRef<HTMLDivElement>(null);
@@ -62,12 +53,8 @@ export function HeroVideo() {
   const videoNow = useRef(0); // read inside timeouts, which would otherwise see a stale value
   videoNow.current = video;
 
-  // Decision (agreed with SaaviGenAI): the hero video is core content, so it plays
-  // even when the visitor's OS asks for reduced motion. Windows "best performance"
-  // mode and many remote desktops switch that on silently. Reduced-motion visitors
-  // still lose the extras (zoom, pointer drift, sliding titles; see globals.css),
-  // and everyone has the pause button. Only Save-Data (metered connection) shows
-  // the still poster. To go back to stills for reduced motion, add `|| reduce` below.
+  // Only a metered connection (Save-Data) falls back to the still poster.
+  // To also show stills for reduced motion, add `|| reduce` here.
   useEffect(() => {
     const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData === true;
     if (saveData) {
@@ -90,7 +77,7 @@ export function HeroVideo() {
     };
   }, []);
 
-  // Pointer parallax (desktop pointers only).
+  // Pointer parallax (desktop pointers only, not for reduced motion).
   useEffect(() => {
     const root = rootRef.current;
     const media = mediaRef.current;
@@ -147,32 +134,21 @@ export function HeroVideo() {
     }
   }, [video, running, stillOnly]);
 
-  // Two independent timers: one for the clip, one for the title.
+  // Next clip every VIDEO_MS while running.
   useEffect(() => {
     if (!running) return;
     const t = window.setTimeout(() => setVideo((v) => (v + 1) % VIDEOS.length), VIDEO_MS);
     return () => clearTimeout(t);
   }, [video, running]);
-  useEffect(() => {
-    if (!running) return;
-    const t = window.setTimeout(() => setTitle((v) => (v + 1) % TITLES.length), TITLE_MS);
-    return () => clearTimeout(t);
-  }, [title, running]);
-
-  const goTo = useCallback((i: number) => {
-    setTitle(i);
-    setVideo(i % VIDEOS.length);
-  }, []);
 
   return (
     <section
       ref={rootRef}
       data-hero="dark"
       aria-labelledby="hero-title"
-      aria-roledescription="carousel"
       className="relative isolate -mt-16 flex min-h-[100svh] flex-col overflow-hidden bg-[#05070b] text-white md:min-h-[100dvh]"
     >
-      {/* Background videos (decorative). Posters show instantly; each clip fades in when it's its turn. */}
+      {/* Background videos (decorative). Posters show instantly; each clip fades in on its turn. */}
       <div aria-hidden="true" className="absolute inset-0 -z-10 overflow-hidden">
         <div ref={mediaRef} className="hero-media absolute inset-0">
           {VIDEOS.map((name, i) => (
@@ -199,30 +175,10 @@ export function HeroVideo() {
 
       <Container className="flex flex-1 flex-col justify-end pt-32 pb-32 md:justify-center md:pt-40">
         <Eyebrow onDark>The Key to Secure AI</Eyebrow>
-
-        {/* All titles share one grid cell, so the block never changes height between titles. */}
-        <div className="mt-5 grid">
-          {TITLES.map((lines, i) => {
-            const Tag = i === 0 ? "h1" : "p";
-            return (
-              <Tag
-                key={lines[0]}
-                id={i === 0 ? "hero-title" : undefined}
-                aria-hidden={i === 0 ? undefined : true}
-                data-active={i === title}
-                className="hero-title col-start-1 row-start-1 max-w-[18ch] text-display font-bold md:max-w-none"
-              >
-                <span className="hero-line" style={{ "--line": 0 } as React.CSSProperties}>
-                  {lines[0]}
-                </span>
-                <span className="hero-line text-[#2997ff]" style={{ "--line": 1 } as React.CSSProperties}>
-                  {lines[1]}
-                </span>
-              </Tag>
-            );
-          })}
-        </div>
-
+        <h1 id="hero-title" className="mt-5 max-w-[18ch] text-display font-bold md:max-w-none">
+          <span className="block">Your AI is running.</span>
+          <span className="block text-[#2997ff]">Do you know what it&apos;s doing?</span>
+        </h1>
         <p className="mt-7 max-w-[46ch] text-lead text-white/80">
           SaaviAIDR gives security teams visibility, detection and response across every AI agent and chatbot in the
           enterprise.
@@ -237,41 +193,41 @@ export function HeroVideo() {
         </div>
       </Container>
 
-      {/* Slide controls (bottom left; the WhatsApp button lives bottom right) */}
+      {/* Clip controls (bottom left; the WhatsApp button lives bottom right) */}
       <Container className="pointer-events-none absolute inset-x-0 bottom-0 pb-8">
         <div className="pointer-events-auto flex items-center gap-4">
           {!stillOnly ? (
             <button
               type="button"
               onClick={() => setPlaying((p) => !p)}
-              aria-label={playing ? "Pause slideshow" : "Play slideshow"}
+              aria-label={playing ? "Pause background video" : "Play background video"}
               className="inline-flex size-9 items-center justify-center rounded-[8px] border border-white/30 text-white/85 transition-colors hover:border-white hover:text-white"
             >
               <Icon icon={playing ? Pause : Play} size={15} />
             </button>
           ) : null}
-          <div role="group" aria-label="Choose slide" className="flex items-center gap-1.5">
-            {TITLES.map((lines, i) => (
+          <div role="group" aria-label="Choose background video" className="flex items-center gap-1.5">
+            {VIDEOS.map((name, i) => (
               <button
-                key={lines[0]}
+                key={name}
                 type="button"
-                onClick={() => goTo(i)}
-                aria-label={`Show slide ${i + 1} of ${TITLES.length}`}
-                aria-current={i === title ? "true" : undefined}
+                onClick={() => setVideo(i)}
+                aria-label={`Show video ${i + 1} of ${VIDEOS.length}`}
+                aria-current={i === video ? "true" : undefined}
                 className="group/dot relative flex h-6 items-center"
               >
                 <span
                   className={cn(
-                    "relative block h-[3px] overflow-hidden bg-white/30 transition-[width] duration-500 ease-out group-hover/dot:bg-white/60",
-                    i === title ? "w-12" : "w-5",
+                    "relative block h-[3px] overflow-hidden rounded-full bg-white/30 transition-[width] duration-500 ease-out group-hover/dot:bg-white/60",
+                    i === video ? "w-12" : "w-5",
                   )}
                 >
-                  {i === title ? (
+                  {i === video ? (
                     <span
-                      key={`${title}-${running}`}
-                      className="hero-progress absolute inset-0 bg-white"
+                      key={`${video}-${running}`}
+                      className="hero-progress motion-ok absolute inset-0 bg-white"
                       data-running={running}
-                      style={{ "--slide-ms": `${TITLE_MS}ms` } as React.CSSProperties}
+                      style={{ "--slide-ms": `${VIDEO_MS}ms` } as React.CSSProperties}
                     />
                   ) : null}
                 </span>

@@ -45,14 +45,9 @@
   --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Registered custom properties, so they can be animated and inherited:
-   --spin turns the "Works with" orbit, --p is the pipeline's scroll progress
-   (defaults to 1 = fully drawn, so browsers without scroll animations show everything). */
-@property --spin {
-  syntax: "<angle>";
-  inherits: true;
-  initial-value: 0deg;
-}
+/* Registered custom property, so it can be animated and inherited:
+   --p is the pipeline's scroll progress (defaults to 1 = fully drawn, so
+   browsers without scroll-driven animations show everything). */
 @property --p {
   syntax: "<number>";
   inherits: true;
@@ -242,11 +237,17 @@
     }
   }
 
-  /* Safety net: nothing animates for people who ask for less motion */
+  /* Safety net: nothing animates for people who ask for less motion,
+     EXCEPT elements marked .motion-ok. SaaviGenAI asked for these to move for
+     everyone (Windows "best performance" mode turns reduced motion on silently):
+       - the "Works with" logo carousel (has a pause button)
+       - the scroll pipeline (only moves when the visitor scrolls)
+       - the hero video progress bar
+     To make everything respect reduced motion again, remove `:not(.motion-ok)`. */
   @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
+    *:not(.motion-ok),
+    *:not(.motion-ok)::before,
+    *:not(.motion-ok)::after {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
@@ -319,70 +320,30 @@
   }
 
   /* ========================================================================
-     "Works with" orbit (components/ui/LogoOrbit.tsx)
-     The vendor cards travel round a tilted 3D ring around the SaaviAIDR mark.
-     --spin turns the whole ring; each card is counter-rotated so it always faces
-     the viewer, and fades with depth (cos of its angle). Hover pauses it.
+     "Works with" logo carousel (components/ui/LogoCarousel.tsx)
+     A row of logo cards drifting left in a seamless loop: the track holds
+     --copies identical lists, so moving it by 100% / --copies lands exactly
+     where it started. Hover, keyboard focus or the pause button stop it.
+     Marked .motion-ok, so it also moves for reduced-motion visitors.
      ======================================================================== */
-  .orbit {
-    --r: 8.5rem; /* ring radius */
-    --tilt: -16deg;
-    perspective: 1100px;
+  .logo-carousel {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
   }
-  @media (min-width: 640px) {
-    .orbit {
-      --r: 13rem;
-    }
+  .logo-carousel-track {
+    display: flex;
+    width: max-content;
+    animation: logo-carousel var(--duration, 40s) linear infinite;
   }
-  @media (min-width: 1024px) {
-    .orbit {
-      --r: 20rem;
-    }
+  .logo-carousel:hover .logo-carousel-track,
+  .logo-carousel:focus-within .logo-carousel-track,
+  .logo-carousel[data-paused="true"] .logo-carousel-track {
+    animation-play-state: paused;
   }
-  .orbit-ring {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform-style: preserve-3d;
-    transform: rotateX(var(--tilt));
-  }
-  @media (prefers-reduced-motion: no-preference) {
-    .orbit-ring {
-      animation: orbit-spin 42s linear infinite;
-    }
-    .orbit:hover .orbit-ring,
-    .orbit:focus-within .orbit-ring {
-      animation-play-state: paused;
-    }
-  }
-  @keyframes orbit-spin {
+  @keyframes logo-carousel {
     to {
-      --spin: 360deg;
+      transform: translateX(calc(-100% / var(--copies, 4)));
     }
-  }
-  .orbit-path {
-    position: absolute;
-    left: calc(var(--r) * -1);
-    top: calc(var(--r) * -1);
-    width: calc(var(--r) * 2);
-    height: calc(var(--r) * 2);
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    transform: rotateX(90deg);
-  }
-  .orbit-item {
-    --a: calc(var(--i) * 360deg / var(--n) + var(--spin));
-    position: absolute;
-    left: 0;
-    top: 0;
-    transform: translate(-50%, -50%) rotateY(var(--a)) translateZ(var(--r)) rotateY(calc(var(--a) * -1)) rotateX(calc(var(--tilt) * -1));
-    opacity: calc(0.4 + 0.6 * (cos(var(--a)) + 1) / 2);
-  }
-  .orbit-center {
-    position: absolute;
-    left: 0;
-    top: 0;
-    transform: translate(-50%, -50%) rotateX(calc(var(--tilt) * -1));
   }
 
   /* Monochrome logo: the SVG is used as a mask and painted with the text colour,
@@ -449,8 +410,10 @@
     background: var(--accent);
     box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 18%, transparent);
   }
+  /* Scroll-linked, so it only moves when the visitor scrolls: enabled for everyone
+     (also reduced motion), as agreed with SaaviGenAI. */
   @supports (animation-timeline: view()) {
-    @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+    @media (min-width: 768px) {
       .pipeline {
         height: 230vh;
         view-timeline-name: --pipeline;
@@ -540,18 +503,11 @@
     transform-origin: left;
     transform: scaleX(0);
   }
-  @media (prefers-reduced-motion: no-preference) {
-    .hero-progress[data-running="true"] {
-      animation: hero-progress var(--slide-ms) linear forwards;
-    }
-    .hero-progress[data-running="false"] {
-      transform: scaleX(1);
-    }
+  .hero-progress[data-running="true"] {
+    animation: hero-progress var(--slide-ms) linear forwards;
   }
-  @media (prefers-reduced-motion: reduce) {
-    .hero-progress {
-      transform: scaleX(1);
-    }
+  .hero-progress[data-running="false"] {
+    transform: scaleX(1);
   }
   @keyframes hero-progress {
     to {

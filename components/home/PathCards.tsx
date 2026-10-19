@@ -1,18 +1,17 @@
 import { Button } from "@/components/ui/Button";
-import { InViewVideo } from "@/components/ui/InViewVideo";
 import { cn } from "@/lib/utils";
 
-// Plan 2.5 "Run it yourself, or let us run it". Each card leads with a short
-// looping clip (plays only while on screen): a specialist at a server console
-// for the platform, a team working in a server room for the managed service.
-// [IMAGE] in the plan asked for illustrations of exactly these two scenes.
+// Plan 2.5 "Run it yourself, or let us run it". Each card leads with a photo:
+// a person working against a wall of streaming data (your own team operating the
+// platform) and a modern operations centre with a team of specialists (the managed
+// service). Free Pexels photos, see content/media-credits.md.
 const CARDS = [
   {
     title: "SaaviAIDR Platform",
     body: "Deploy it in your environment and operate it with your own team.",
     cta: "Explore the platform",
     href: "/saaviaidr/",
-    video: "card-platform-operator",
+    image: "/images/home/card-platform.webp",
     inverse: false,
   },
   {
@@ -20,7 +19,7 @@ const CARDS = [
     body: "Our specialists deploy, tune and operate SaaviAIDR for you.",
     cta: "See managed services",
     href: "/managed-services/",
-    video: "card-managed-team",
+    image: "/images/home/card-managed.webp",
     inverse: true,
   },
 ];
@@ -35,8 +34,17 @@ export function PathCards() {
           style={{ "--reveal-index": i } as React.CSSProperties}
           className={cn("group/path flex flex-col overflow-hidden rounded-[1.25rem]", c.inverse ? "bg-inverse text-on-inverse" : "bg-raised text-ink")}
         >
-          <div className="relative aspect-[16/10] overflow-hidden">
-            <InViewVideo name={c.video} className="transition-transform duration-[1200ms] ease-out group-hover/path:scale-[1.05] motion-reduce:transform-none" />
+          <div className="relative aspect-[16/10] overflow-hidden bg-tint">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={c.image}
+              alt=""
+              loading="lazy"
+              decoding="async"
+              width={1280}
+              height={800}
+              className="size-full object-cover transition-transform duration-[1200ms] ease-out group-hover/path:scale-[1.05] motion-reduce:transform-none"
+            />
           </div>
           <div className="flex flex-1 flex-col items-start p-8 md:p-10">
             <h3 className="text-[1.75rem] font-semibold leading-tight tracking-[-0.035em] md:text-[2.25rem]">{c.title}</h3>

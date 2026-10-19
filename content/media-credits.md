@@ -3,36 +3,39 @@
 Stock media used on the site, where it came from, and how it was processed.
 Keep this list up to date whenever a clip, photo or logo is added or replaced.
 
-## Videos (public/videos/)
+## Home hero videos (public/videos/)
 
-All from Mixkit (https://mixkit.co), free stock video. Mixkit's free video
-licence is understood to allow use on commercial websites without attribution,
-but not resale or redistribution of the clips on their own.
-**TO CONFIRM before launch:** read the current terms at https://mixkit.co/license/.
+All from Pexels (https://www.pexels.com). The Pexels licence allows free use,
+including commercial use, without attribution; it does not allow selling unaltered
+copies or implying endorsement by the people/brands shown.
+**TO CONFIRM before launch:** read the current terms at https://www.pexels.com/license/.
 
-| File | Used in | Mixkit clip | Mixkit ID |
+| File | Pexels video | Pexels ID | Page |
 |---|---|---|---|
-| hero-01-datacenter | Home hero | Bluish data center hallway | 23282 |
-| hero-02-circuit | Home hero | High tech circuit board with processor | 47051 |
-| hero-03-network | Home hero | 3D animation of lines and luminous points rotating | 31510 |
-| hero-04-code | Home hero | Experienced programmer working on a powerful computer | 41656 |
-| hero-05-engineers | Home hero | Engineers working in the data center | 22966 |
-| hero-06-world | Home hero | World map in a digital world | 12748 |
-| card-platform-operator | Home "Run it yourself" card | Information technology specialist in data center | 23218 |
-| card-managed-team | Home "Let us run it" card | Engineer team working in a server room | 23158 |
+| ai-01-neural-nodes | Futuristic network of glowing connections | 35008786 | https://www.pexels.com/video/35008786/ |
+| ai-02-chip-data | Futuristic circuit board with glowing microchip | 36382300 | https://www.pexels.com/video/36382300/ |
+| ai-03-threat-interface | Futuristic neon digital interface display | 29844748 | https://www.pexels.com/video/29844748/ |
+| ai-04-neural-field | Futuristic neural network animation with glowing nodes | 33164273 | https://www.pexels.com/video/33164273/ |
+| ai-05-data-flow | Dynamic binary code flow in digital space | 31359793 | https://www.pexels.com/video/31359793/ |
+| ai-06-processor | Futuristic circuit board with central processor | 35977437 | https://www.pexels.com/video/35977437/ |
 
-Source URL pattern: `https://assets.mixkit.co/videos/<ID>/<ID>-720.mp4`
-
-Processing (ffmpeg): hero clips are 4-second excerpts, 1280px wide; card clips are
-6 seconds, 960px wide. All 25 fps H.264 (CRF 30-32), audio removed, `+faststart`
-so playback starts before the file finishes downloading. The `.jpg` next to each
-clip is its first frame, used as the poster that shows instantly.
-
-Clips were chosen partly by a measured motion score (average frame-to-frame pixel
-change), so the hero never shows near-static footage that reads as a photo.
+Processing (ffmpeg, read straight from the Pexels original): 6-second excerpt
+from 1 s in, 1280px wide, 25 fps, H.264 (CRF 30-35), audio removed, `+faststart`.
+The `.jpg` next to each clip is its first frame, used as the poster.
+Clips were chosen for AI themes (neural networks, AI chips, AI interfaces), the
+site's dark-blue palette, and a measured motion score so none reads as a still.
 
 To replace a clip: keep the same file name (or update `VIDEOS` in
 components/home/HeroVideo.tsx), keep it under about 1.5 MB, and regenerate the poster.
+
+## Home "Run it yourself / let us run it" photos (public/images/home/)
+
+Pexels photos, 1280x800 WebP, metadata stripped:
+
+| File | Pexels photo | Pexels ID |
+|---|---|---|
+| card-platform.webp | Person facing a big screen with numbers | 9783346 |
+| card-managed.webp | Men and women sitting in front of computers and a large screen | 19317897 |
 
 ## Insights covers (public/images/insights/)
 
@@ -44,6 +47,8 @@ components/home/HeroVideo.tsx), keep it under about 1.5 MB, and regenerate the p
 | claude-mythos-project-glasswing.webp | Frame from Mixkit 47050 "Close up of fiber optics in a server room" |
 | will-indian-banks-trust-claude-with-core-banking-data.webp | Frame from Mixkit 4809 "Business people at work meeting" |
 | cccl-ai-security-event-bengaluru.webp | SaaviGenAI's own event photo (public/images/ThumbnailArticle3.jpeg) |
+
+Mixkit (https://mixkit.co) free licence: **TO CONFIRM** at https://mixkit.co/license/.
 
 ## Logos (public/logos/)
 
