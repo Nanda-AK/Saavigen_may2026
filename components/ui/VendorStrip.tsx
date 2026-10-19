@@ -18,15 +18,13 @@ export function VendorStrip({ className }: { className?: string }) {
             className="flex shrink-0 items-center"
           >
             {vendors.map((v) => (
-              <li key={`${copy}-${v.name}`} className="px-7 md:px-10">
+              <li key={`${copy}-${v.name}`} className="px-8 md:px-12">
                 {v.logo ? (
-                  // Official logo files are forced to the same grey as the text wordmarks.
+                  // Official logo files are shown in the same grey as the text wordmarks.
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={v.logo} alt={v.name} className="h-7 w-auto opacity-70 grayscale" />
+                  <img src={v.logo} alt={v.name} className="h-8 w-auto opacity-60 grayscale" />
                 ) : (
-                  <span className="whitespace-nowrap font-display text-[1.375rem] font-medium tracking-[-0.02em] text-ink-muted">
-                    {v.name}
-                  </span>
+                  <span className="whitespace-nowrap text-[1.625rem] font-semibold tracking-[-0.035em] text-ink-muted">{v.name}</span>
                 )}
               </li>
             ))}

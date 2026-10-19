@@ -1,49 +1,47 @@
 @import "tailwindcss";
 
 /* ==========================================================================
-   SaaviGenAI design tokens
+   SaaviGenAI design tokens (Apple / OpenAI-style: white and light-grey
+   surfaces, near-black text, one professional blue, amber only for alerts)
    --------------------------------------------------------------------------
    Every colour is written once with light-dark(LIGHT, DARK). The browser
    picks the value from `color-scheme`:
      - default: follows the visitor's OS setting (prefers-color-scheme)
      - html[data-theme="light" | "dark"]: forced by the temporary theme switch
-       in the footer (see components/layout/ThemeSwitch.tsx)
+       in the footer (components/layout/ThemeSwitch.tsx)
    To ship ONE theme permanently later: set `color-scheme: light` (or dark)
    on :root below and delete the ThemeSwitch.
 
-   Contrast rules (checked by `npm run check:contrast`):
-     - signal (#12B886) is decoration only in light mode (about 2.4:1).
-       Text links and focus rings use signal-ink instead.
-     - field is the input border colour (at least 3:1 against the canvas).
+   Contrast (checked by `npm run check:contrast`):
+     - accent-ink is the blue for TEXT and links (passes on white and grey).
+     - accent-fill is the blue BUTTON background (white text on it passes).
+     - field is the input border colour (at least 3:1).
    ========================================================================== */
 :root {
   color-scheme: light dark;
 
-  --canvas: light-dark(#f7f6f2, #0b1220); /* page background */
-  --raised: light-dark(#fcfbf8, #111a2b); /* tiles, cards */
-  --sunken: light-dark(#efede7, #0e1626); /* tinted bands */
-  --ink: light-dark(#0b1220, #eceae4); /* headings and body text */
-  --ink-soft: light-dark(#333c4b, #c9cdd4); /* supporting text */
-  --ink-muted: light-dark(#5a6372, #9aa3b2); /* dates, captions, meta */
-  --line: light-dark(#dedbd2, #1f2a3d); /* 1px borders */
-  --line-strong: light-dark(#c8c4b8, #2e3b52); /* hover borders, dividers */
-  --field: light-dark(#80868f, #6b7586); /* form input borders */
-  --signal: #12b886; /* the one accent: dots, lines, active states */
-  --signal-ink: light-dark(#087f5b, #3dd6a3); /* accent as text, focus ring */
-  --alert: light-dark(#f59f00, #ffb020); /* alert moments (decoration) */
-  --alert-ink: light-dark(#9a5b00, #ffc24d); /* alert as text */
-  --danger: light-dark(#b42318, #ff8a80); /* form errors */
-  --inverse: light-dark(#0b1220, #eceae4); /* primary button fill */
-  --inverse-hover: light-dark(#1f2a3d, #d6d3cb);
-  --on-inverse: light-dark(#f7f6f2, #0b1220); /* text on primary button */
+  --canvas: light-dark(#ffffff, #0a0a0c); /* page background */
+  --sunken: light-dark(#f5f5f7, #161618); /* grey bands, cards on white */
+  --raised: light-dark(#ffffff, #1d1d1f); /* cards on grey bands */
+  --tint: light-dark(#e8e8ed, #232326); /* image wells, article covers */
+  --ink: light-dark(#1d1d1f, #f5f5f7); /* headings and body text */
+  --ink-soft: light-dark(#424245, #d2d2d7); /* supporting text */
+  --ink-muted: light-dark(#6e6e73, #a1a1a6); /* dates, captions, meta */
+  --line: light-dark(#d2d2d7, #2c2c2e); /* hairlines */
+  --line-strong: light-dark(#b8b8bf, #3a3a3c); /* diagram lines, dividers */
+  --field: light-dark(#86868b, #6e6e73); /* form input borders */
+  --accent: light-dark(#0071e3, #2997ff); /* decorative accent: lines, dots, active states */
+  --accent-ink: light-dark(#0066cc, #2997ff); /* accent as text and links */
+  --accent-fill: #0071e3; /* primary button background (both themes) */
+  --accent-fill-hover: #0077ed;
+  --alert: light-dark(#ff9f0a, #ffb340); /* threat / alert moments (decoration) */
+  --alert-ink: light-dark(#b25000, #ffb340); /* alert as text */
+  --danger: light-dark(#d70015, #ff6961); /* form errors */
+  --inverse: light-dark(#1d1d1f, #f5f5f7); /* high-contrast card / button */
+  --inverse-hover: light-dark(#333336, #e8e8ed);
+  --on-inverse: light-dark(#ffffff, #1d1d1f); /* text on inverse */
 
-  /* Footer sits on ink in both themes (plan 1.2: "logo for the footer background colour") */
-  --footer-bg: light-dark(#0b1220, #070c16);
-  --footer-ink: #eceae4;
-  --footer-muted: #9aa3b2;
-  --footer-line: light-dark(#1f2a3d, #1a2436);
-
-  --focus: var(--signal-ink);
+  --focus: var(--accent-ink);
   --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -56,60 +54,61 @@
 }
 
 /* Tailwind utilities generated from the tokens above, e.g. bg-canvas, text-ink,
-   border-line, font-display, text-h2, rounded-box, max-w-page. */
+   bg-accent-fill, text-display, rounded-box, max-w-page. */
 @theme inline {
   --color-canvas: var(--canvas);
-  --color-raised: var(--raised);
   --color-sunken: var(--sunken);
+  --color-raised: var(--raised);
+  --color-tint: var(--tint);
   --color-ink: var(--ink);
   --color-ink-soft: var(--ink-soft);
   --color-ink-muted: var(--ink-muted);
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
   --color-field: var(--field);
-  --color-signal: var(--signal);
-  --color-signal-ink: var(--signal-ink);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-fill: var(--accent-fill);
+  --color-accent-fill-hover: var(--accent-fill-hover);
   --color-alert: var(--alert);
   --color-alert-ink: var(--alert-ink);
   --color-danger: var(--danger);
   --color-inverse: var(--inverse);
   --color-inverse-hover: var(--inverse-hover);
   --color-on-inverse: var(--on-inverse);
-  --color-footer: var(--footer-bg);
-  --color-footer-ink: var(--footer-ink);
-  --color-footer-muted: var(--footer-muted);
-  --color-footer-line: var(--footer-line);
 
-  /* Font variables are set by next/font in app/layout.tsx */
-  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
-  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-plex-mono), ui-monospace, "SFMono-Regular", monospace;
+  /* Geist (set by next/font in app/layout.tsx): closest free match to the
+     SF Pro / Söhne look of Apple and OpenAI. */
+  --font-display: var(--font-geist), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
 }
 
 @theme {
-  /* Type scale: fluid between mobile (375px) and desktop (1440px) */
-  --text-display: clamp(2.5rem, 1.85rem + 2.8vw, 4rem);
-  --text-display--line-height: 1.04;
-  --text-display--letter-spacing: -0.03em;
-  --text-h2: clamp(2rem, 1.62rem + 1.6vw, 2.75rem);
-  --text-h2--line-height: 1.1;
-  --text-h2--letter-spacing: -0.022em;
-  --text-h3: clamp(1.25rem, 1.18rem + 0.3vw, 1.5rem);
-  --text-h3--line-height: 1.25;
-  --text-h3--letter-spacing: -0.01em;
-  --text-lead: clamp(1.125rem, 1.07rem + 0.25vw, 1.3125rem);
-  --text-lead--line-height: 1.5;
+  /* Type scale: fluid between mobile (375px) and desktop (1440px).
+     Display fits "Do you know what it's doing?" on one line at 1280px+. */
+  --text-display: clamp(2.6rem, 1.2rem + 4.4vw, 4.75rem);
+  --text-display--line-height: 1.02;
+  --text-display--letter-spacing: -0.045em;
+  --text-h2: clamp(2.25rem, 1.55rem + 2.4vw, 3.75rem);
+  --text-h2--line-height: 1.05;
+  --text-h2--letter-spacing: -0.035em;
+  --text-h3: clamp(1.25rem, 1.16rem + 0.35vw, 1.5rem);
+  --text-h3--line-height: 1.2;
+  --text-h3--letter-spacing: -0.02em;
+  --text-lead: clamp(1.125rem, 1.04rem + 0.38vw, 1.375rem);
+  --text-lead--line-height: 1.45;
+  --text-lead--letter-spacing: -0.01em;
   --text-body: 1.0625rem;
   --text-body--line-height: 1.6;
   --text-label: 0.75rem;
   --text-label--line-height: 1.4;
-  --text-label--letter-spacing: 0.12em;
+  --text-label--letter-spacing: 0.06em;
 
-  /* One corner radius for every box, button and input (shape lock) */
-  --radius-box: 0.375rem;
+  /* Shape rule: cards and panels 20px, buttons and small chips fully round. */
+  --radius-box: 1.25rem;
 
-  /* Page and reading widths */
-  --container-page: 77.5rem;
+  --container-page: 80rem;
   --container-prose: 42rem;
 
   --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
@@ -122,406 +121,452 @@
    would silently override classes like text-on-inverse on links.
    ========================================================================== */
 @layer base {
-* {
-  box-sizing: border-box;
-}
+  * {
+    box-sizing: border-box;
+  }
 
-html {
-  -webkit-text-size-adjust: 100%;
-}
-
-@media (prefers-reduced-motion: no-preference) {
   html {
-    scroll-behavior: smooth;
-  }
-}
-
-body {
-  margin: 0;
-  background: var(--canvas);
-  color: var(--ink);
-  font-family: var(--font-sans);
-  font-size: var(--text-body);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-
-h1,
-h2,
-h3,
-h4 {
-  font-family: var(--font-display);
-  font-weight: 500;
-  text-wrap: balance;
-}
-
-p {
-  text-wrap: pretty;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-::selection {
-  background: color-mix(in srgb, var(--signal) 28%, transparent);
-  color: var(--ink);
-}
-
-/* One visible focus style for every interactive element (2px, 3:1+ contrast) */
-:focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: 3px;
-  border-radius: 2px;
-}
-} /* end @layer base */
-
-@layer components {
-.skip-link {
-  position: absolute;
-  left: 1rem;
-  top: 0.75rem;
-  z-index: 60;
-  transform: translateY(-160%);
-  border-radius: var(--radius-box);
-  background: var(--inverse);
-  color: var(--on-inverse);
-  padding: 0.75rem 1rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: transform 150ms ease;
-}
-
-.skip-link:focus {
-  transform: translateY(0);
-}
-
-/* Logo key mark: a transparency mask painted with the current text colour,
-   so it follows light/dark automatically. Source: scripts/build-brand-assets.mjs */
-.key-mark {
-  display: inline-block;
-  aspect-ratio: 172 / 160;
-  background-color: currentColor;
-  -webkit-mask: url("/brand/key-mark.png") center / contain no-repeat;
-  mask: url("/brand/key-mark.png") center / contain no-repeat;
-}
-
-/* ==========================================================================
-   Scroll reveal (driven by components/motion/RevealObserver.tsx)
-   Elements opt in with data-reveal. Optional stagger: style="--reveal-index: N".
-   Content is only hidden once the observer has started (html.reveal-ready),
-   so if JavaScript fails, everything stays visible.
-   ========================================================================== */
-@media (prefers-reduced-motion: no-preference) {
-  .reveal-ready [data-reveal] {
-    transition:
-      opacity 520ms var(--ease-out-soft),
-      transform 520ms var(--ease-out-soft);
-    transition-delay: calc(var(--reveal-index, 0) * 70ms);
+    -webkit-text-size-adjust: 100%;
   }
 
-  .reveal-ready [data-reveal]:not(.is-revealed) {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-}
-
-/* Safety net: no animation or transition runs for people who ask for less motion */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-/* ==========================================================================
-   Component motion. Rule of thumb used throughout: the resting state is the
-   FINAL state (so no-JS and reduced-motion visitors see everything), and the
-   "before" state only applies once the reveal system is running
-   (.reveal-ready ... :not(.is-revealed)).
-   ========================================================================== */
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-}
-@keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-}
-@keyframes dash-flow {
-  to {
-    stroke-dashoffset: -12;
-  }
-}
-
-/* --- Faint dot grid (hero stage, diagram panels) --- */
-.hero-grid {
-  background-image: radial-gradient(circle at 1px 1px, var(--line-strong) 1px, transparent 0);
-  background-size: 24px 24px;
-  opacity: 0.55;
-}
-
-/* --- Home hero: discovery sequence. Chips and the first console rows appear
-       one by one; this part is pure CSS so it also plays before JS loads. --- */
-@media (prefers-reduced-motion: no-preference) {
-  .hero-chip {
-    animation: fade-up 600ms var(--ease-out-soft) both;
-    animation-delay: calc(var(--i) * 280ms + 250ms);
-  }
-  .hero-row-initial {
-    animation: fade-up 450ms var(--ease-out-soft) both;
-    animation-delay: calc(var(--i) * 280ms + 450ms);
-  }
-  .hero-row {
-    animation: fade-up 450ms var(--ease-out-soft) both;
-  }
-  .hero-hint {
-    animation: fade-in 800ms ease 3s both;
-  }
-}
-
-/* --- Vendor marquee (VendorStrip). 4 copies of the list, so moving by 25%
-       shifts exactly one copy and the loop is seamless. --- */
-.marquee {
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-}
-@media (prefers-reduced-motion: no-preference) {
-  .marquee-track {
-    animation: marquee 50s linear infinite;
-  }
-  .marquee:hover .marquee-track,
-  .marquee:focus-within .marquee-track {
-    animation-play-state: paused;
-  }
-}
-@keyframes marquee {
-  to {
-    transform: translateX(-25%);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .marquee {
-    -webkit-mask-image: none;
-    mask-image: none;
-  }
-  .marquee-track {
-    width: auto;
-    flex-wrap: wrap;
-  }
-  .marquee-track > ul:not(:first-child) {
-    display: none;
-  }
-  .marquee-track > ul {
-    flex-wrap: wrap;
-    row-gap: 1rem;
-  }
-}
-
-/* --- StepFlow: connectors draw in order, steps light up, then a dot travels.
-       Vertical below 768px, horizontal above. Node is 48px, so its centre is 24px. --- */
-.stepflow-link {
-  position: absolute;
-  left: 24px;
-  top: 24px;
-  width: 1px;
-  height: calc(100% + 3rem); /* reaches the next node: own height + row gap (gap-12) */
-  background: var(--line-strong);
-  transform-origin: top;
-  transition: transform 700ms var(--ease-out-soft);
-  transition-delay: calc(var(--i) * 380ms + 300ms);
-}
-.stepflow-pulse {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-}
-.stepflow-pulse::before {
-  content: "";
-  position: absolute;
-  left: -3px;
-  top: -3px;
-  width: 7px;
-  height: 7px;
-  border-radius: 999px;
-  background: var(--signal);
-}
-.stepflow-node {
-  border-color: var(--signal);
-  color: var(--signal-ink);
-  transition:
-    border-color 400ms ease,
-    color 400ms ease;
-  transition-delay: calc(var(--i) * 380ms + 150ms);
-}
-.stepflow-step[data-tone="alert"] .stepflow-node {
-  border-color: var(--alert);
-  color: var(--alert-ink);
-}
-.reveal-ready .stepflow:not(.is-revealed) .stepflow-node {
-  border-color: var(--line);
-  color: var(--ink-muted);
-}
-.reveal-ready .stepflow:not(.is-revealed) .stepflow-link {
-  transform: scaleY(0);
-}
-@media (min-width: 768px) {
-  .stepflow {
-    grid-template-columns: repeat(var(--n), minmax(0, 1fr));
-  }
-  .stepflow-link {
-    width: calc(100% + 1.5rem); /* own width + column gap (gap-6) */
-    height: 1px;
-    transform-origin: left;
-  }
-  .reveal-ready .stepflow:not(.is-revealed) .stepflow-link {
-    transform: scaleX(0);
-  }
-}
-@media (prefers-reduced-motion: no-preference) {
-  .stepflow.is-revealed .stepflow-pulse {
-    animation: step-pulse-y calc((var(--n) - 1) * 1.4s) linear infinite;
-    animation-delay: calc(var(--i) * 1.4s + var(--n) * 380ms + 600ms);
-  }
-  @media (min-width: 768px) {
-    .stepflow.is-revealed .stepflow-pulse {
-      animation-name: step-pulse-x;
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
     }
   }
+
+  body {
+    margin: 0;
+    background: var(--canvas);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: 1.6;
+    letter-spacing: -0.005em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--accent) 22%, transparent);
+    color: var(--ink);
+  }
+
+  /* One visible focus style for every interactive element (2px, 3:1+ contrast) */
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+  }
 }
-@keyframes step-pulse-x {
-  0% {
-    opacity: 0;
-    transform: translateX(0);
+
+@layer components {
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: 0.75rem;
+    z-index: 60;
+    transform: translateY(-160%);
+    border-radius: 999px;
+    background: var(--inverse);
+    color: var(--on-inverse);
+    padding: 0.75rem 1.125rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: transform 150ms ease;
   }
-  3% {
-    opacity: 1;
-  }
-  25% {
-    opacity: 1;
-    transform: translateX(100%);
-  }
-  28%,
-  100% {
-    opacity: 0;
-    transform: translateX(100%);
-  }
-}
-@keyframes step-pulse-y {
-  0% {
-    opacity: 0;
+
+  .skip-link:focus {
     transform: translateY(0);
   }
-  3% {
-    opacity: 1;
-  }
-  25% {
-    opacity: 1;
-    transform: translateY(100%);
-  }
-  28%,
-  100% {
-    opacity: 0;
-    transform: translateY(100%);
-  }
-}
 
-/* --- Flow connectors in diagrams: a 1px line with accent dashes marching along it --- */
-.flow-line {
-  position: relative;
-  display: block;
-  background: var(--line-strong);
-}
-.flow-line-x {
-  height: 1px;
-  min-width: 1.5rem;
-}
-.flow-line-y {
-  width: 1px;
-}
-.flow-line::after {
-  content: "";
-  position: absolute;
-  inset: -1px 0;
-  background-image: linear-gradient(90deg, var(--signal) 0 4px, transparent 4px 14px);
-  background-size: 14px 3px;
-}
-.flow-line-y::after {
-  inset: 0 -1px;
-  background-image: linear-gradient(180deg, var(--signal) 0 4px, transparent 4px 14px);
-  background-size: 3px 14px;
-}
-@media (prefers-reduced-motion: no-preference) {
-  .flow-line-x::after {
-    animation: flow-x 0.9s linear infinite;
+  /* Logo key mark: a transparency mask painted with the current text colour, so it
+     follows light/dark and turns white over the video hero. Source: scripts/build-brand-assets.mjs */
+  .key-mark {
+    display: inline-block;
+    aspect-ratio: 172 / 160;
+    background-color: currentColor;
+    -webkit-mask: url("/brand/key-mark.png") center / contain no-repeat;
+    mask: url("/brand/key-mark.png") center / contain no-repeat;
   }
-  .flow-line-y::after {
-    animation: flow-y 0.9s linear infinite;
+
+  /* ========================================================================
+     Scroll reveal (components/motion/RevealObserver.tsx)
+     Elements opt in with data-reveal; optional stagger via --reveal-index.
+     Content is only hidden once the observer runs (html.reveal-ready),
+     so if JavaScript fails nothing stays invisible.
+     ======================================================================== */
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal-ready [data-reveal] {
+      transition:
+        opacity 700ms var(--ease-out-soft),
+        transform 700ms var(--ease-out-soft);
+      transition-delay: calc(var(--reveal-index, 0) * 80ms);
+    }
+
+    .reveal-ready [data-reveal]:not(.is-revealed) {
+      opacity: 0;
+      transform: translateY(24px);
+    }
   }
-  .dash-flow {
-    animation: dash-flow 1.2s linear infinite;
+
+  /* Safety net: nothing animates for people who ask for less motion */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
-  .why-diagram {
-    animation: fade-up 450ms var(--ease-out-soft) both;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
   }
-  .why-progress {
-    width: 100%;
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+  @keyframes dash-flow {
+    to {
+      stroke-dashoffset: -12;
+    }
+  }
+
+  /* ========================================================================
+     Home hero: rotating videos + titles (components/home/HeroVideo.tsx)
+     ======================================================================== */
+  /* Dark wash so white text always reads, strongest on the left where the text sits */
+  .hero-scrim {
+    background:
+      linear-gradient(100deg, rgb(5 7 11 / 0.9) 0%, rgb(5 7 11 / 0.72) 34%, rgb(5 7 11 / 0.28) 64%, rgb(5 7 11 / 0.18) 100%),
+      linear-gradient(0deg, rgb(5 7 11 / 0.7) 0%, transparent 32%);
+  }
+  @media (max-width: 767px) {
+    .hero-scrim {
+      background:
+        linear-gradient(0deg, rgb(5 7 11 / 0.92) 0%, rgb(5 7 11 / 0.6) 55%, rgb(5 7 11 / 0.45) 100%);
+    }
+  }
+
+  /* Titles are stacked in one grid cell; only the active one is visible.
+     Each line rises in with a short stagger; the old title leaves faster. */
+  .hero-title .hero-line {
+    display: block;
+    opacity: 0;
+    transform: translateY(0.35em);
+    transition:
+      opacity 380ms ease,
+      transform 380ms ease;
+  }
+  .hero-title[data-active="true"] .hero-line {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 900ms var(--ease-out-soft),
+      transform 900ms var(--ease-out-soft);
+    transition-delay: calc(var(--line, 0) * 110ms + 160ms);
+  }
+
+  .hero-video {
+    opacity: 0;
+    transition: opacity 1200ms ease;
+  }
+  .hero-video[data-active="true"] {
+    opacity: 1;
+  }
+
+  /* Active slide indicator fills over the slide duration */
+  .hero-progress {
     transform-origin: left;
-    animation: why-progress var(--why-ms) linear forwards;
-  }
-  .path-card:hover .path-link {
-    animation: dash-flow 0.9s linear infinite;
-  }
-  .contact-band-pattern {
-    animation: drift 80s linear infinite;
-  }
-}
-@keyframes flow-x {
-  to {
-    background-position: 14px 0;
-  }
-}
-@keyframes flow-y {
-  to {
-    background-position: 0 14px;
-  }
-}
-@keyframes why-progress {
-  from {
     transform: scaleX(0);
   }
-}
-@keyframes drift {
-  to {
-    background-position: 260px 130px;
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-progress[data-running="true"] {
+      animation: hero-progress var(--slide-ms) linear forwards;
+    }
+    .hero-progress[data-running="false"] {
+      transform: scaleX(1);
+    }
   }
-}
-.dash-flow {
-  stroke-dasharray: 3 9;
-}
-.path-link {
-  stroke-dasharray: 3 5;
-  transition: stroke 300ms ease;
-}
-.path-card:hover .path-link {
-  stroke: var(--signal);
-}
+  @media (prefers-reduced-motion: reduce) {
+    .hero-progress {
+      transform: scaleX(1);
+    }
+  }
+  @keyframes hero-progress {
+    to {
+      transform: scaleX(1);
+    }
+  }
 
-/* --- Contact band: faint dot grid, fading out behind the text --- */
-.contact-band-pattern {
-  background-image: radial-gradient(circle at 1px 1px, var(--line-strong) 1px, transparent 0);
-  background-size: 26px 26px;
-  -webkit-mask-image: linear-gradient(90deg, transparent 30%, #000 90%);
-  mask-image: linear-gradient(90deg, transparent 30%, #000 90%);
-}
+  /* ========================================================================
+     Vendor marquee (VendorStrip). 4 copies; moving by 25% = one copy.
+     ======================================================================== */
+  .marquee {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .marquee-track {
+      animation: marquee 50s linear infinite;
+    }
+    .marquee:hover .marquee-track,
+    .marquee:focus-within .marquee-track {
+      animation-play-state: paused;
+    }
+  }
+  @keyframes marquee {
+    to {
+      transform: translateX(-25%);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee {
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+    .marquee-track {
+      width: auto;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .marquee-track > ul:not(:first-child) {
+      display: none;
+    }
+    .marquee-track > ul {
+      flex-wrap: wrap;
+      justify-content: center;
+      row-gap: 1rem;
+    }
+  }
+
+  /* ========================================================================
+     StepFlow: connectors draw in order, steps light up, then a dot travels.
+     Vertical below 768px, horizontal above. Node is 56px (centre 28px).
+     Resting state = final state; the "before" state needs .reveal-ready.
+     ======================================================================== */
+  .stepflow-link {
+    position: absolute;
+    left: 28px;
+    top: 28px;
+    width: 1px;
+    height: calc(100% + 3rem); /* own height + row gap (gap-12) */
+    background: var(--line-strong);
+    transform-origin: top;
+    transition: transform 700ms var(--ease-out-soft);
+    transition-delay: calc(var(--i) * 380ms + 300ms);
+  }
+  .stepflow-pulse {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+  }
+  .stepflow-pulse::before {
+    content: "";
+    position: absolute;
+    left: -3.5px;
+    top: -3.5px;
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--accent);
+  }
+  .stepflow-node {
+    border-color: var(--accent);
+    color: var(--accent-ink);
+    transition:
+      border-color 400ms ease,
+      color 400ms ease,
+      background-color 400ms ease;
+    transition-delay: calc(var(--i) * 380ms + 150ms);
+  }
+  .stepflow-step[data-tone="alert"] .stepflow-node {
+    border-color: var(--alert);
+    color: var(--alert-ink);
+  }
+  .reveal-ready .stepflow:not(.is-revealed) .stepflow-node {
+    border-color: var(--line);
+    color: var(--ink-muted);
+  }
+  .reveal-ready .stepflow:not(.is-revealed) .stepflow-link {
+    transform: scaleY(0);
+  }
+  @media (min-width: 768px) {
+    .stepflow {
+      grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+    }
+    .stepflow-link {
+      width: calc(100% + 2rem); /* own width + column gap (gap-8) */
+      height: 1px;
+      transform-origin: left;
+    }
+    .reveal-ready .stepflow:not(.is-revealed) .stepflow-link {
+      transform: scaleX(0);
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .stepflow.is-revealed .stepflow-pulse {
+      animation: step-pulse-y calc((var(--n) - 1) * 1.4s) linear infinite;
+      animation-delay: calc(var(--i) * 1.4s + var(--n) * 380ms + 600ms);
+    }
+    @media (min-width: 768px) {
+      .stepflow.is-revealed .stepflow-pulse {
+        animation-name: step-pulse-x;
+      }
+    }
+  }
+  @keyframes step-pulse-x {
+    0% {
+      opacity: 0;
+      transform: translateX(0);
+    }
+    3% {
+      opacity: 1;
+    }
+    25% {
+      opacity: 1;
+      transform: translateX(100%);
+    }
+    28%,
+    100% {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+  }
+  @keyframes step-pulse-y {
+    0% {
+      opacity: 0;
+      transform: translateY(0);
+    }
+    3% {
+      opacity: 1;
+    }
+    25% {
+      opacity: 1;
+      transform: translateY(100%);
+    }
+    28%,
+    100% {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+  }
+
+  /* ========================================================================
+     Diagram connectors: a 1px line with blue dashes moving along it (data flow)
+     ======================================================================== */
+  .flow-line {
+    position: relative;
+    display: block;
+    background: var(--line-strong);
+  }
+  .flow-line-x {
+    height: 1px;
+    min-width: 1.5rem;
+  }
+  .flow-line-y {
+    width: 1px;
+  }
+  .flow-line::after {
+    content: "";
+    position: absolute;
+    inset: -1px 0;
+    background-image: linear-gradient(90deg, var(--accent) 0 4px, transparent 4px 14px);
+    background-size: 14px 3px;
+  }
+  .flow-line-y::after {
+    inset: 0 -1px;
+    background-image: linear-gradient(180deg, var(--accent) 0 4px, transparent 4px 14px);
+    background-size: 3px 14px;
+  }
+  .dash-flow {
+    stroke-dasharray: 3 9;
+  }
+  .path-link {
+    stroke-dasharray: 3 5;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .flow-line-x::after {
+      animation: flow-x 0.9s linear infinite;
+    }
+    .flow-line-y::after {
+      animation: flow-y 0.9s linear infinite;
+    }
+    .dash-flow {
+      animation: dash-flow 1.2s linear infinite;
+    }
+    .why-diagram {
+      animation: fade-up 500ms var(--ease-out-soft) both;
+    }
+    .why-progress {
+      width: 100%;
+      transform-origin: left;
+      animation: why-progress var(--why-ms) linear forwards;
+    }
+    .path-card:hover .path-link {
+      animation: dash-flow 0.9s linear infinite;
+    }
+  }
+  @keyframes flow-x {
+    to {
+      background-position: 14px 0;
+    }
+  }
+  @keyframes flow-y {
+    to {
+      background-position: 0 14px;
+    }
+  }
+  @keyframes why-progress {
+    from {
+      transform: scaleX(0);
+    }
+  }
+
+  /* Faint dot grid (diagram panels) */
+  .dot-grid {
+    background-image: radial-gradient(circle at 1px 1px, var(--line) 1px, transparent 0);
+    background-size: 22px 22px;
+  }
+
+  /* Translucent header bar (Apple-style). Falls back to solid when the
+     visitor asks for reduced transparency. */
+  .header-glass {
+    background: color-mix(in srgb, var(--canvas) 82%, transparent);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .header-glass {
+      background: var(--canvas);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
 } /* end @layer components */
 
 /* ==========================================================================

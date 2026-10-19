@@ -34,8 +34,8 @@ function Streams({ rnd }: { rnd: () => number }) {
       {lines.map((d, i) => (
         <path key={i} d={d} className={i === hot ? "stroke-alert" : "stroke-line-strong"} strokeWidth={i === hot ? 1.5 : 1} fill="none" />
       ))}
-      <rect x={fx - 2} y={fy - 22} width={70} height={44} rx={4} className="fill-raised stroke-ink-muted" strokeWidth={1} />
-      <circle cx={fx} cy={fy} r={4} className="fill-signal" />
+      <rect x={fx - 2} y={fy - 22} width={70} height={44} rx={4} className="fill-canvas stroke-ink-muted" strokeWidth={1} />
+      <circle cx={fx} cy={fy} r={4} className="fill-accent" />
     </>
   );
 }
@@ -50,7 +50,7 @@ function Columns({ rnd }: { rnd: () => number }) {
       {Array.from({ length: count }, (_, i) => {
         const h = 30 + rnd() * 140;
         const x = 32 + i * 25;
-        return <rect key={i} x={x} y={210 - h} width={12} height={h} rx={1.5} className={i === accent ? "fill-signal" : "fill-line-strong"} />;
+        return <rect key={i} x={x} y={210 - h} width={12} height={h} rx={1.5} className={i === accent ? "fill-accent" : "fill-line-strong"} />;
       })}
     </>
   );
@@ -65,7 +65,7 @@ function Frames({ rnd }: { rnd: () => number }) {
         const w = 340 - i * 52;
         const h = 210 - i * 32;
         return (
-          <rect key={i} x={cx - w / 2} y={125 - h / 2} width={w} height={h} rx={4} fill="none" className={i === 5 ? "stroke-signal" : "stroke-line-strong"} strokeWidth={1} strokeDasharray={i % 2 ? "3 5" : undefined} />
+          <rect key={i} x={cx - w / 2} y={125 - h / 2} width={w} height={h} rx={4} fill="none" className={i === 5 ? "stroke-accent" : "stroke-line-strong"} strokeWidth={1} strokeDasharray={i % 2 ? "3 5" : undefined} />
         );
       })}
     </>
@@ -75,7 +75,7 @@ function Frames({ rnd }: { rnd: () => number }) {
 export function ArticleCover({ slug, category, className }: { slug: string; category: Category; className?: string }) {
   const rnd = seeded(slug);
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid slice" aria-hidden="true" className={cn("block size-full bg-sunken", className)}>
+    <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid slice" aria-hidden="true" className={cn("block size-full bg-tint", className)}>
       {category === "Industry Analysis" ? <Columns rnd={rnd} /> : category === "AI Governance" ? <Frames rnd={rnd} /> : <Streams rnd={rnd} />}
     </svg>
   );

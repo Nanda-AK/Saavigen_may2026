@@ -108,10 +108,10 @@ export function HeroSignal({ className }: { className?: string }) {
       colors.line = resolve("--line-strong");
       colors.muted = resolve("--ink-muted");
       colors.ink = resolve("--ink");
-      colors.signal = resolve("--signal");
+      colors.signal = resolve("--accent");
       colors.alert = resolve("--alert");
       colors.raised = resolve("--raised");
-      const mono = getComputedStyle(document.documentElement).getPropertyValue("--font-plex-mono").trim();
+      const mono = getComputedStyle(document.documentElement).getPropertyValue("--font-geist-mono").trim();
       colors.font = `500 11px ${mono || "ui-monospace, monospace"}`;
     };
     readColors();
@@ -430,7 +430,7 @@ export function HeroSignal({ className }: { className?: string }) {
       }}
       className={cn("hero-signal relative cursor-crosshair overflow-hidden rounded-box border border-line bg-raised select-none", className)}
     >
-      <div aria-hidden="true" className="hero-grid absolute inset-0" />
+      <div aria-hidden="true" className="dot-grid absolute inset-0" />
       <canvas ref={canvasRef} aria-hidden="true" className="absolute inset-0 size-full" />
 
       {/* Agent sources */}
@@ -474,7 +474,7 @@ export function HeroSignal({ className }: { className?: string }) {
                   s === stage
                     ? s === "Detect"
                       ? "border-alert text-alert-ink"
-                      : "border-signal text-signal-ink"
+                      : "border-accent text-accent-ink"
                     : "border-transparent text-ink-muted",
                 )}
               >
@@ -496,7 +496,7 @@ export function HeroSignal({ className }: { className?: string }) {
               <span className="text-ink-muted">{r.time}</span>
               <span
                 className={cn(
-                  r.stage === "DETECT" ? "text-alert-ink" : r.stage === "RESPOND" ? "text-signal-ink" : "text-ink-muted",
+                  r.stage === "DETECT" ? "text-alert-ink" : r.stage === "RESPOND" ? "text-accent-ink" : "text-ink-muted",
                 )}
               >
                 {r.stage}

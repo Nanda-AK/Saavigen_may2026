@@ -12,27 +12,24 @@ const channels = [
   { label: "LinkedIn", value: site.linkedin.display, href: site.linkedin.href, icon: Linkedin },
 ];
 
-// Plan 1.2. Sits on ink in both themes; the focus ring is lightened locally
-// so it keeps 3:1 contrast on the dark background.
+// Plan 1.2. Apple-style footer: quiet, small type, hairline dividers.
 export function Footer() {
   return (
-    <footer className="bg-footer text-footer-ink [--focus:#3dd6a3]">
-      <Container className="py-16 lg:py-20">
+    <footer className="border-t border-line bg-canvas text-ink">
+      <Container className="py-14 lg:py-16">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-12">
           <div className="lg:col-span-6">
-            <Link href="/" aria-label="SaaviGenAI home" className="inline-block rounded-box">
+            <Link href="/" aria-label="SaaviGenAI home" className="inline-block rounded-full">
               <Logo />
             </Link>
-            <p className="mt-6 max-w-xs font-display text-[1.75rem] leading-tight tracking-[-0.02em]">
-              {site.tagline}
-            </p>
+            <p className="mt-5 text-[1.5rem] font-semibold tracking-[-0.03em] text-ink">{site.tagline}</p>
           </div>
 
           <nav aria-label="Footer" className="lg:col-span-2">
-            <ul className="space-y-3">
+            <ul className="space-y-3 text-[0.875rem]">
               {footerNav.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} className="text-footer-muted transition-colors hover:text-footer-ink">
+                  <Link href={item.href} className="text-ink-muted transition-colors hover:text-ink">
                     {item.label}
                   </Link>
                 </li>
@@ -40,7 +37,7 @@ export function Footer() {
             </ul>
           </nav>
 
-          <ul className="space-y-3 md:col-start-2 lg:col-span-4 lg:col-start-auto">
+          <ul className="space-y-3 text-[0.875rem] md:col-start-2 lg:col-span-4 lg:col-start-auto">
             {channels.map((c) => {
               const external = c.href.startsWith("http");
               return (
@@ -48,9 +45,9 @@ export function Footer() {
                   <a
                     href={c.href}
                     {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                    className="group inline-flex items-center gap-3 text-footer-muted transition-colors hover:text-footer-ink"
+                    className="group inline-flex items-center gap-3 text-ink-muted transition-colors hover:text-ink"
                   >
-                    <Icon icon={c.icon} size={18} className="text-footer-muted group-hover:text-footer-ink" />
+                    <Icon icon={c.icon} size={17} />
                     <span className="sr-only">{c.label}: </span>
                     <span className="break-all">{c.value}</span>
                   </a>
@@ -60,14 +57,14 @@ export function Footer() {
           </ul>
         </div>
 
-        <div className="mt-16 flex flex-col gap-5 border-t border-footer-line pt-6 text-sm text-footer-muted md:flex-row md:items-center md:justify-between">
+        <div className="mt-14 flex flex-col gap-5 border-t border-line pt-6 text-[0.8125rem] text-ink-muted md:flex-row md:items-center md:justify-between">
           <p>{site.copyright}</p>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
             <nav aria-label="Legal">
               <ul className="flex gap-6">
                 {legalNav.map((item) => (
                   <li key={item.href}>
-                    <Link href={item.href} className="transition-colors hover:text-footer-ink">
+                    <Link href={item.href} className="transition-colors hover:text-ink">
                       {item.label}
                     </Link>
                   </li>

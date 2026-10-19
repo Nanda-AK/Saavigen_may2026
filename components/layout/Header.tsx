@@ -11,6 +11,10 @@ import { Logo } from "@/components/ui/Logo";
 import { contactLink, primaryNav } from "@/content/site";
 import { cn } from "@/lib/utils";
 
+// Pages whose first section is a dark full-bleed hero (marked data-hero="dark").
+// On these the header starts transparent with white text, so it sits on the video.
+const DARK_HERO_PAGES = ["/"];
+
 // "/insights/some-article/" should still highlight "Insights".
 const isActive = (pathname: string, href: string) => pathname === href || pathname.startsWith(href);
 
@@ -20,6 +24,7 @@ export function Header() {
   const pathname = usePathname() ?? "/";
   const normalized = pathname.endsWith("/") ? pathname : `${pathname}/`;
   const [open, setOpen] = useState(false);
+  const [overHero, setOverHero] = useState(DARK_HERO_PAGES.includes(pathname));
   const toggleRef = useRef<HTMLButtonElement>(null);
 
   const close = useCallback((returnFocus = false) => {
@@ -30,6 +35,22 @@ export function Header() {
   // Close the menu after navigating to another page.
   useEffect(() => {
     setOpen(false);
+  }, [pathname]);
+
+  // Transparent while the dark hero is behind the bar. The observer watches a
+  // thin strip at the top of the window (rootMargin cuts off the rest), so no
+  // scroll listener is needed.
+  useEffect(() => {
+    const hero = document.querySelector('[data-hero="dark"]');
+    if (!hero) {
+      setOverHero(false);
+      return;
+    }
+    const io = new IntersectionObserver(([entry]) => setOverHero(entry.isIntersecting), {
+      rootMargin: "0px 0px -92% 0px",
+    });
+    io.observe(hero);
+    return () => io.disconnect();
   }, [pathname]);
 
   // While open: Escape closes it, the page behind can't scroll, and it
@@ -49,10 +70,17 @@ export function Header() {
     };
   }, [open, close]);
 
+  const clear = overHero && !open;
+
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-canvas">
-      <Container className="flex h-16 items-center justify-between gap-6 lg:h-[72px]">
-        <Link href="/" aria-label="SaaviGenAI home" className="rounded-box text-ink">
+    <header
+      className={cn(
+        "sticky top-0 z-40 border-b transition-[background-color,border-color,color] duration-300",
+        clear ? "border-transparent bg-transparent text-white" : "header-glass border-line text-ink",
+      )}
+    >
+      <Container className="flex h-16 items-center justify-between gap-6">
+        <Link href="/" aria-label="SaaviGenAI home" className="rounded-full">
           <Logo compact />
         </Link>
 
@@ -66,12 +94,16 @@ export function Header() {
                     href={item.href}
                     aria-current={active ? "page" : undefined}
                     className={cn(
-                      "relative py-2 text-[0.9375rem] transition-colors duration-200",
-                      // 1px line under the link: grows on hover, stays for the current page
-                      "after:absolute after:inset-x-0 after:-bottom-px after:h-px after:origin-left after:bg-signal after:transition-transform after:duration-300",
-                      active
-                        ? "text-ink after:scale-x-100"
-                        : "text-ink-soft after:scale-x-0 hover:text-ink hover:after:scale-x-100",
+                      "relative py-2 text-[0.875rem] tracking-[-0.005em] transition-colors duration-200",
+                      "after:absolute after:inset-x-0 after:bottom-0 after:h-px after:origin-left after:bg-current after:transition-transform after:duration-300",
+                      active ? "after:scale-x-100" : "after:scale-x-0 hover:after:scale-x-100",
+                      clear
+                        ? active
+                          ? "text-white"
+                          : "text-white/75 hover:text-white"
+                        : active
+                          ? "text-ink"
+                          : "text-ink-soft hover:text-ink",
                     )}
                   >
                     {item.label}
@@ -82,14 +114,17 @@ export function Header() {
           </ul>
         </nav>
 
-        <div className="flex items-center gap-2">
-          <Button href={contactLink.href} className="min-h-10 px-4">
+        <div className="flex items-center gap-1.5">
+          <Button href={contactLink.href} variant={clear ? "light" : "primary"} className="min-h-9 px-4 text-[0.875rem]">
             {contactLink.label}
           </Button>
           <button
             ref={toggleRef}
             type="button"
-            className="inline-flex size-11 items-center justify-center rounded-box text-ink hover:bg-sunken lg:hidden"
+            className={cn(
+              "inline-flex size-11 items-center justify-center rounded-full transition-colors lg:hidden",
+              clear ? "hover:bg-white/10" : "hover:bg-sunken",
+            )}
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? "Close menu" : "Open menu"}
@@ -100,29 +135,24 @@ export function Header() {
         </div>
       </Container>
 
-      <div
-        id="mobile-menu"
-        hidden={!open}
-        className="fixed inset-x-0 top-16 bottom-0 z-40 overflow-y-auto border-t border-line bg-canvas lg:hidden"
-      >
-        <Container className="py-6">
+      <div id="mobile-menu" hidden={!open} className="fixed inset-x-0 top-16 bottom-0 z-40 overflow-y-auto bg-canvas text-ink lg:hidden">
+        <Container className="py-4">
           <nav aria-label="Primary">
-            <ul className="divide-y divide-line border-b border-line">
+            <ul>
               {primaryNav.map((item) => {
                 const active = isActive(normalized, item.href);
                 return (
-                  <li key={item.href}>
+                  <li key={item.href} className="border-b border-line">
                     <Link
                       href={item.href}
                       aria-current={active ? "page" : undefined}
                       onClick={() => close()}
                       className={cn(
-                        "flex items-center justify-between py-5 font-display text-2xl tracking-[-0.02em]",
+                        "flex items-center justify-between py-5 text-[1.75rem] font-semibold tracking-[-0.03em]",
                         active ? "text-ink" : "text-ink-soft",
                       )}
                     >
                       {item.label}
-                      {active ? <span aria-hidden="true" className="size-2 rounded-full bg-signal" /> : null}
                     </Link>
                   </li>
                 );

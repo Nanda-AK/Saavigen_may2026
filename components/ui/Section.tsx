@@ -4,38 +4,48 @@ import { cn } from "@/lib/utils";
 
 const tones = {
   canvas: "bg-canvas",
-  raised: "bg-raised",
   sunken: "bg-sunken",
 } as const;
 
 type SectionProps = {
   id?: string;
+  /** Sections alternate white (canvas) and light grey (sunken), Apple-style */
   tone?: keyof typeof tones;
-  /** Adds a 1px top border to separate sections that share a background */
-  divided?: boolean;
   className?: string;
   containerClassName?: string;
   labelledBy?: string;
   children: ReactNode;
 };
 
-// Standard vertical rhythm: 64px mobile, 96px tablet, 128px desktop.
-export function Section({
-  id,
-  tone = "canvas",
-  divided = false,
-  className,
-  containerClassName,
-  labelledBy,
-  children,
-}: SectionProps) {
+// Standard vertical rhythm: 80px mobile, 112px tablet, 144px desktop.
+export function Section({ id, tone = "canvas", className, containerClassName, labelledBy, children }: SectionProps) {
   return (
-    <section
-      id={id}
-      aria-labelledby={labelledBy}
-      className={cn(tones[tone], divided && "border-t border-line", "py-16 md:py-24 lg:py-32", className)}
-    >
+    <section id={id} aria-labelledby={labelledBy} className={cn(tones[tone], "py-20 md:py-28 lg:py-36", className)}>
       <Container className={containerClassName}>{children}</Container>
     </section>
+  );
+}
+
+/** Centred section headline with an optional supporting line. */
+export function SectionHeader({
+  id,
+  title,
+  sub,
+  align = "center",
+  className,
+}: {
+  id: string;
+  title: ReactNode;
+  sub?: ReactNode;
+  align?: "center" | "left";
+  className?: string;
+}) {
+  return (
+    <div data-reveal className={cn(align === "center" ? "mx-auto max-w-3xl text-center" : "max-w-3xl", className)}>
+      <h2 id={id} className="text-h2 text-ink">
+        {title}
+      </h2>
+      {sub ? <p className="mt-5 text-lead text-ink-muted">{sub}</p> : null}
+    </div>
   );
 }

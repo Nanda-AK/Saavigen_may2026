@@ -14,27 +14,30 @@ for (const [, name, value] of rootBlock.matchAll(/--([\w-]+):\s*([^;]+);/g)) {
   if (pair) tokens[name] = { light: pair[1], dark: pair[2] };
   else if (single) tokens[name] = { light: single[1], dark: single[1] };
 }
-tokens.focus = tokens["signal-ink"];
+tokens.focus = tokens["accent-ink"];
+tokens.white = { light: "#ffffff", dark: "#ffffff" };
 
 // [foreground, background, minimum ratio, what it is]
 const PAIRS = [
   ["ink", "canvas", 4.5, "body text"],
-  ["ink", "raised", 4.5, "text on tiles"],
+  ["ink", "sunken", 4.5, "text on grey bands / cards"],
   ["ink-soft", "canvas", 4.5, "supporting text"],
+  ["ink-soft", "sunken", 4.5, "supporting text on grey"],
   ["ink-muted", "canvas", 4.5, "meta text"],
-  ["ink-muted", "raised", 4.5, "meta text on tiles"],
-  ["ink-muted", "sunken", 4.5, "meta text on tinted bands"],
-  ["signal-ink", "canvas", 4.5, "links / accent text"],
-  ["signal-ink", "raised", 4.5, "links on tiles"],
+  ["ink-muted", "sunken", 4.5, "meta text on grey"],
+  ["ink-muted", "raised", 4.5, "meta text on white cards"],
+  ["accent-ink", "canvas", 4.5, "links / accent text"],
+  ["accent-ink", "sunken", 4.5, "links on grey"],
+  ["white", "accent-fill", 4.5, "primary (blue) button label"],
   ["alert-ink", "canvas", 4.5, "alert text"],
+  ["alert-ink", "sunken", 4.5, "alert text on grey"],
   ["danger", "canvas", 4.5, "form error text"],
-  ["danger", "raised", 4.5, "form error text on form panel"],
-  ["on-inverse", "inverse", 4.5, "primary button label"],
+  ["danger", "sunken", 4.5, "form error text on grey panel"],
+  ["on-inverse", "inverse", 4.5, "inverse card / button text"],
   ["field", "canvas", 3, "input border (non-text)"],
-  ["field", "raised", 3, "input border on panel"],
+  ["field", "sunken", 3, "input border on grey"],
   ["focus", "canvas", 3, "focus ring (non-text)"],
-  ["footer-ink", "footer-bg", 4.5, "footer text"],
-  ["footer-muted", "footer-bg", 4.5, "footer meta text"],
+  ["focus", "sunken", 3, "focus ring on grey"],
 ];
 
 const lum = (hex) => {

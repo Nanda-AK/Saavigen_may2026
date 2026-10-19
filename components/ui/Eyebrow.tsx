@@ -1,10 +1,18 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-// Small mono label above a headline. Only used where the content plan says
-// "Above the headline", so it stays rare (Taste rule: max 1 per 3 sections).
-export function Eyebrow({ className, children }: { className?: string; children: ReactNode }) {
+// Short line above a headline. Only used where the content plan says
+// "Above the headline". `onDark` is for the video hero.
+export function Eyebrow({ className, onDark = false, children }: { className?: string; onDark?: boolean; children: ReactNode }) {
   return (
-    <p className={cn("font-mono text-label font-medium uppercase text-signal-ink", className)}>{children}</p>
+    <p
+      className={cn(
+        "text-[0.9375rem] font-semibold tracking-[-0.01em] md:text-[1.0625rem]",
+        onDark ? "text-[#2997ff]" : "text-accent-ink",
+        className,
+      )}
+    >
+      {children}
+    </p>
   );
 }

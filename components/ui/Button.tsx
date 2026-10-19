@@ -4,19 +4,24 @@ import type { ButtonHTMLAttributes, ReactNode } from "react";
 import { ICON_STROKE } from "@/components/ui/Icon";
 import { cn } from "@/lib/utils";
 
-type Variant = "primary" | "secondary" | "ghost";
+type Variant = "primary" | "secondary" | "contrast" | "light" | "light-outline" | "link";
 
 const variants: Record<Variant, string> = {
-  // Ink fill. The accent teal never fills a button (it's kept for signals).
-  primary: "bg-inverse text-on-inverse hover:bg-inverse-hover",
-  // 1px ink outline
-  secondary: "border border-ink text-ink hover:bg-sunken",
-  // Text link with arrow, for low-emphasis actions inside cards
-  ghost: "px-0 text-ink underline decoration-line-strong underline-offset-[6px] hover:decoration-signal",
+  // Blue pill: the main action on a page
+  primary: "bg-accent-fill text-white hover:bg-accent-fill-hover",
+  // Outlined pill in the text colour
+  secondary: "border border-ink/80 text-ink hover:bg-ink hover:text-canvas",
+  // Flipped colours for use on an inverse (black) card
+  contrast: "bg-on-inverse text-inverse hover:opacity-90",
+  // On the dark video hero (white whatever the theme).
+  light: "bg-white text-[color:#1d1d1f] hover:bg-white/90",
+  "light-outline": "border border-white/45 text-white hover:border-white hover:bg-white/10",
+  // Text link with arrow (Apple "Learn more >")
+  link: "h-auto min-h-0 px-0 text-accent-ink hover:underline underline-offset-4",
 };
 
 const base =
-  "group inline-flex min-h-11 items-center justify-center gap-2 whitespace-nowrap rounded-box px-5 text-[0.9375rem] font-medium leading-none transition-colors duration-200";
+  "group inline-flex min-h-11 items-center justify-center gap-1.5 whitespace-nowrap rounded-full px-6 text-[0.9375rem] font-medium tracking-[-0.01em] transition-colors duration-200";
 
 type Common = {
   variant?: Variant;
@@ -38,7 +43,7 @@ function Arrow({ external }: { external: boolean }) {
     <Glyph
       width={16}
       height={16}
-      strokeWidth={ICON_STROKE}
+      strokeWidth={ICON_STROKE + 0.5}
       aria-hidden="true"
       className="shrink-0 transition-transform duration-200 ease-out group-hover:translate-x-[3px] motion-reduce:transition-none"
     />

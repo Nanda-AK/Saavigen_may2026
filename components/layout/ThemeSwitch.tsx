@@ -46,7 +46,7 @@ export function ThemeSwitch({ className }: { className?: string }) {
   }
 
   return (
-    <div role="group" aria-label="Colour theme" className={cn("inline-flex rounded-box border border-footer-line p-0.5", className)}>
+    <div role="group" aria-label="Colour theme" className={cn("inline-flex rounded-full border border-line p-0.5", className)}>
       {options.map((o) => (
         <button
           key={o.value}
@@ -55,11 +55,11 @@ export function ThemeSwitch({ className }: { className?: string }) {
           aria-pressed={choice === o.value}
           onClick={() => apply(o.value)}
           className={cn(
-            "inline-flex size-8 items-center justify-center rounded-[4px] transition-colors",
-            choice === o.value ? "bg-footer-line text-footer-ink" : "text-footer-muted hover:text-footer-ink",
+            "inline-flex size-8 items-center justify-center rounded-full transition-colors",
+            choice === o.value ? "bg-sunken text-ink" : "text-ink-muted hover:text-ink",
           )}
         >
-          <Icon icon={o.icon} size={16} />
+          <Icon icon={o.icon} size={15} />
         </button>
       ))}
     </div>
