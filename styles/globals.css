@@ -117,7 +117,11 @@
 
 /* ==========================================================================
    Base
+   IMPORTANT: everything below lives in @layer base / @layer components.
+   Unlayered CSS beats ALL Tailwind utilities, so a plain `a { color: inherit }`
+   would silently override classes like text-on-inverse on links.
    ========================================================================== */
+@layer base {
 * {
   box-sizing: border-box;
 }
@@ -172,7 +176,9 @@ a {
   outline-offset: 3px;
   border-radius: 2px;
 }
+} /* end @layer base */
 
+@layer components {
 .skip-link {
   position: absolute;
   left: 1rem;
@@ -232,6 +238,291 @@ a {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ==========================================================================
+   Component motion. Rule of thumb used throughout: the resting state is the
+   FINAL state (so no-JS and reduced-motion visitors see everything), and the
+   "before" state only applies once the reveal system is running
+   (.reveal-ready ... :not(.is-revealed)).
+   ========================================================================== */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+@keyframes dash-flow {
+  to {
+    stroke-dashoffset: -12;
+  }
+}
+
+/* --- Faint dot grid (hero stage, diagram panels) --- */
+.hero-grid {
+  background-image: radial-gradient(circle at 1px 1px, var(--line-strong) 1px, transparent 0);
+  background-size: 24px 24px;
+  opacity: 0.55;
+}
+
+/* --- Home hero: discovery sequence. Chips and the first console rows appear
+       one by one; this part is pure CSS so it also plays before JS loads. --- */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-chip {
+    animation: fade-up 600ms var(--ease-out-soft) both;
+    animation-delay: calc(var(--i) * 280ms + 250ms);
+  }
+  .hero-row-initial {
+    animation: fade-up 450ms var(--ease-out-soft) both;
+    animation-delay: calc(var(--i) * 280ms + 450ms);
+  }
+  .hero-row {
+    animation: fade-up 450ms var(--ease-out-soft) both;
+  }
+  .hero-hint {
+    animation: fade-in 800ms ease 3s both;
+  }
+}
+
+/* --- Vendor marquee (VendorStrip). 4 copies of the list, so moving by 25%
+       shifts exactly one copy and the loop is seamless. --- */
+.marquee {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .marquee-track {
+    animation: marquee 50s linear infinite;
+  }
+  .marquee:hover .marquee-track,
+  .marquee:focus-within .marquee-track {
+    animation-play-state: paused;
+  }
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-25%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .marquee-track {
+    width: auto;
+    flex-wrap: wrap;
+  }
+  .marquee-track > ul:not(:first-child) {
+    display: none;
+  }
+  .marquee-track > ul {
+    flex-wrap: wrap;
+    row-gap: 1rem;
+  }
+}
+
+/* --- StepFlow: connectors draw in order, steps light up, then a dot travels.
+       Vertical below 768px, horizontal above. Node is 48px, so its centre is 24px. --- */
+.stepflow-link {
+  position: absolute;
+  left: 24px;
+  top: 24px;
+  width: 1px;
+  height: calc(100% + 3rem); /* reaches the next node: own height + row gap (gap-12) */
+  background: var(--line-strong);
+  transform-origin: top;
+  transition: transform 700ms var(--ease-out-soft);
+  transition-delay: calc(var(--i) * 380ms + 300ms);
+}
+.stepflow-pulse {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+.stepflow-pulse::before {
+  content: "";
+  position: absolute;
+  left: -3px;
+  top: -3px;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--signal);
+}
+.stepflow-node {
+  border-color: var(--signal);
+  color: var(--signal-ink);
+  transition:
+    border-color 400ms ease,
+    color 400ms ease;
+  transition-delay: calc(var(--i) * 380ms + 150ms);
+}
+.stepflow-step[data-tone="alert"] .stepflow-node {
+  border-color: var(--alert);
+  color: var(--alert-ink);
+}
+.reveal-ready .stepflow:not(.is-revealed) .stepflow-node {
+  border-color: var(--line);
+  color: var(--ink-muted);
+}
+.reveal-ready .stepflow:not(.is-revealed) .stepflow-link {
+  transform: scaleY(0);
+}
+@media (min-width: 768px) {
+  .stepflow {
+    grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+  }
+  .stepflow-link {
+    width: calc(100% + 1.5rem); /* own width + column gap (gap-6) */
+    height: 1px;
+    transform-origin: left;
+  }
+  .reveal-ready .stepflow:not(.is-revealed) .stepflow-link {
+    transform: scaleX(0);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .stepflow.is-revealed .stepflow-pulse {
+    animation: step-pulse-y calc((var(--n) - 1) * 1.4s) linear infinite;
+    animation-delay: calc(var(--i) * 1.4s + var(--n) * 380ms + 600ms);
+  }
+  @media (min-width: 768px) {
+    .stepflow.is-revealed .stepflow-pulse {
+      animation-name: step-pulse-x;
+    }
+  }
+}
+@keyframes step-pulse-x {
+  0% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+  3% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 1;
+    transform: translateX(100%);
+  }
+  28%,
+  100% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+@keyframes step-pulse-y {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  3% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 1;
+    transform: translateY(100%);
+  }
+  28%,
+  100% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+/* --- Flow connectors in diagrams: a 1px line with accent dashes marching along it --- */
+.flow-line {
+  position: relative;
+  display: block;
+  background: var(--line-strong);
+}
+.flow-line-x {
+  height: 1px;
+  min-width: 1.5rem;
+}
+.flow-line-y {
+  width: 1px;
+}
+.flow-line::after {
+  content: "";
+  position: absolute;
+  inset: -1px 0;
+  background-image: linear-gradient(90deg, var(--signal) 0 4px, transparent 4px 14px);
+  background-size: 14px 3px;
+}
+.flow-line-y::after {
+  inset: 0 -1px;
+  background-image: linear-gradient(180deg, var(--signal) 0 4px, transparent 4px 14px);
+  background-size: 3px 14px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .flow-line-x::after {
+    animation: flow-x 0.9s linear infinite;
+  }
+  .flow-line-y::after {
+    animation: flow-y 0.9s linear infinite;
+  }
+  .dash-flow {
+    animation: dash-flow 1.2s linear infinite;
+  }
+  .why-diagram {
+    animation: fade-up 450ms var(--ease-out-soft) both;
+  }
+  .why-progress {
+    width: 100%;
+    transform-origin: left;
+    animation: why-progress var(--why-ms) linear forwards;
+  }
+  .path-card:hover .path-link {
+    animation: dash-flow 0.9s linear infinite;
+  }
+  .contact-band-pattern {
+    animation: drift 80s linear infinite;
+  }
+}
+@keyframes flow-x {
+  to {
+    background-position: 14px 0;
+  }
+}
+@keyframes flow-y {
+  to {
+    background-position: 0 14px;
+  }
+}
+@keyframes why-progress {
+  from {
+    transform: scaleX(0);
+  }
+}
+@keyframes drift {
+  to {
+    background-position: 260px 130px;
+  }
+}
+.dash-flow {
+  stroke-dasharray: 3 9;
+}
+.path-link {
+  stroke-dasharray: 3 5;
+  transition: stroke 300ms ease;
+}
+.path-card:hover .path-link {
+  stroke: var(--signal);
+}
+
+/* --- Contact band: faint dot grid, fading out behind the text --- */
+.contact-band-pattern {
+  background-image: radial-gradient(circle at 1px 1px, var(--line-strong) 1px, transparent 0);
+  background-size: 26px 26px;
+  -webkit-mask-image: linear-gradient(90deg, transparent 30%, #000 90%);
+  mask-image: linear-gradient(90deg, transparent 30%, #000 90%);
+}
+} /* end @layer components */
 
 /* ==========================================================================
    LEGACY (old site pages only). Delete in Phase 7 together with

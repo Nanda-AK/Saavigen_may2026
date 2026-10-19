@@ -1,9 +1,9 @@
-import type { LucideIcon } from "lucide-react";
-import { Icon } from "@/components/ui/Icon";
+import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 type TileProps = {
-  icon?: LucideIcon;
+  /** An <Icon /> or <ComposedIcon /> element */
+  icon?: ReactNode;
   title: string;
   body: string;
   /** Position in a group, used to stagger the scroll reveal */
@@ -23,8 +23,8 @@ export function Tile({ icon, title, body, index = 0, className }: TileProps) {
       )}
     >
       {icon ? (
-        <span className="mb-8 inline-flex size-11 items-center justify-center rounded-box border border-line text-ink transition-colors duration-300 group-hover/tile:border-signal group-hover/tile:text-signal-ink">
-          <Icon icon={icon} size={22} />
+        <span className="mb-10 inline-flex size-12 items-center justify-center rounded-box border border-line text-ink transition-colors duration-300 group-hover/tile:border-signal group-hover/tile:text-signal-ink">
+          {icon}
         </span>
       ) : null}
       <h3 className="text-h3 text-ink">{title}</h3>
