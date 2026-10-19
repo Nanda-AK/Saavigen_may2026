@@ -9,19 +9,19 @@ import { cn } from "@/lib/utils";
   - Every secondary action is a TEXT LINK with a chevron; the underline draws in on
     hover and the chevron nudges right (.link-cta in globals.css).
 
-  Variants
-    primary     blue fill            (main action on light sections)
-    light       white fill           (main action on the dark video hero)
-    contrast    flipped colours      (main action on an inverse / black card)
-    link        blue text + chevron  (secondary action on light sections)
-    link-light  light-blue text      (secondary action on dark backgrounds)
+  Variants (monochrome, Apple / OpenAI style)
+    primary     black fill (white in dark mode)  main action on light sections
+    light       white fill            main action on the dark video hero
+    contrast    flipped colours       main action on an inverse / black card
+    link        ink text + chevron    secondary action on light sections
+    link-light  white text + chevron  secondary action on dark backgrounds
 */
 
 type Variant = "primary" | "light" | "contrast" | "link" | "link-light";
 type Size = "sm" | "md" | "lg";
 
 const fills: Record<"primary" | "light" | "contrast", string> = {
-  primary: "bg-accent-fill text-white hover:bg-accent-fill-hover",
+  primary: "bg-accent-fill text-on-accent hover:bg-accent-fill-hover",
   light: "bg-white text-[color:#1d1d1f] hover:bg-[#e8e8ed]",
   contrast: "bg-on-inverse text-inverse hover:opacity-85",
 };
@@ -60,7 +60,7 @@ export function Button(props: AsLink | AsButton) {
   const classes = isLink
     ? cn(
         "link-cta group inline-flex items-center gap-0.5 font-medium tracking-[-0.01em]",
-        variant === "link" ? "text-accent-ink" : "text-[color:#2997ff]",
+        variant === "link" ? "text-accent-ink" : "text-white",
         linkSizes[size],
         className,
       )

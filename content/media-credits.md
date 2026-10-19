@@ -35,7 +35,7 @@ Pexels photos, 1280x800 WebP, metadata stripped:
 | File | Pexels photo | Pexels ID |
 |---|---|---|
 | card-platform.webp | Person facing a big screen with numbers | 9783346 |
-| card-managed.webp | Men and women sitting in front of computers and a large screen | 19317897 |
+| card-managed.webp | Woman in yellow long sleeve shirt looking at computer data (analyst at monitoring dashboards, team behind) | 8204355 |
 
 ## Insights covers (public/images/insights/)
 

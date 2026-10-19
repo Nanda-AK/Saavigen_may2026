@@ -28,7 +28,7 @@ const PAIRS = [
   ["ink-muted", "raised", 4.5, "meta text on white cards"],
   ["accent-ink", "canvas", 4.5, "links / accent text"],
   ["accent-ink", "sunken", 4.5, "links on grey"],
-  ["white", "accent-fill", 4.5, "primary (blue) button label"],
+  ["on-accent", "accent-fill", 4.5, "primary button label"],
   ["alert-ink", "canvas", 4.5, "alert text"],
   ["alert-ink", "sunken", 4.5, "alert text on grey"],
   ["danger", "canvas", 4.5, "form error text"],

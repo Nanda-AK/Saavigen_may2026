@@ -146,7 +146,8 @@ export function HeroVideo() {
       ref={rootRef}
       data-hero="dark"
       aria-labelledby="hero-title"
-      className="relative isolate -mt-16 flex min-h-[100svh] flex-col overflow-hidden bg-[#05070b] text-white md:min-h-[100dvh]"
+      // -mt pulls the hero up under the sticky header (64px mobile, 80px desktop) so the video fills the top
+      className="relative isolate -mt-16 flex min-h-[100svh] flex-col overflow-hidden bg-[#05070b] text-white md:min-h-[100dvh] lg:-mt-20"
     >
       {/* Background videos (decorative). Posters show instantly; each clip fades in on its turn. */}
       <div aria-hidden="true" className="absolute inset-0 -z-10 overflow-hidden">
@@ -177,7 +178,7 @@ export function HeroVideo() {
         <Eyebrow onDark>The Key to Secure AI</Eyebrow>
         <h1 id="hero-title" className="mt-5 max-w-[18ch] text-display font-bold md:max-w-none">
           <span className="block">Your AI is running.</span>
-          <span className="block text-[#2997ff]">Do you know what it&apos;s doing?</span>
+          <span className="block text-[#a1a1a6]">Do you know what it&apos;s doing?</span>
         </h1>
         <p className="mt-7 max-w-[46ch] text-lead text-white/80">
           SaaviAIDR gives security teams visibility, detection and response across every AI agent and chatbot in the

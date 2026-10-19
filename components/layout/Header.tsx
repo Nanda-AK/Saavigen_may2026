@@ -79,13 +79,15 @@ export function Header() {
         clear ? "border-transparent bg-transparent text-white" : "header-glass border-line text-ink",
       )}
     >
-      <Container className="flex h-16 items-center justify-between gap-6">
-        <Link href="/" aria-label="SaaviGenAI home" className="rounded-full">
-          <Logo compact />
+      {/* 64px tall on mobile, 80px on desktop. If you change this, also change the
+          hero's -mt-16 / lg:-mt-20 (HeroVideo.tsx) and the mobile menu's top-16. */}
+      <Container className="flex h-16 items-center justify-between gap-6 lg:h-20">
+        <Link href="/" aria-label="SaaviGenAI home" className="rounded-[8px]">
+          <Logo size="lg" compact />
         </Link>
 
         <nav aria-label="Primary" className="hidden lg:block">
-          <ul className="flex items-center gap-9">
+          <ul className="flex items-center gap-10 xl:gap-12">
             {primaryNav.map((item) => {
               const active = isActive(normalized, item.href);
               return (
@@ -94,7 +96,7 @@ export function Header() {
                     href={item.href}
                     aria-current={active ? "page" : undefined}
                     className={cn(
-                      "relative py-2 text-[0.875rem] tracking-[-0.005em] transition-colors duration-200",
+                      "relative py-2 text-[1rem] font-medium tracking-[-0.01em] transition-colors duration-200",
                       "after:absolute after:inset-x-0 after:bottom-0 after:h-px after:origin-left after:bg-current after:transition-transform after:duration-300",
                       active ? "after:scale-x-100" : "after:scale-x-0 hover:after:scale-x-100",
                       clear
@@ -115,7 +117,7 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-1.5">
-          <Button href={contactLink.href} variant={clear ? "light" : "primary"} size="sm">
+          <Button href={contactLink.href} variant={clear ? "light" : "primary"} size="md">
             {contactLink.label}
           </Button>
           <button

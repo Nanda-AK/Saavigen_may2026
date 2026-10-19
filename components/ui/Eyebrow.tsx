@@ -8,7 +8,7 @@ export function Eyebrow({ className, onDark = false, children }: { className?: s
     <p
       className={cn(
         "text-[0.9375rem] font-semibold tracking-[-0.01em] md:text-[1.0625rem]",
-        onDark ? "text-[#2997ff]" : "text-accent-ink",
+        onDark ? "text-white/70" : "text-ink-muted",
         className,
       )}
     >

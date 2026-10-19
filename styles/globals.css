@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 /* ==========================================================================
-   SaaviGenAI design tokens (Apple / OpenAI-style: white and light-grey
-   surfaces, near-black text, one professional blue, amber only for alerts)
+   SaaviGenAI design tokens (Apple / OpenAI-style monochrome: white and
+   light-grey surfaces, near-black text and accents, amber only for alerts)
    --------------------------------------------------------------------------
    Every colour is written once with light-dark(LIGHT, DARK). The browser
    picks the value from `color-scheme`:
@@ -13,8 +13,8 @@
    on :root below and delete the ThemeSwitch.
 
    Contrast (checked by `npm run check:contrast`):
-     - accent-ink is the blue for TEXT and links (passes on white and grey).
-     - accent-fill is the blue BUTTON background (white text on it passes).
+     - accent-ink is the accent for TEXT and links (passes on white and grey).
+     - accent-fill is the main BUTTON background; on-accent is its text.
      - field is the input border colour (at least 3:1).
    ========================================================================== */
 :root {
@@ -30,10 +30,12 @@
   --line: light-dark(#d2d2d7, #2c2c2e); /* hairlines */
   --line-strong: light-dark(#b8b8bf, #3a3a3c); /* diagram lines, dividers */
   --field: light-dark(#86868b, #6e6e73); /* form input borders */
-  --accent: light-dark(#0071e3, #2997ff); /* decorative accent: lines, dots, active states */
-  --accent-ink: light-dark(#0066cc, #2997ff); /* accent as text and links */
-  --accent-fill: #0071e3; /* primary button background (both themes) */
-  --accent-fill-hover: #0077ed;
+  /* Accent = black (white in dark mode), Apple / OpenAI monochrome. No blue. */
+  --accent: light-dark(#1d1d1f, #f5f5f7); /* lines, dots, active states */
+  --accent-ink: light-dark(#1d1d1f, #f5f5f7); /* accent as text and links */
+  --accent-fill: light-dark(#1d1d1f, #f5f5f7); /* primary button background */
+  --accent-fill-hover: light-dark(#3a3a3c, #d2d2d7);
+  --on-accent: light-dark(#ffffff, #1d1d1f); /* text / icons on accent-fill */
   --alert: light-dark(#ff9f0a, #ffb340); /* threat / alert moments (decoration) */
   --alert-ink: light-dark(#b25000, #ffb340); /* alert as text */
   --danger: light-dark(#d70015, #ff6961); /* form errors */
@@ -79,6 +81,7 @@
   --color-accent-ink: var(--accent-ink);
   --color-accent-fill: var(--accent-fill);
   --color-accent-fill-hover: var(--accent-fill-hover);
+  --color-on-accent: var(--on-accent);
   --color-alert: var(--alert);
   --color-alert-ink: var(--alert-ink);
   --color-danger: var(--danger);
@@ -370,7 +373,7 @@
   .pipeline-node {
     border-color: color-mix(in srgb, var(--accent) calc(var(--on) * 100%), var(--line));
     background: color-mix(in srgb, var(--accent-fill) calc(var(--on) * 100%), var(--raised));
-    color: color-mix(in srgb, #fff calc(var(--on) * 100%), var(--ink-muted));
+    color: color-mix(in srgb, var(--on-accent) calc(var(--on) * 100%), var(--ink-muted));
     transition: transform 300ms var(--ease-out-soft);
   }
   .pipeline-step[data-tone="alert"] .pipeline-node {
