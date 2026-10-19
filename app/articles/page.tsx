@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { FooterCTABand } from "@/components/sections/FooterCTABand";
-import { HeroSection } from "@/components/sections/HeroSection";
-import { SectionLabel } from "@/components/ui/SectionLabel";
+import { FooterCTABand } from "@/components/legacy/sections/FooterCTABand";
+import { HeroSection } from "@/components/legacy/sections/HeroSection";
+import { SectionLabel } from "@/components/legacy/ui/SectionLabel";
 import { pageMetadata } from "@/lib/metadata";
 import { basePath } from "@/lib/site";
 

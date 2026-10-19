@@ -1,11 +1,11 @@
 import dynamic from "next/dynamic";
-import { FooterCTABand } from "@/components/sections/FooterCTABand";
-import { HeroSection } from "@/components/sections/HeroSection";
-import { SectionLabel } from "@/components/ui/SectionLabel";
+import { FooterCTABand } from "@/components/legacy/sections/FooterCTABand";
+import { HeroSection } from "@/components/legacy/sections/HeroSection";
+import { SectionLabel } from "@/components/legacy/ui/SectionLabel";
 import { pageMetadata } from "@/lib/metadata";
 
 const WaitlistForm = dynamic(
-  () => import("@/components/sections/WaitlistForm").then((m) => m.WaitlistForm),
+  () => import("@/components/legacy/sections/WaitlistForm").then((m) => m.WaitlistForm),
 );
 
 export const metadata = pageMetadata(

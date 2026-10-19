@@ -7,13 +7,15 @@
     "build": "next build",
     "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc --noEmit",
-    "postbuild": "next-sitemap && node -e \"require('fs').closeSync(require('fs').openSync('out/.nojekyll','w'))\""
+    "postbuild": "next-sitemap && node -e \"require('fs').closeSync(require('fs').openSync('out/.nojekyll','w'))\"",
+    "brand:assets": "node scripts/build-brand-assets.mjs",
+    "check:contrast": "node scripts/check-contrast.mjs"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.13",
     "clsx": "^2.1.1",
     "lucide-react": "^0.468.0",
-    "next": "15.5.18",
+    "next": "15.5.28",
     "next-sitemap": "^4.2.3",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
@@ -26,8 +28,9 @@
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.0",
     "eslint": "^9.36.0",
-    "eslint-config-next": "15.5.18",
+    "eslint-config-next": "15.5.28",
     "prettier": "^3.4.2",
+    "sharp": "^0.34.5",
     "typescript": "^5.7.2"
   }
 }

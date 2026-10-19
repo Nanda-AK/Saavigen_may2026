@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/Button";
-import { SectionLabel } from "@/components/ui/SectionLabel";
+import { Button } from "@/components/legacy/ui/Button";
+import { SectionLabel } from "@/components/legacy/ui/SectionLabel";
 
 export function FooterCTABand() {
   return (

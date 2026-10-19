@@ -1,87 +1,268 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   SaaviGenAI design tokens
+   --------------------------------------------------------------------------
+   Every colour is written once with light-dark(LIGHT, DARK). The browser
+   picks the value from `color-scheme`:
+     - default: follows the visitor's OS setting (prefers-color-scheme)
+     - html[data-theme="light" | "dark"]: forced by the temporary theme switch
+       in the footer (see components/layout/ThemeSwitch.tsx)
+   To ship ONE theme permanently later: set `color-scheme: light` (or dark)
+   on :root below and delete the ThemeSwitch.
+
+   Contrast rules (checked by `npm run check:contrast`):
+     - signal (#12B886) is decoration only in light mode (about 2.4:1).
+       Text links and focus rings use signal-ink instead.
+     - field is the input border colour (at least 3:1 against the canvas).
+   ========================================================================== */
 :root {
-    --bg-base: #ffffff;
-    --bg-surface: #f8faff;
-    --color-navy: #1b2a4a;
-    --color-navy-light: #2d3f6b;
-    --color-gold: #c9a84c;
-    --color-gold-dim: rgba(201, 168, 76, 0.15);
-    --color-teal: #2d7d9a;
-    --color-teal-dark: #1f5a73;
-    --text-primary: #1b2a4a;
-    --text-secondary: #546480;
-    --text-muted: #8fa0b8;
-    --text-on-dark: #c4cedc;
-    --border-default: #e0e6ef;
-    --border-subtle: #eef1f7;
-    --state-error: #dc2626;
-    --state-success: #16a34a;
+  color-scheme: light dark;
+
+  --canvas: light-dark(#f7f6f2, #0b1220); /* page background */
+  --raised: light-dark(#fcfbf8, #111a2b); /* tiles, cards */
+  --sunken: light-dark(#efede7, #0e1626); /* tinted bands */
+  --ink: light-dark(#0b1220, #eceae4); /* headings and body text */
+  --ink-soft: light-dark(#333c4b, #c9cdd4); /* supporting text */
+  --ink-muted: light-dark(#5a6372, #9aa3b2); /* dates, captions, meta */
+  --line: light-dark(#dedbd2, #1f2a3d); /* 1px borders */
+  --line-strong: light-dark(#c8c4b8, #2e3b52); /* hover borders, dividers */
+  --field: light-dark(#80868f, #6b7586); /* form input borders */
+  --signal: #12b886; /* the one accent: dots, lines, active states */
+  --signal-ink: light-dark(#087f5b, #3dd6a3); /* accent as text, focus ring */
+  --alert: light-dark(#f59f00, #ffb020); /* alert moments (decoration) */
+  --alert-ink: light-dark(#9a5b00, #ffc24d); /* alert as text */
+  --danger: light-dark(#b42318, #ff8a80); /* form errors */
+  --inverse: light-dark(#0b1220, #eceae4); /* primary button fill */
+  --inverse-hover: light-dark(#1f2a3d, #d6d3cb);
+  --on-inverse: light-dark(#f7f6f2, #0b1220); /* text on primary button */
+
+  /* Footer sits on ink in both themes (plan 1.2: "logo for the footer background colour") */
+  --footer-bg: light-dark(#0b1220, #070c16);
+  --footer-ink: #eceae4;
+  --footer-muted: #9aa3b2;
+  --footer-line: light-dark(#1f2a3d, #1a2436);
+
+  --focus: var(--signal-ink);
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+/* Tailwind utilities generated from the tokens above, e.g. bg-canvas, text-ink,
+   border-line, font-display, text-h2, rounded-box, max-w-page. */
 @theme inline {
-    --color-base: var(--bg-base);
-    --color-surface: var(--bg-surface);
-    --color-navy: #1b2a4a;
-    --color-navy-light: #2d3f6b;
-    --color-gold: #c9a84c;
-    --color-gold-dim: rgba(201, 168, 76, 0.15);
-    --color-teal: #2d7d9a;
-    --color-teal-dark: #1f5a73;
-    --color-primary: var(--text-primary);
-    --color-secondary: var(--text-secondary);
-    --color-muted: var(--text-muted);
-    --color-on-dark: var(--text-on-dark);
-    --color-default: var(--border-default);
-    --color-subtle: var(--border-subtle);
-    --color-error: var(--state-error);
-    --color-success: var(--state-success);
-    --font-display: "Playfair Display", serif;
-    --font-sans: Inter, system-ui, sans-serif;
-    --font-mono: "Roboto Mono", monospace;
+  --color-canvas: var(--canvas);
+  --color-raised: var(--raised);
+  --color-sunken: var(--sunken);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-muted: var(--ink-muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-field: var(--field);
+  --color-signal: var(--signal);
+  --color-signal-ink: var(--signal-ink);
+  --color-alert: var(--alert);
+  --color-alert-ink: var(--alert-ink);
+  --color-danger: var(--danger);
+  --color-inverse: var(--inverse);
+  --color-inverse-hover: var(--inverse-hover);
+  --color-on-inverse: var(--on-inverse);
+  --color-footer: var(--footer-bg);
+  --color-footer-ink: var(--footer-ink);
+  --color-footer-muted: var(--footer-muted);
+  --color-footer-line: var(--footer-line);
+
+  /* Font variables are set by next/font in app/layout.tsx */
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SFMono-Regular", monospace;
 }
 
+@theme {
+  /* Type scale: fluid between mobile (375px) and desktop (1440px) */
+  --text-display: clamp(2.5rem, 1.85rem + 2.8vw, 4rem);
+  --text-display--line-height: 1.04;
+  --text-display--letter-spacing: -0.03em;
+  --text-h2: clamp(2rem, 1.62rem + 1.6vw, 2.75rem);
+  --text-h2--line-height: 1.1;
+  --text-h2--letter-spacing: -0.022em;
+  --text-h3: clamp(1.25rem, 1.18rem + 0.3vw, 1.5rem);
+  --text-h3--line-height: 1.25;
+  --text-h3--letter-spacing: -0.01em;
+  --text-lead: clamp(1.125rem, 1.07rem + 0.25vw, 1.3125rem);
+  --text-lead--line-height: 1.5;
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.6;
+  --text-label: 0.75rem;
+  --text-label--line-height: 1.4;
+  --text-label--letter-spacing: 0.12em;
+
+  /* One corner radius for every box, button and input (shape lock) */
+  --radius-box: 0.375rem;
+
+  /* Page and reading widths */
+  --container-page: 77.5rem;
+  --container-prose: 42rem;
+
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html {
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
     scroll-behavior: smooth;
+  }
 }
 
 body {
-    margin: 0;
-    background: var(--bg-base);
-    color: var(--text-primary);
-    font-family: var(--font-sans), system-ui, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
+  margin: 0;
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 a {
-    text-decoration: none;
+  color: inherit;
+  text-decoration: none;
 }
 
 ::selection {
-    background: var(--color-gold-dim);
-    color: var(--text-primary);
+  background: color-mix(in srgb, var(--signal) 28%, transparent);
+  color: var(--ink);
+}
+
+/* One visible focus style for every interactive element (2px, 3:1+ contrast) */
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
 .skip-link {
-    position: absolute;
-    left: 1rem;
-    top: 1rem;
-    z-index: 50;
-    transform: translateY(-150%);
-    border-radius: 0.25rem;
-    background: var(--color-gold);
-    color: var(--color-navy);
-    padding: 0.75rem 1rem;
-    font-size: 0.875rem;
-    font-weight: 700;
-    transition: transform 150ms ease;
+  position: absolute;
+  left: 1rem;
+  top: 0.75rem;
+  z-index: 60;
+  transform: translateY(-160%);
+  border-radius: var(--radius-box);
+  background: var(--inverse);
+  color: var(--on-inverse);
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: transform 150ms ease;
 }
 
 .skip-link:focus {
-    transform: translateY(0);
+  transform: translateY(0);
+}
+
+/* Logo key mark: a transparency mask painted with the current text colour,
+   so it follows light/dark automatically. Source: scripts/build-brand-assets.mjs */
+.key-mark {
+  display: inline-block;
+  aspect-ratio: 172 / 160;
+  background-color: currentColor;
+  -webkit-mask: url("/brand/key-mark.png") center / contain no-repeat;
+  mask: url("/brand/key-mark.png") center / contain no-repeat;
+}
+
+/* ==========================================================================
+   Scroll reveal (driven by components/motion/RevealObserver.tsx)
+   Elements opt in with data-reveal. Optional stagger: style="--reveal-index: N".
+   Content is only hidden once the observer has started (html.reveal-ready),
+   so if JavaScript fails, everything stays visible.
+   ========================================================================== */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-ready [data-reveal] {
+    transition:
+      opacity 520ms var(--ease-out-soft),
+      transform 520ms var(--ease-out-soft);
+    transition-delay: calc(var(--reveal-index, 0) * 70ms);
+  }
+
+  .reveal-ready [data-reveal]:not(.is-revealed) {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+/* Safety net: no animation or transition runs for people who ask for less motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ==========================================================================
+   LEGACY (old site pages only). Delete in Phase 7 together with
+   components/legacy/ and the old routes. Do not use in new components.
+   ========================================================================== */
+:root {
+  --bg-base: #ffffff;
+  --bg-surface: #f8faff;
+  --text-primary: #1b2a4a;
+  --text-secondary: #546480;
+  --text-muted: #8fa0b8;
+  --text-on-dark: #c4cedc;
+  --border-default: #e0e6ef;
+  --border-subtle: #eef1f7;
+}
+
+@theme inline {
+  --color-base: var(--bg-base);
+  --color-surface: var(--bg-surface);
+  --color-navy: #1b2a4a;
+  --color-navy-light: #2d3f6b;
+  --color-gold: #c9a84c;
+  --color-gold-dim: rgba(201, 168, 76, 0.15);
+  --color-teal: #2d7d9a;
+  --color-teal-dark: #1f5a73;
+  --color-primary: var(--text-primary);
+  --color-secondary: var(--text-secondary);
+  --color-muted: var(--text-muted);
+  --color-on-dark: var(--text-on-dark);
+  --color-default: var(--border-default);
+  --color-subtle: var(--border-subtle);
+  --color-error: #dc2626;
+  --color-success: #16a34a;
 }

@@ -1,9 +1,9 @@
 import { ShieldCheck, Sparkles, Users } from "lucide-react";
-import { FooterCTABand } from "@/components/sections/FooterCTABand";
-import { HeroSection } from "@/components/sections/HeroSection";
-import { DifferentiatorCard } from "@/components/ui/DifferentiatorCard";
-import { SectionLabel } from "@/components/ui/SectionLabel";
-import { ServiceCard } from "@/components/ui/ServiceCard";
+import { FooterCTABand } from "@/components/legacy/sections/FooterCTABand";
+import { HeroSection } from "@/components/legacy/sections/HeroSection";
+import { DifferentiatorCard } from "@/components/legacy/ui/DifferentiatorCard";
+import { SectionLabel } from "@/components/legacy/ui/SectionLabel";
+import { ServiceCard } from "@/components/legacy/ui/ServiceCard";
 import { pageMetadata } from "@/lib/metadata";
 import { basePath, services } from "@/lib/site";
 

@@ -1,8 +1,8 @@
 import { Eye, Handshake, Shield } from "lucide-react";
-import { FooterCTABand } from "@/components/sections/FooterCTABand";
-import { HeroSection } from "@/components/sections/HeroSection";
-import { DifferentiatorCard } from "@/components/ui/DifferentiatorCard";
-import { SectionLabel } from "@/components/ui/SectionLabel";
+import { FooterCTABand } from "@/components/legacy/sections/FooterCTABand";
+import { HeroSection } from "@/components/legacy/sections/HeroSection";
+import { DifferentiatorCard } from "@/components/legacy/ui/DifferentiatorCard";
+import { SectionLabel } from "@/components/legacy/ui/SectionLabel";
 import { pageMetadata } from "@/lib/metadata";
 import { basePath } from "@/lib/site";
 

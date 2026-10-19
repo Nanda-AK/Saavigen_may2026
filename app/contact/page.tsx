@@ -1,5 +1,5 @@
 import { Mail, Phone } from "lucide-react";
-import { SectionLabel } from "@/components/ui/SectionLabel";
+import { SectionLabel } from "@/components/legacy/ui/SectionLabel";
 import { pageMetadata } from "@/lib/metadata";
 import { CONTACT_EMAIL } from "@/lib/site";
 
