@@ -271,53 +271,22 @@
   }
 
   /* ========================================================================
-     Buttons (components/ui/Button.tsx): near-square split button with a fill
-     that sweeps in from the left on hover. Colours come from --btn-* variables
-     set per variant in Button.tsx.
+     Text-link CTAs (Button variant "link" / "link-light", Apple style):
+     the underline draws in from the left on hover, the chevron nudges right.
      ======================================================================== */
-  .btn {
-    position: relative;
-    isolation: isolate;
-    display: inline-flex;
-    align-items: stretch;
-    overflow: hidden;
-    border-radius: 3px;
-    border: 1px solid var(--btn-border, transparent);
-    background: var(--btn-bg);
-    color: var(--btn-fg);
-    transition:
-      color 300ms ease,
-      border-color 300ms ease,
-      transform 120ms ease;
+  .link-cta-label {
+    background: linear-gradient(currentColor, currentColor) left bottom / 0 1px no-repeat;
+    padding-bottom: 1px;
+    transition: background-size 350ms var(--ease-out-soft);
   }
-  .btn-sweep {
-    position: absolute;
-    inset: -1px;
-    z-index: 0;
-    background: var(--btn-sweep);
-    transform: scaleX(0);
-    transform-origin: left center;
-    transition: transform 520ms var(--ease-out-soft);
+  .link-cta:hover .link-cta-label,
+  .link-cta:focus-visible .link-cta-label {
+    background-size: 100% 1px;
   }
-  .btn:hover,
-  .btn:focus-visible {
-    color: var(--btn-fg-hover);
-    border-color: var(--btn-sweep);
+  .link-cta-chevron {
+    transition: transform 300ms var(--ease-out-soft);
   }
-  .btn:hover .btn-sweep,
-  .btn:focus-visible .btn-sweep {
-    transform: scaleX(1);
-  }
-  .btn:active {
-    transform: translateY(1px);
-  }
-  .btn-cell {
-    border-left: 1px solid color-mix(in srgb, currentColor 24%, transparent);
-  }
-  .btn-arrow {
-    transition: transform 320ms var(--ease-out-soft);
-  }
-  .btn:hover .btn-arrow {
+  .link-cta:hover .link-cta-chevron {
     transform: translateX(3px);
   }
 

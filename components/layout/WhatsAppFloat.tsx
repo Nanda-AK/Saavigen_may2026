@@ -11,7 +11,7 @@ export function WhatsAppFloat() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`Message us on WhatsApp: ${site.whatsapp.display}`}
-      className="wa-float fixed right-4 bottom-4 z-50 flex h-14 items-center rounded-[6px] bg-inverse px-4 text-on-inverse shadow-[0_18px_40px_-14px_rgb(0_0_0/0.45)] transition-transform duration-200 hover:-translate-y-0.5 md:right-6 md:bottom-6"
+      className="wa-float fixed right-4 bottom-4 z-50 flex h-14 items-center rounded-[14px] bg-inverse px-4 text-on-inverse shadow-[0_18px_40px_-14px_rgb(0_0_0/0.45)] transition-transform duration-200 hover:-translate-y-0.5 md:right-6 md:bottom-6"
     >
       {/* Label first so it grows out to the left while the icon stays at the right edge */}
       <span aria-hidden="true" className="wa-label overflow-hidden whitespace-nowrap text-[0.9375rem] font-medium">

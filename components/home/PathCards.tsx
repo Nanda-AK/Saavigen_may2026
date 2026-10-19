@@ -41,7 +41,7 @@ export function PathCards() {
           <div className="flex flex-1 flex-col items-start p-8 md:p-10">
             <h3 className="text-[1.75rem] font-semibold leading-tight tracking-[-0.035em] md:text-[2.25rem]">{c.title}</h3>
             <p className={cn("mt-3 max-w-[36ch] text-lead", c.inverse ? "text-on-inverse/70" : "text-ink-muted")}>{c.body}</p>
-            <Button href={c.href} variant={c.inverse ? "contrast" : "primary"} arrow className="mt-8">
+            <Button href={c.href} variant={c.inverse ? "contrast" : "primary"} className="mt-8">
               {c.cta}
             </Button>
           </div>

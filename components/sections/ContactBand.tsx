@@ -18,7 +18,7 @@ export function ContactBand() {
           Tell us what AI you&apos;re running. We&apos;ll show you what SaaviAIDR sees.
         </p>
         <div data-reveal style={{ "--reveal-index": 2 } as React.CSSProperties} className="mt-11 flex justify-center">
-          <Button href={`mailto:${site.email}`} size="lg" arrow wrap>
+          <Button href={`mailto:${site.email}`} size="lg" wrap>
             <Icon icon={Mail} size={18} />
             Email us: {site.email}
           </Button>

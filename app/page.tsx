@@ -74,7 +74,7 @@ export default function HomePage() {
           </div>
         </div>
         <div className="mt-12 flex justify-center">
-          <Button href="/insights/" variant="secondary" arrow>
+          <Button href="/insights/" variant="link">
             View all insights
           </Button>
         </div>

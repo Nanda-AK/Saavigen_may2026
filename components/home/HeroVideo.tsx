@@ -30,7 +30,8 @@ import { cn } from "@/lib/utils";
   Accessibility and performance
   - Pause / play button (auto-rotating content must be pausable).
   - Everything stops while the hero is off screen or the tab is hidden.
-  - prefers-reduced-motion or Save-Data: still poster image, no rotation, no parallax.
+  - prefers-reduced-motion: video still plays, but no zoom, no parallax, no sliding titles.
+  - Save-Data: still poster image, no rotation.
   - Only the <h1> is read by screen readers; the rotating copies are aria-hidden.
 */
 
@@ -61,10 +62,15 @@ export function HeroVideo() {
   const videoNow = useRef(0); // read inside timeouts, which would otherwise see a stale value
   videoNow.current = video;
 
+  // Decision (agreed with SaaviGenAI): the hero video is core content, so it plays
+  // even when the visitor's OS asks for reduced motion. Windows "best performance"
+  // mode and many remote desktops switch that on silently. Reduced-motion visitors
+  // still lose the extras (zoom, pointer drift, sliding titles; see globals.css),
+  // and everyone has the pause button. Only Save-Data (metered connection) shows
+  // the still poster. To go back to stills for reduced motion, add `|| reduce` below.
   useEffect(() => {
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData === true;
-    if (reduce || saveData) {
+    if (saveData) {
       setStillOnly(true);
       setPlaying(false);
     }
@@ -88,7 +94,8 @@ export function HeroVideo() {
   useEffect(() => {
     const root = rootRef.current;
     const media = mediaRef.current;
-    if (!root || !media || stillOnly || !window.matchMedia("(pointer: fine)").matches) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!root || !media || stillOnly || reduce || !window.matchMedia("(pointer: fine)").matches) return;
     const onMove = (e: PointerEvent) => {
       const b = root.getBoundingClientRect();
       media.style.setProperty("--mx", (((e.clientX - b.left) / b.width) * 2 - 1).toFixed(3));
@@ -220,11 +227,11 @@ export function HeroVideo() {
           SaaviAIDR gives security teams visibility, detection and response across every AI agent and chatbot in the
           enterprise.
         </p>
-        <div className="mt-10 flex flex-wrap gap-3">
-          <Button href="/saaviaidr/" variant="light" size="lg" arrow>
+        <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
+          <Button href="/saaviaidr/" variant="light" size="lg">
             Explore SaaviAIDR
           </Button>
-          <Button href="/contact/" variant="light-outline" size="lg">
+          <Button href="/contact/" variant="link-light" size="lg">
             Contact Us
           </Button>
         </div>
@@ -238,7 +245,7 @@ export function HeroVideo() {
               type="button"
               onClick={() => setPlaying((p) => !p)}
               aria-label={playing ? "Pause slideshow" : "Play slideshow"}
-              className="inline-flex size-9 items-center justify-center rounded-[3px] border border-white/30 text-white/85 transition-colors hover:border-white hover:text-white"
+              className="inline-flex size-9 items-center justify-center rounded-[8px] border border-white/30 text-white/85 transition-colors hover:border-white hover:text-white"
             >
               <Icon icon={playing ? Pause : Play} size={15} />
             </button>
