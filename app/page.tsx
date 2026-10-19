@@ -7,8 +7,8 @@ import { WhatWeSecure } from "@/components/sections/WhatWeSecure";
 import { ArticleCard } from "@/components/ui/ArticleCard";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
+import { ScrollPipeline } from "@/components/ui/ScrollPipeline";
 import { Section, SectionHeader } from "@/components/ui/Section";
-import { StepFlow } from "@/components/ui/StepFlow";
 import { getFeaturedArticles } from "@/lib/insights";
 import { pageMetadata } from "@/lib/metadata";
 
@@ -43,11 +43,8 @@ export default function HomePage() {
       {/* 2.2 What we secure + Works with (white) */}
       <WhatWeSecure headline="One platform for every AI in your enterprise" />
 
-      {/* 2.3 How it works (grey) */}
-      <Section tone="sunken" labelledBy="how-title">
-        <SectionHeader id="how-title" title="From blind spot to control" />
-        <StepFlow steps={STEPS} nodeBg="bg-raised" className="mt-16 lg:mt-24" />
-      </Section>
+      {/* 2.3 How it works (grey): pinned while you scroll; the line fills and steps light up */}
+      <ScrollPipeline id="how-title" title="From blind spot to control" steps={STEPS} />
 
       {/* 2.4 Why SaaviAIDR (white) */}
       <Section labelledBy="why-title">

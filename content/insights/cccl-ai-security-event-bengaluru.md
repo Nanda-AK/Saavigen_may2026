@@ -4,7 +4,7 @@ date: 2026-07-12
 author: saavigenai
 category: Company News
 summary: null
-cover: /images/blog3/FirstBlog3.jpg
+cover: /images/insights/cccl-ai-security-event-bengaluru.webp
 source: null
 ---
 

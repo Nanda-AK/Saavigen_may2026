@@ -19,7 +19,7 @@ export type Article = {
   author: string; // key in content/authors (Phase 5)
   category: Category;
   summary: string | null; // null = [PLACEHOLDER] in the plan
-  cover: string; // "generated" = abstract cover drawn by ArticleCover, otherwise an image path
+  cover: string | null; // image path, e.g. /images/insights/<slug>.webp (1200x750)
   source: { name: string; url: string } | null;
   featured: number | null; // 1-3 = order on the Home page
   body: string;
@@ -52,7 +52,7 @@ function parse(file: string): Article {
     author: String(data.author),
     category: data.category,
     summary: data.summary ? String(data.summary) : null,
-    cover: data.cover ? String(data.cover) : "generated",
+    cover: data.cover ? String(data.cover) : null,
     source: data.source?.url ? { name: String(data.source.name), url: String(data.source.url) } : null,
     featured: typeof data.featured === "number" ? data.featured : null,
     body: content.trim(),

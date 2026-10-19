@@ -4,7 +4,7 @@ date: 2026-08-03
 author: nanda-kumar
 category: AI Agent Security
 summary: null
-cover: generated
+cover: /images/insights/claude-went-rogue-or-did-the-sandbox-fail.webp
 source:
   name: LinkedIn
   url: https://www.linkedin.com/posts/nandakumar80_ai-cybersecurity-aiagents-share-7489982114205978624-coqn/

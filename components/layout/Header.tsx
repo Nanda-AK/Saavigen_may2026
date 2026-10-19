@@ -115,7 +115,7 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-1.5">
-          <Button href={contactLink.href} variant={clear ? "light" : "primary"} className="min-h-9 px-4 text-[0.875rem]">
+          <Button href={contactLink.href} variant={clear ? "light" : "primary"} size="sm">
             {contactLink.label}
           </Button>
           <button

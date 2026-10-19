@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { THEME_INIT_SCRIPT } from "@/components/layout/ThemeSwitch";
+import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
 import { RevealObserver } from "@/components/motion/RevealObserver";
 import { siteUrl } from "@/lib/site";
 import "@/styles/globals.css";
@@ -52,6 +53,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Header />
         <main id="main-content">{children}</main>
         <Footer />
+        <WhatsAppFloat />
         <RevealObserver />
       </body>
     </html>

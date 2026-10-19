@@ -4,7 +4,7 @@ date: 2026-04-08
 author: nanda-kumar
 category: AI Agent Security
 summary: null
-cover: generated
+cover: /images/insights/claude-mythos-project-glasswing.webp
 source:
   name: LinkedIn
   url: https://www.linkedin.com/pulse/claude-mythos-project-glasswing-moment-ai-crossed-kirubakaran-akwdc/

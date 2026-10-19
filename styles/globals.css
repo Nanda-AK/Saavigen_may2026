@@ -45,6 +45,20 @@
   --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Registered custom properties, so they can be animated and inherited:
+   --spin turns the "Works with" orbit, --p is the pipeline's scroll progress
+   (defaults to 1 = fully drawn, so browsers without scroll animations show everything). */
+@property --spin {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 0deg;
+}
+@property --p {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+
 :root[data-theme="light"] {
   color-scheme: light;
 }
@@ -257,8 +271,261 @@
   }
 
   /* ========================================================================
+     Buttons (components/ui/Button.tsx): near-square split button with a fill
+     that sweeps in from the left on hover. Colours come from --btn-* variables
+     set per variant in Button.tsx.
+     ======================================================================== */
+  .btn {
+    position: relative;
+    isolation: isolate;
+    display: inline-flex;
+    align-items: stretch;
+    overflow: hidden;
+    border-radius: 3px;
+    border: 1px solid var(--btn-border, transparent);
+    background: var(--btn-bg);
+    color: var(--btn-fg);
+    transition:
+      color 300ms ease,
+      border-color 300ms ease,
+      transform 120ms ease;
+  }
+  .btn-sweep {
+    position: absolute;
+    inset: -1px;
+    z-index: 0;
+    background: var(--btn-sweep);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 520ms var(--ease-out-soft);
+  }
+  .btn:hover,
+  .btn:focus-visible {
+    color: var(--btn-fg-hover);
+    border-color: var(--btn-sweep);
+  }
+  .btn:hover .btn-sweep,
+  .btn:focus-visible .btn-sweep {
+    transform: scaleX(1);
+  }
+  .btn:active {
+    transform: translateY(1px);
+  }
+  .btn-cell {
+    border-left: 1px solid color-mix(in srgb, currentColor 24%, transparent);
+  }
+  .btn-arrow {
+    transition: transform 320ms var(--ease-out-soft);
+  }
+  .btn:hover .btn-arrow {
+    transform: translateX(3px);
+  }
+
+  /* ========================================================================
      Home hero: rotating videos + titles (components/home/HeroVideo.tsx)
      ======================================================================== */
+  /* Pointer parallax: HeroVideo sets --mx / --my (-1..1) on this layer. */
+  .hero-media {
+    transform: translate3d(calc(var(--mx, 0) * -14px), calc(var(--my, 0) * -10px), 0) scale(1.06);
+    transition: transform 900ms var(--ease-out-soft);
+  }
+  /* Slow zoom so even calm footage keeps moving. Every clip carries the animation
+     but only the visible one runs; the others freeze where they are, so a clip
+     never snaps back to normal size while it is fading out. */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-video {
+      animation: hero-zoom 7s ease-in-out infinite alternate paused;
+    }
+    .hero-video[data-active="true"] {
+      animation-play-state: running;
+    }
+  }
+  @keyframes hero-zoom {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.1);
+    }
+  }
+
+  /* ========================================================================
+     "Works with" orbit (components/ui/LogoOrbit.tsx)
+     The vendor cards travel round a tilted 3D ring around the SaaviAIDR mark.
+     --spin turns the whole ring; each card is counter-rotated so it always faces
+     the viewer, and fades with depth (cos of its angle). Hover pauses it.
+     ======================================================================== */
+  .orbit {
+    --r: 8.5rem; /* ring radius */
+    --tilt: -16deg;
+    perspective: 1100px;
+  }
+  @media (min-width: 640px) {
+    .orbit {
+      --r: 13rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .orbit {
+      --r: 20rem;
+    }
+  }
+  .orbit-ring {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform-style: preserve-3d;
+    transform: rotateX(var(--tilt));
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .orbit-ring {
+      animation: orbit-spin 42s linear infinite;
+    }
+    .orbit:hover .orbit-ring,
+    .orbit:focus-within .orbit-ring {
+      animation-play-state: paused;
+    }
+  }
+  @keyframes orbit-spin {
+    to {
+      --spin: 360deg;
+    }
+  }
+  .orbit-path {
+    position: absolute;
+    left: calc(var(--r) * -1);
+    top: calc(var(--r) * -1);
+    width: calc(var(--r) * 2);
+    height: calc(var(--r) * 2);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    transform: rotateX(90deg);
+  }
+  .orbit-item {
+    --a: calc(var(--i) * 360deg / var(--n) + var(--spin));
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translate(-50%, -50%) rotateY(var(--a)) translateZ(var(--r)) rotateY(calc(var(--a) * -1)) rotateX(calc(var(--tilt) * -1));
+    opacity: calc(0.4 + 0.6 * (cos(var(--a)) + 1) / 2);
+  }
+  .orbit-center {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translate(-50%, -50%) rotateX(calc(var(--tilt) * -1));
+  }
+
+  /* Monochrome logo: the SVG is used as a mask and painted with the text colour,
+     so any vendor logo file matches the theme. */
+  .logo-mask {
+    display: inline-block;
+    background-color: currentColor;
+    -webkit-mask: var(--logo) center / contain no-repeat;
+    mask: var(--logo) center / contain no-repeat;
+  }
+
+  /* ========================================================================
+     Scroll-driven pipeline (components/ui/ScrollPipeline.tsx)
+     On desktop, in browsers with scroll-driven animations, the section is
+     taller than the screen and its content sticks; scrolling through it moves
+     --p from 0 to 1, which fills the line and lights each step in turn.
+     Everywhere else (mobile, Firefox, reduced motion) --p stays 1: everything
+     is simply shown, fully lit.
+     ======================================================================== */
+  .pipeline-step {
+    /* 0..1: how "on" this step is, from the scroll progress */
+    --on: clamp(0, (var(--p) * (var(--n) - 1) - var(--i)) * 6 + 1, 1);
+  }
+  .pipeline-node {
+    border-color: color-mix(in srgb, var(--accent) calc(var(--on) * 100%), var(--line));
+    background: color-mix(in srgb, var(--accent-fill) calc(var(--on) * 100%), var(--raised));
+    color: color-mix(in srgb, #fff calc(var(--on) * 100%), var(--ink-muted));
+    transition: transform 300ms var(--ease-out-soft);
+  }
+  .pipeline-step[data-tone="alert"] .pipeline-node {
+    border-color: color-mix(in srgb, var(--alert) calc(var(--on) * 100%), var(--line));
+    background: color-mix(in srgb, var(--alert) calc(var(--on) * 100%), var(--raised));
+    color: color-mix(in srgb, #1d1d1f calc(var(--on) * 100%), var(--ink-muted));
+  }
+  .pipeline-step:hover .pipeline-node {
+    transform: scale(1.08);
+  }
+  .pipeline-text {
+    opacity: calc(0.3 + 0.7 * var(--on));
+    transform: translateY(calc((1 - var(--on)) * 10px));
+  }
+  .pipeline-track {
+    position: absolute;
+    left: 28px;
+    top: 28px;
+    height: 1px;
+    width: calc((100% + 2rem) * (var(--n) - 1) / var(--n)); /* first to last node centre (gap-8) */
+    background: var(--line-strong);
+  }
+  .pipeline-fill {
+    position: absolute;
+    inset: 0;
+    background: var(--accent);
+    transform: scaleX(var(--p));
+    transform-origin: left;
+  }
+  .pipeline-head {
+    position: absolute;
+    top: -4px;
+    left: calc(var(--p) * 100% - 4.5px);
+    width: 9px;
+    height: 9px;
+    border-radius: 999px;
+    background: var(--accent);
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 18%, transparent);
+  }
+  @supports (animation-timeline: view()) {
+    @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+      .pipeline {
+        height: 230vh;
+        view-timeline-name: --pipeline;
+        view-timeline-axis: block;
+      }
+      .pipeline-sticky {
+        position: sticky;
+        top: 0;
+        min-height: 100dvh;
+        display: flex;
+        align-items: center;
+      }
+      .pipeline-progress {
+        animation: pipeline-progress linear both;
+        animation-timeline: --pipeline;
+        animation-range: contain 5% contain 90%;
+      }
+    }
+  }
+  @keyframes pipeline-progress {
+    from {
+      --p: 0;
+    }
+    to {
+      --p: 1;
+    }
+  }
+
+  /* Floating WhatsApp button (components/layout/WhatsAppFloat.tsx):
+     the label slides out on hover / focus. */
+  .wa-label {
+    max-width: 0;
+    opacity: 0;
+    transition:
+      max-width 420ms var(--ease-out-soft),
+      opacity 250ms ease,
+      padding 420ms var(--ease-out-soft);
+  }
+  .wa-float:hover .wa-label,
+  .wa-float:focus-visible .wa-label {
+    max-width: 16rem;
+    opacity: 1;
+    padding-right: 0.875rem;
+  }
   /* Dark wash so white text always reads, strongest on the left where the text sits */
   .hero-scrim {
     background:
@@ -320,159 +587,6 @@
   @keyframes hero-progress {
     to {
       transform: scaleX(1);
-    }
-  }
-
-  /* ========================================================================
-     Vendor marquee (VendorStrip). 4 copies; moving by 25% = one copy.
-     ======================================================================== */
-  .marquee {
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
-    mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
-  }
-  @media (prefers-reduced-motion: no-preference) {
-    .marquee-track {
-      animation: marquee 50s linear infinite;
-    }
-    .marquee:hover .marquee-track,
-    .marquee:focus-within .marquee-track {
-      animation-play-state: paused;
-    }
-  }
-  @keyframes marquee {
-    to {
-      transform: translateX(-25%);
-    }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .marquee {
-      -webkit-mask-image: none;
-      mask-image: none;
-    }
-    .marquee-track {
-      width: auto;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .marquee-track > ul:not(:first-child) {
-      display: none;
-    }
-    .marquee-track > ul {
-      flex-wrap: wrap;
-      justify-content: center;
-      row-gap: 1rem;
-    }
-  }
-
-  /* ========================================================================
-     StepFlow: connectors draw in order, steps light up, then a dot travels.
-     Vertical below 768px, horizontal above. Node is 56px (centre 28px).
-     Resting state = final state; the "before" state needs .reveal-ready.
-     ======================================================================== */
-  .stepflow-link {
-    position: absolute;
-    left: 28px;
-    top: 28px;
-    width: 1px;
-    height: calc(100% + 3rem); /* own height + row gap (gap-12) */
-    background: var(--line-strong);
-    transform-origin: top;
-    transition: transform 700ms var(--ease-out-soft);
-    transition-delay: calc(var(--i) * 380ms + 300ms);
-  }
-  .stepflow-pulse {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-  }
-  .stepflow-pulse::before {
-    content: "";
-    position: absolute;
-    left: -3.5px;
-    top: -3.5px;
-    width: 8px;
-    height: 8px;
-    border-radius: 999px;
-    background: var(--accent);
-  }
-  .stepflow-node {
-    border-color: var(--accent);
-    color: var(--accent-ink);
-    transition:
-      border-color 400ms ease,
-      color 400ms ease,
-      background-color 400ms ease;
-    transition-delay: calc(var(--i) * 380ms + 150ms);
-  }
-  .stepflow-step[data-tone="alert"] .stepflow-node {
-    border-color: var(--alert);
-    color: var(--alert-ink);
-  }
-  .reveal-ready .stepflow:not(.is-revealed) .stepflow-node {
-    border-color: var(--line);
-    color: var(--ink-muted);
-  }
-  .reveal-ready .stepflow:not(.is-revealed) .stepflow-link {
-    transform: scaleY(0);
-  }
-  @media (min-width: 768px) {
-    .stepflow {
-      grid-template-columns: repeat(var(--n), minmax(0, 1fr));
-    }
-    .stepflow-link {
-      width: calc(100% + 2rem); /* own width + column gap (gap-8) */
-      height: 1px;
-      transform-origin: left;
-    }
-    .reveal-ready .stepflow:not(.is-revealed) .stepflow-link {
-      transform: scaleX(0);
-    }
-  }
-  @media (prefers-reduced-motion: no-preference) {
-    .stepflow.is-revealed .stepflow-pulse {
-      animation: step-pulse-y calc((var(--n) - 1) * 1.4s) linear infinite;
-      animation-delay: calc(var(--i) * 1.4s + var(--n) * 380ms + 600ms);
-    }
-    @media (min-width: 768px) {
-      .stepflow.is-revealed .stepflow-pulse {
-        animation-name: step-pulse-x;
-      }
-    }
-  }
-  @keyframes step-pulse-x {
-    0% {
-      opacity: 0;
-      transform: translateX(0);
-    }
-    3% {
-      opacity: 1;
-    }
-    25% {
-      opacity: 1;
-      transform: translateX(100%);
-    }
-    28%,
-    100% {
-      opacity: 0;
-      transform: translateX(100%);
-    }
-  }
-  @keyframes step-pulse-y {
-    0% {
-      opacity: 0;
-      transform: translateY(0);
-    }
-    3% {
-      opacity: 1;
-    }
-    25% {
-      opacity: 1;
-      transform: translateY(100%);
-    }
-    28%,
-    100% {
-      opacity: 0;
-      transform: translateY(100%);
     }
   }
 

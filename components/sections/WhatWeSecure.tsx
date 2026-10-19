@@ -1,9 +1,9 @@
 import { Building2, MessageSquare, Network, SquareCode, UserRound } from "lucide-react";
 import { ComposedIcon } from "@/components/ui/ComposedIcon";
 import { Icon } from "@/components/ui/Icon";
+import { LogoOrbit } from "@/components/ui/LogoOrbit";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { Tile } from "@/components/ui/Tile";
-import { VendorStrip } from "@/components/ui/VendorStrip";
 
 // Plan 2.2 (Home) and 3.2 (Platform reuses the same tiles and logo strip with its own headline).
 const TILES = [
@@ -40,7 +40,7 @@ export function WhatWeSecure({ headline, id = "what-we-secure" }: { headline: st
       </div>
       <div data-reveal className="mt-20 lg:mt-28">
         <p className="text-center text-[0.875rem] font-medium text-ink-muted">Works with</p>
-        <VendorStrip className="mt-8" />
+        <LogoOrbit />
       </div>
     </Section>
   );
