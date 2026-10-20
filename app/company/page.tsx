@@ -1,11 +1,9 @@
-import { Compass, Linkedin, MessageSquareText, Wrench } from "lucide-react";
+import { Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { Container } from "@/components/ui/Container";
 import { CtaBand } from "@/components/ui/CtaBand";
 import { FillText } from "@/components/ui/FillText";
 import { Icon } from "@/components/ui/Icon";
 import { PageHero } from "@/components/ui/PageHero";
-import { Placeholder } from "@/components/ui/Placeholder";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { advisor, founder, foundingMembers, type Person } from "@/content/team";
 import { pageMetadata } from "@/lib/metadata";
@@ -17,12 +15,6 @@ export const metadata = pageMetadata(
   "SaaviGenAI builds SaaviAIDR, a detection and response platform for enterprise AI. Meet our founder, advisor and founding members.",
   "/company/",
 );
-
-const PRINCIPLES = [
-  { title: "Practical", body: "Controls that teams can run every day.", icon: Wrench },
-  { title: "Clear", body: "Plain language, with no jargon or fear.", icon: MessageSquareText },
-  { title: "Practitioner-led", body: "Built from experience of operating real systems.", icon: Compass },
-];
 
 function LinkedInLink({ href, name, className }: { href: string; name: string; className?: string }) {
   return (
@@ -140,36 +132,7 @@ export default function CompanyPage() {
         </ul>
       </Section>
 
-      {/* 7.6 Our principles */}
-      <Section tone="sunken" labelledBy="principles-title">
-        <SectionHeader id="principles-title" title="How we work" />
-        <p className="mt-6 text-center">
-          <Placeholder kind="TO CONFIRM" note="These are draft principles based on the mission text on the current website. Please approve or replace them." />
-        </p>
-        <Container className="mt-14 max-w-5xl px-0 sm:px-0 lg:mt-20 lg:px-0">
-          <ol>
-            {PRINCIPLES.map((p, i) => (
-              <li
-                key={p.title}
-                data-reveal
-                style={{ "--reveal-index": i } as React.CSSProperties}
-                className="group grid items-baseline gap-3 border-t border-line py-10 last:border-b md:grid-cols-[4rem_1fr_1fr] md:gap-8"
-              >
-                <span className="font-mono text-label text-ink-muted">{String(i + 1).padStart(2, "0")}</span>
-                <h3 className="flex items-center gap-4 text-[2.25rem] font-semibold tracking-[-0.045em] text-ink transition-transform duration-500 group-hover:translate-x-2 md:text-[3rem]">
-                  {p.title}
-                </h3>
-                <p className="flex items-center gap-3 text-lead text-ink-muted">
-                  <span className="text-ink">
-                    <Icon icon={p.icon} size={22} />
-                  </span>
-                  {p.body}
-                </p>
-              </li>
-            ))}
-          </ol>
-        </Container>
-      </Section>
+      {/* 7.6 "Our principles" (How we work) was removed at the client's request. */}
 
       {/* 7.7 Closing call to action */}
       <CtaBand id="company-cta" title="Work with us" line="Talk to us about SaaviAIDR or our managed services.">
