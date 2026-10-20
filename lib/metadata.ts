@@ -26,7 +26,7 @@ export function pageMetadata(title: string, description: string | undefined, pat
     title: { absolute: title },
     description,
     alternates: { canonical: url },
-    // Preview builds (npm run build:preview sets NEXT_PUBLIC_NOINDEX=1) keep every page out of search engines.
+    // Temporary copies of the site (e.g. a Vercel test deploy) set NEXT_PUBLIC_NOINDEX=1 to keep every page out of search engines.
     robots: PREVIEW ? { index: false, follow: false } : options.noindex ? { index: false, follow: true } : undefined,
     openGraph: {
       title,

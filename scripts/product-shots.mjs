@@ -7,7 +7,7 @@
 //    and redrawn with sample text in the same colour and size (REPLACEMENTS below).
 // 2. Export the full overview + three crops (one per dashboard panel) as WebP.
 //
-// Source: assets/source/product/dashboard-overview.png (1900x907; never published).
+// Source: assets/source/product/dashboard-overview.png (1900x907; git-ignored, never published).
 // To use a new screenshot: replace the source file, check the REPLACEMENTS boxes still
 // line up (x, y = left / text baseline in source pixels), and re-run.
 import { mkdir, stat } from "node:fs/promises";

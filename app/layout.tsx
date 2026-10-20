@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   title: "SaaviAIDR | AI Detection and Response | SaaviGenAI",
   description:
     "SaaviAIDR gives security teams visibility, detection and response across the AI agents and chatbots in their organisation. Self-hosted, with managed service options.",
-  // Preview builds (npm run build:preview) must never be indexed.
+  // Temporary copies of the site (NEXT_PUBLIC_NOINDEX=1, e.g. set in Vercel) must never be indexed.
   ...(process.env.NEXT_PUBLIC_NOINDEX === "1" ? { robots: { index: false, follow: false } } : {}),
 };
 

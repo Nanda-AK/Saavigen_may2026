@@ -2,7 +2,7 @@
 module.exports = {
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://saavigen.ai",
   generateRobotsTxt: true,
-  // Preview builds (npm run build:preview) tell every crawler to stay out.
+  // Temporary copies of the site (NEXT_PUBLIC_NOINDEX=1, e.g. set in Vercel) tell every crawler to stay out.
   ...(process.env.NEXT_PUBLIC_NOINDEX === "1" ? { robotsTxtOptions: { policies: [{ userAgent: "*", disallow: "/" }] } } : {}),
   outDir: "out",
   trailingSlash: true,
