@@ -12,7 +12,7 @@ copies or implying endorsement by the people/brands shown.
 
 | File | Pexels video | Pexels ID | Page |
 |---|---|---|---|
-| ai-01-neural-nodes | Futuristic network of glowing connections | 35008786 | https://www.pexels.com/video/35008786/ |
+| ai-01-neural-tunnel | Flight through a glowing neural tunnel (replaced 35008786, Oct 2026) | 18333010 | https://www.pexels.com/video/18333010/ |
 | ai-02-chip-data | Futuristic circuit board with glowing microchip | 36382300 | https://www.pexels.com/video/36382300/ |
 | ai-03-threat-interface | Futuristic neon digital interface display | 29844748 | https://www.pexels.com/video/29844748/ |
 | ai-04-neural-field | Futuristic neural network animation with glowing nodes | 33164273 | https://www.pexels.com/video/33164273/ |

@@ -32,7 +32,7 @@ import { cn } from "@/lib/utils";
 export const VIDEO_MS = 5000;
 
 const VIDEOS = [
-  "ai-01-neural-nodes",
+  "ai-01-neural-tunnel",
   "ai-02-chip-data",
   "ai-03-threat-interface",
   "ai-04-neural-field",
