@@ -162,11 +162,12 @@ export function Header() {
         aria-label="Menu"
         inert={!open}
         className={cn(
-          "fixed inset-y-0 right-0 z-[71] flex w-[min(88vw,24rem)] flex-col bg-canvas text-ink shadow-[0_0_60px_rgb(0_0_0/0.25)] transition-[transform,visibility] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] lg:hidden",
+          "fixed inset-y-0 right-0 z-[71] flex w-[min(84vw,21rem)] flex-col bg-canvas text-ink shadow-[0_0_60px_rgb(0_0_0/0.25)] transition-[transform,visibility] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] lg:hidden",
           open ? "visible translate-x-0" : "invisible translate-x-full",
         )}
       >
-        <div className="flex h-16 shrink-0 items-center justify-between border-b border-line px-5">
+        {/* Sized for phones: 56px top bar, 20px links in 52px rows, regular button. */}
+        <div className="flex h-14 shrink-0 items-center justify-between border-b border-line pr-2 pl-5">
           <Link href="/" aria-label="SaaviGenAI home" onClick={() => close()} className="rounded-[8px]">
             <Logo />
           </Link>
@@ -177,11 +178,11 @@ export function Header() {
             aria-label="Close menu"
             className="inline-flex size-11 items-center justify-center rounded-full hover:bg-sunken"
           >
-            <Icon icon={X} size={22} />
+            <Icon icon={X} size={20} />
           </button>
         </div>
 
-        <nav aria-label="Primary" className="flex-1 overflow-y-auto px-5 py-4">
+        <nav aria-label="Primary" className="flex-1 overflow-y-auto px-5 pt-2 pb-6">
           <ul>
             {primaryNav.map((item, i) => {
               const active = isActive(normalized, item.href);
@@ -195,37 +196,37 @@ export function Header() {
                     href={item.href}
                     aria-current={active ? "page" : undefined}
                     onClick={() => close()}
-                    className="group flex items-center justify-between py-5"
+                    className="group flex min-h-[3.25rem] items-center justify-between py-3"
                   >
-                    <span className={cn("text-[1.75rem] font-semibold tracking-[-0.035em]", active ? "text-ink" : "text-ink-soft")}>{item.label}</span>
+                    <span className={cn("text-[1.25rem] tracking-[-0.02em]", active ? "font-semibold text-ink" : "font-medium text-ink-soft")}>{item.label}</span>
                     <span className={cn("transition-transform duration-300 group-hover:translate-x-1", active ? "text-ink" : "text-ink-muted")}>
-                      <Icon icon={ArrowRight} size={22} />
+                      <Icon icon={ArrowRight} size={18} />
                     </span>
                   </Link>
                 </li>
               );
             })}
           </ul>
-          <Button href={contactLink.href} size="lg" className="mt-8 w-full" onClick={() => close()}>
+          <Button href={contactLink.href} size="md" className="mt-6 w-full" onClick={() => close()}>
             {contactLink.label}
           </Button>
         </nav>
 
-        <ul className="shrink-0 space-y-3 border-t border-line px-5 py-6 text-[0.9375rem] text-ink-muted">
+        <ul className="shrink-0 space-y-2.5 border-t border-line px-5 py-5 text-[0.875rem] text-ink-muted">
           <li>
-            <a href={`mailto:${site.email}`} className="inline-flex items-center gap-3 hover:text-ink">
-              <Icon icon={Mail} size={17} /> {site.email}
+            <a href={`mailto:${site.email}`} className="inline-flex items-center gap-2.5 hover:text-ink">
+              <Icon icon={Mail} size={16} /> {site.email}
             </a>
           </li>
           <li>
-            <a href={site.whatsapp.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 hover:text-ink">
-              <Icon icon={MessageCircle} size={17} /> <span className="sr-only">WhatsApp: </span>
+            <a href={site.whatsapp.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2.5 hover:text-ink">
+              <Icon icon={MessageCircle} size={16} /> <span className="sr-only">WhatsApp: </span>
               {site.whatsapp.display}
             </a>
           </li>
           <li>
-            <a href={site.linkedin.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 hover:text-ink">
-              <Icon icon={Linkedin} size={17} /> <span className="sr-only">LinkedIn: </span>
+            <a href={site.linkedin.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2.5 hover:text-ink">
+              <Icon icon={Linkedin} size={16} /> <span className="sr-only">LinkedIn: </span>
               {site.linkedin.display}
             </a>
           </li>

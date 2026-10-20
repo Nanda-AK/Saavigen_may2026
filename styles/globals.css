@@ -770,13 +770,17 @@
   .prose-legal > :first-child {
     margin-top: 0;
   }
-  /* Document look: justified paragraphs and list items. No automatic hyphenation,
+  /* Document look: justified paragraphs and list items from tablet width up.
+     On phones the column is too narrow for justified text (it leaves big gaps
+     between words), so it stays left-aligned there. No automatic hyphenation,
      so words are never split with a dash at line ends. */
-  .prose-legal p,
-  .prose-legal li {
-    text-align: justify;
-    text-justify: inter-word;
-    hyphens: manual;
+  @media (min-width: 768px) {
+    .prose-legal p,
+    .prose-legal li {
+      text-align: justify;
+      text-justify: inter-word;
+      hyphens: manual;
+    }
   }
   .prose-article img {
     width: 100%;
