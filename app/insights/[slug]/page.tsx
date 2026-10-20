@@ -8,7 +8,6 @@ import { ArticleCard } from "@/components/ui/ArticleCard";
 import { Container } from "@/components/ui/Container";
 import { Icon } from "@/components/ui/Icon";
 import { PageHero } from "@/components/ui/PageHero";
-import { PlaceholderBlock } from "@/components/ui/Placeholder";
 import { authors } from "@/content/team";
 import { formatDate, getAllArticles, getArticle, getRelated, renderMarkdown } from "@/lib/insights";
 import { pageMetadata } from "@/lib/metadata";
@@ -84,15 +83,18 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
         ) : null}
 
         <Container className="mt-14 max-w-[42rem] md:mt-20">
+          {/* Every article has full text. If a future one ships without a body, show its summary
+              (and the "Read the original" link below) instead of an empty page. */}
           {html ? (
             <div className="prose-article" dangerouslySetInnerHTML={{ __html: html }} />
-          ) : (
-            <PlaceholderBlock kind="PLACEHOLDER" note="Full article text. To confirm whether this article is republished in full on the new site or links out to its original source." />
-          )}
+          ) : article.summary ? (
+            <p className="text-lead text-ink-soft">{article.summary}</p>
+          ) : null}
 
+          {/* "First shared": the site versions are written up from the author's shorter LinkedIn posts. */}
           {article.source ? (
             <p className="mt-12 border-t border-line pt-6 text-ink-muted">
-              Originally published on {article.source.name}, {formatDate(article.date)}.{" "}
+              First shared on {article.source.name}, {formatDate(article.date)}.{" "}
               <a href={article.source.url} target="_blank" rel="noopener noreferrer" className="link-cta group inline-flex items-center gap-1 font-medium text-ink">
                 <span className="link-cta-label">Read the original</span>
                 <Icon icon={ArrowUpRight} size={16} />
