@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { formatDate, type Article } from "@/lib/insights";
+import { formatDate, type Article } from "@/lib/article-utils";
 import { cn } from "@/lib/utils";
 
 type Layout = "feature" | "row" | "stack";

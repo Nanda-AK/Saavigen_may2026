@@ -1,5 +1,6 @@
 // Reads the Insights articles from content/insights/*.md at build time.
 // Nothing here ships to the browser (static export renders it into HTML).
+// Browser-safe types and helpers live in lib/article-utils.ts.
 //
 // Each file's frontmatter is checked when the site builds. A typo in a
 // category or date stops the build with a message naming the file, instead
@@ -7,23 +8,10 @@
 import { readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
+import { marked } from "marked";
+import { CATEGORIES, readingMinutes, type Article, type GalleryImage } from "@/lib/article-utils";
 
-// Plan 5.2 categories ([TO CONFIRM] final names). The listing filter uses this order.
-export const CATEGORIES = ["AI Agent Security", "AI Governance", "Industry Analysis", "Company News"] as const;
-export type Category = (typeof CATEGORIES)[number];
-
-export type Article = {
-  slug: string;
-  title: string;
-  date: string; // ISO yyyy-mm-dd
-  author: string; // key in content/authors (Phase 5)
-  category: Category;
-  summary: string | null; // null = [PLACEHOLDER] in the plan
-  cover: string | null; // image path, e.g. /images/insights/<slug>.webp (1200x750)
-  source: { name: string; url: string } | null;
-  featured: number | null; // 1-3 = order on the Home page
-  body: string;
-};
+export { CATEGORIES, formatDate, type Article, type Category } from "@/lib/article-utils";
 
 const DIR = path.join(process.cwd(), "content", "insights");
 
@@ -45,6 +33,14 @@ function parse(file: string): Article {
   if (!CATEGORIES.includes(data.category)) {
     fail(file, `category "${data.category}" must be one of: ${CATEGORIES.join(", ")}`);
   }
+  // Strip HTML comments (editor notes) so they never count as article text.
+  const body = content.replace(/<!--[\s\S]*?-->/g, "").trim();
+  const gallery: GalleryImage[] = Array.isArray(data.gallery)
+    ? data.gallery.map((g: { src?: string; alt?: string }, i: number) => {
+        if (!g?.src || !g?.alt) fail(file, `gallery item ${i + 1} needs both "src" and "alt"`);
+        return { src: String(g.src), alt: String(g.alt) };
+      })
+    : [];
   return {
     slug: file.replace(/\.md$/, ""),
     title: String(data.title),
@@ -55,7 +51,9 @@ function parse(file: string): Article {
     cover: data.cover ? String(data.cover) : null,
     source: data.source?.url ? { name: String(data.source.name), url: String(data.source.url) } : null,
     featured: typeof data.featured === "number" ? data.featured : null,
-    body: content.trim(),
+    gallery,
+    body,
+    readingMinutes: readingMinutes(body),
   };
 }
 
@@ -67,6 +65,10 @@ export function getAllArticles(): Article[] {
     .sort((a, b) => b.date.localeCompare(a.date));
 }
 
+export function getArticle(slug: string): Article | undefined {
+  return getAllArticles().find((a) => a.slug === slug);
+}
+
 /** The three Home page cards (plan 2.6), in their `featured` order. */
 export function getFeaturedArticles(): Article[] {
   return getAllArticles()
@@ -75,12 +77,13 @@ export function getFeaturedArticles(): Article[] {
     .slice(0, 3);
 }
 
-/** "August 3, 2026", the format used in the content plan. */
-export function formatDate(iso: string) {
-  return new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    timeZone: "UTC",
-  });
+/** Plan 6 "Related articles: three cards": same category first, then the newest others. */
+export function getRelated(article: Article, count = 3): Article[] {
+  const others = getAllArticles().filter((a) => a.slug !== article.slug);
+  return [...others.filter((a) => a.category === article.category), ...others.filter((a) => a.category !== article.category)].slice(0, count);
+}
+
+/** Markdown -> HTML at build time. Content is our own (content/insights), so raw HTML is allowed. */
+export function renderMarkdown(markdown: string): string {
+  return marked.parse(markdown, { async: false, gfm: true }) as string;
 }

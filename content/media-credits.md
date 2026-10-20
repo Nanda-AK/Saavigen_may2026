@@ -46,7 +46,7 @@ Pexels photos, 1280x800 WebP, metadata stripped:
 | claude-went-rogue-or-did-the-sandbox-fail.webp | Frame from Mixkit 46635 "Programming and coding new technologies" |
 | claude-mythos-project-glasswing.webp | Frame from Mixkit 47050 "Close up of fiber optics in a server room" |
 | will-indian-banks-trust-claude-with-core-banking-data.webp | Frame from Mixkit 4809 "Business people at work meeting" |
-| cccl-ai-security-event-bengaluru.webp | SaaviGenAI's own event photo (public/images/ThumbnailArticle3.jpeg) |
+| cccl-ai-security-event-bengaluru.webp | SaaviGenAI's own event photo (source: assets/source/cccl/ThumbnailArticle3.jpeg) |
 
 Mixkit (https://mixkit.co) free licence: **TO CONFIRM** at https://mixkit.co/license/.
 

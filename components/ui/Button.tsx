@@ -57,9 +57,11 @@ export function Button(props: AsLink | AsButton) {
   const { variant = "primary", size = "md", wrap = false, className, children } = props;
   const isLink = variant === "link" || variant === "link-light";
 
+  // Links are inline text (not flex), so a long label wraps like a sentence and
+  // the chevron stays attached to the last word on narrow screens.
   const classes = isLink
     ? cn(
-        "link-cta group inline-flex items-center gap-0.5 font-medium tracking-[-0.01em]",
+        "link-cta group inline text-center font-medium tracking-[-0.01em]",
         variant === "link" ? "text-accent-ink" : "text-white",
         linkSizes[size],
         className,
@@ -75,7 +77,7 @@ export function Button(props: AsLink | AsButton) {
   const content = isLink ? (
     <>
       <span className="link-cta-label">{children}</span>
-      <ChevronRight width={18} height={18} strokeWidth={2} aria-hidden="true" className="link-cta-chevron shrink-0" />
+      <ChevronRight width={18} height={18} strokeWidth={2} aria-hidden="true" className="link-cta-chevron ml-0.5 inline-block align-[-3px]" />
     </>
   ) : (
     children

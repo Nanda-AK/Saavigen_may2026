@@ -11,9 +11,11 @@ import { Logo } from "@/components/ui/Logo";
 import { contactLink, primaryNav } from "@/content/site";
 import { cn } from "@/lib/utils";
 
-// Pages whose first section is a dark full-bleed hero (marked data-hero="dark").
+// Pages whose first section is a dark full-bleed video hero (marked data-hero="dark").
 // On these the header starts transparent with white text, so it sits on the video.
-const DARK_HERO_PAGES = ["/"];
+// (This list only sets the first paint; after loading, the header checks the page
+// itself for data-hero="dark", so a page missing here just shows a brief flash.)
+const DARK_HERO_PAGES = ["/", "/saaviaidr/", "/managed-services/", "/insights/", "/company/", "/contact/", "/privacy/", "/terms/"];
 
 // "/insights/some-article/" should still highlight "Insights".
 const isActive = (pathname: string, href: string) => pathname === href || pathname.startsWith(href);
@@ -24,7 +26,7 @@ export function Header() {
   const pathname = usePathname() ?? "/";
   const normalized = pathname.endsWith("/") ? pathname : `${pathname}/`;
   const [open, setOpen] = useState(false);
-  const [overHero, setOverHero] = useState(DARK_HERO_PAGES.includes(pathname));
+  const [overHero, setOverHero] = useState(DARK_HERO_PAGES.includes(normalized) || normalized.startsWith("/insights/"));
   const toggleRef = useRef<HTMLButtonElement>(null);
 
   const close = useCallback((returnFocus = false) => {

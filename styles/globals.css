@@ -589,6 +589,187 @@
     }
   }
 
+  /* ========================================================================
+     Inner-page hero (components/ui/PageHero.tsx): text rises in on load
+     ======================================================================== */
+  .rise-in > * {
+    animation: fade-up 900ms var(--ease-out-soft) both;
+  }
+  .rise-in > :nth-child(2) {
+    animation-delay: 120ms;
+  }
+  .rise-in > :nth-child(3) {
+    animation-delay: 240ms;
+  }
+  .rise-in > :nth-child(4) {
+    animation-delay: 360ms;
+  }
+
+  /* ========================================================================
+     Scroll-filled statement (components/ui/FillText.tsx), OpenAI-style:
+     each word goes from grey to full ink as it scrolls through the screen.
+     Scroll-linked (only moves when the visitor scrolls), so marked .motion-ok.
+     Browsers without scroll-driven animations show the text fully inked.
+     ======================================================================== */
+  .fill-word {
+    color: var(--ink);
+  }
+  @supports (animation-timeline: view()) {
+    .fill-word {
+      color: color-mix(in srgb, var(--ink) 22%, transparent);
+      animation: word-fill linear both;
+      animation-timeline: view();
+      animation-range: entry 80% cover 42%;
+    }
+  }
+  @keyframes word-fill {
+    to {
+      color: var(--ink);
+    }
+  }
+
+  /* Big media "lifts into place" as it scrolls in (Apple / OpenAI product shots) */
+  @supports (animation-timeline: view()) {
+    .lift-in {
+      animation: lift-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 35%;
+    }
+  }
+  @keyframes lift-in {
+    from {
+      transform: scale(0.9) translateY(40px);
+      opacity: 0.4;
+    }
+  }
+
+  /* Article reading progress: a hairline under the header that fills as you read */
+  .read-progress {
+    transform-origin: left;
+    transform: scaleX(0);
+  }
+  @supports (animation-timeline: scroll()) {
+    .read-progress {
+      animation: read-progress linear both;
+      animation-timeline: scroll(root);
+    }
+  }
+  @keyframes read-progress {
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  /* Team photos: greyscale at rest, full colour on hover / focus */
+  .portrait img {
+    filter: grayscale(1) contrast(1.05);
+    transition:
+      filter 700ms var(--ease-out-soft),
+      transform 900ms var(--ease-out-soft);
+  }
+  .portrait:hover img,
+  .portrait:focus-within img {
+    filter: none;
+    transform: scale(1.03);
+  }
+
+  /* Sticky chapter list (components/ui/ChapterList.tsx): the item nearest the
+     middle of the screen is "active"; the rest fade back */
+  .chapter {
+    opacity: 0.38;
+    transition: opacity 500ms var(--ease-out-soft);
+  }
+  .chapter[data-active="true"] {
+    opacity: 1;
+  }
+  .chapter-bar {
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 600ms var(--ease-out-soft);
+  }
+  .chapter[data-active="true"] .chapter-bar {
+    transform: scaleY(1);
+  }
+
+  /* Architecture diagram: the SaaviAIDR stages light up in turn (Collect,
+     Unify, Detect, Respond) on a 6 s loop; Detect lights amber */
+  @media (prefers-reduced-motion: no-preference) {
+    .arch-stage {
+      animation: arch-stage 6s linear infinite;
+      animation-delay: calc(var(--i) * 1.5s);
+    }
+  }
+  @keyframes arch-stage {
+    0%,
+    22% {
+      background-color: var(--stage-on, var(--inverse));
+      color: var(--stage-on-text, var(--on-inverse));
+    }
+    27%,
+    100% {
+      background-color: transparent;
+      color: inherit;
+    }
+  }
+
+  /* Long-form article typography (components/insights/ArticleBody.tsx) */
+  .prose-article {
+    font-size: 1.1875rem;
+    line-height: 1.7;
+    color: var(--ink-soft);
+  }
+  .prose-article > * + * {
+    margin-top: 1.25em;
+  }
+  .prose-article h2 {
+    margin-top: 2.2em;
+    font-size: clamp(1.625rem, 1.4rem + 0.9vw, 2.125rem);
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+  .prose-article h3 {
+    margin-top: 1.8em;
+    font-size: 1.375rem;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .prose-article a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--line-strong);
+    text-underline-offset: 4px;
+    transition: text-decoration-color 200ms ease;
+  }
+  .prose-article a:hover {
+    text-decoration-color: var(--ink);
+  }
+  .prose-article strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .prose-article ul {
+    list-style: disc;
+    padding-left: 1.25em;
+  }
+  .prose-article li + li {
+    margin-top: 0.5em;
+  }
+  .prose-article img {
+    width: 100%;
+    border-radius: 1.25rem;
+    margin-block: 2em;
+  }
+  .prose-article blockquote {
+    margin-block: 2em;
+    border-left: 2px solid var(--ink);
+    padding-left: 1.25em;
+    font-size: 1.5rem;
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+
   /* Faint dot grid (diagram panels) */
   .dot-grid {
     background-image: radial-gradient(circle at 1px 1px, var(--line) 1px, transparent 0);
@@ -610,37 +791,3 @@
     }
   }
 } /* end @layer components */
-
-/* ==========================================================================
-   LEGACY (old site pages only). Delete in Phase 7 together with
-   components/legacy/ and the old routes. Do not use in new components.
-   ========================================================================== */
-:root {
-  --bg-base: #ffffff;
-  --bg-surface: #f8faff;
-  --text-primary: #1b2a4a;
-  --text-secondary: #546480;
-  --text-muted: #8fa0b8;
-  --text-on-dark: #c4cedc;
-  --border-default: #e0e6ef;
-  --border-subtle: #eef1f7;
-}
-
-@theme inline {
-  --color-base: var(--bg-base);
-  --color-surface: var(--bg-surface);
-  --color-navy: #1b2a4a;
-  --color-navy-light: #2d3f6b;
-  --color-gold: #c9a84c;
-  --color-gold-dim: rgba(201, 168, 76, 0.15);
-  --color-teal: #2d7d9a;
-  --color-teal-dark: #1f5a73;
-  --color-primary: var(--text-primary);
-  --color-secondary: var(--text-secondary);
-  --color-muted: var(--text-muted);
-  --color-on-dark: var(--text-on-dark);
-  --color-default: var(--border-default);
-  --color-subtle: var(--border-subtle);
-  --color-error: #dc2626;
-  --color-success: #16a34a;
-}

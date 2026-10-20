@@ -1,77 +1,64 @@
-import dynamic from "next/dynamic";
-import { FooterCTABand } from "@/components/legacy/sections/FooterCTABand";
-import { HeroSection } from "@/components/legacy/sections/HeroSection";
-import { SectionLabel } from "@/components/legacy/ui/SectionLabel";
+import { Linkedin } from "lucide-react";
+import { CategoryFilter } from "@/components/insights/CategoryFilter";
+import { ContactBand } from "@/components/sections/ContactBand";
+import { Button } from "@/components/ui/Button";
+import { Icon } from "@/components/ui/Icon";
+import { PageHero } from "@/components/ui/PageHero";
+import { Placeholder } from "@/components/ui/Placeholder";
+import { Section } from "@/components/ui/Section";
+import { site } from "@/content/site";
+import { authors } from "@/content/team";
+import { getAllArticles } from "@/lib/insights";
 import { pageMetadata } from "@/lib/metadata";
 
-const WaitlistForm = dynamic(
-  () => import("@/components/legacy/sections/WaitlistForm").then((m) => m.WaitlistForm),
-);
-
+// All copy on this page comes from SaaviGenAI_Website_Content_Plan.md section 5.
 export const metadata = pageMetadata(
-  "Insights | SaaviGenAI",
-  "Security and AI governance insights from SaaviGenAI. Articles are coming soon; contact us to be notified.",
-  "/insights",
+  "Insights | AI Security Articles | SaaviGenAI",
+  "Articles and analysis on AI security, AI agents and AI governance from the SaaviGenAI team.",
+  "/insights/",
 );
 
 export default function InsightsPage() {
+  const articles = getAllArticles();
+  const authorNames = Object.fromEntries(Object.entries(authors).map(([k, a]) => [k, a.name]));
+
   return (
     <>
-      <HeroSection
-        label="Insights"
-        heading="Practical thinking on security and AI governance."
-        subheading="We are preparing field notes, guidance, and perspectives for teams securing AI-enabled organizations."
+      {/* 5.1 Hero */}
+      <PageHero
+        video="page-insights"
+        size="md"
+        title="Insights on AI security"
+        sub="Practical analysis of AI security, AI agents and governance for security leaders and AI teams."
       />
 
-      <section className="bg-base py-12 md:py-16">
-        <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
-          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-            <SectionLabel
-              label="Coming Soon"
-              heading="Insights are being prepared."
-              subheading="Practical guidance on security operations, AI governance, and safe adoption is being prepared for publication."
-            />
-            <div className="rounded-2xl border border-default bg-surface p-6 md:p-8">
-              <h2 className="font-display text-2xl font-bold text-primary">
-                Want to be notified?
-              </h2>
-              <p className="mt-3 text-sm leading-relaxed text-secondary">
-                Share your email to register interest in upcoming SaaviGenAI
-                insights.
-              </p>
-              <WaitlistForm />
-            </div>
-          </div>
+      {/* 5.2 Category filter + 5.3 Article listing */}
+      <Section labelledBy="articles-title">
+        <h2 id="articles-title" className="sr-only">
+          Articles
+        </h2>
+        <p className="mb-6 text-[0.875rem]">
+          <Placeholder kind="TO CONFIRM" note="Final category names." />
+        </p>
+        <CategoryFilter articles={articles} authorNames={authorNames} />
+      </Section>
+
+      {/* 5.4 Follow prompt */}
+      <section aria-label="Follow SaaviGenAI" className="border-t border-line bg-canvas">
+        <div className="mx-auto flex max-w-page flex-col items-start justify-between gap-6 px-4 py-14 sm:flex-row sm:items-center sm:px-8 lg:px-12">
+          <p className="flex items-center gap-4 text-[1.5rem] font-semibold tracking-[-0.03em] text-ink">
+            <span className="inline-flex size-12 items-center justify-center rounded-full bg-sunken">
+              <Icon icon={Linkedin} size={20} />
+            </span>
+            Follow SaaviGenAI on LinkedIn for new articles.
+          </p>
+          <Button href={site.linkedin.href} variant="primary">
+            Follow on LinkedIn
+          </Button>
         </div>
       </section>
 
-      <section className="bg-surface py-12 md:py-16">
-        <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
-          <SectionLabel
-            label="Future Topics"
-            heading="What we plan to cover."
-          />
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {[
-              "Managed security operations for lean teams",
-              "AI detection and response patterns",
-              "Practical AI governance and workforce enablement",
-            ].map((topic) => (
-              <article
-                key={topic}
-                className="rounded-2xl border border-default bg-base p-6 md:p-8"
-              >
-                <div className="mb-4 h-0.5 w-8 bg-gold" />
-                <h3 className="font-display text-xl font-bold text-primary">
-                  {topic}
-                </h3>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <FooterCTABand />
+      <ContactBand />
     </>
   );
 }

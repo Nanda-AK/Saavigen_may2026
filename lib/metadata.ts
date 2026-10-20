@@ -17,7 +17,7 @@ type Options = {
  * Per-page SEO tags. `title` is used exactly as written (titles in the content
  * plan already end in "| SaaviGenAI"), so no template is appended.
  */
-export function pageMetadata(title: string, description: string, path = "/", options: Options = {}): Metadata {
+export function pageMetadata(title: string, description: string | undefined, path = "/", options: Options = {}): Metadata {
   const url = new URL(canonicalPath(path), siteUrl).toString();
 
   return {
