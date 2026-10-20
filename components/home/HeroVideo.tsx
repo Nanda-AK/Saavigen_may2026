@@ -1,11 +1,9 @@
 "use client";
 
-import { Pause, Play } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/Eyebrow";
-import { Icon } from "@/components/ui/Icon";
 import { cn } from "@/lib/utils";
 
 /*
@@ -22,7 +20,9 @@ import { cn } from "@/lib/utils";
   current and the next clip are loaded.
 
   Accessibility and performance
-  - Pause / play button (auto-changing content must be pausable).
+  - No pause button: SaaviGenAI asked for it to be removed (Oct 2026). Note that
+    WCAG 2.2.2 asks for a way to pause motion that runs longer than 5 s; the slide
+    pills still let visitors pick a clip.
   - Everything stops while the hero is off screen or the tab is hidden.
   - Reduced motion (agreed with SaaviGenAI): video still plays, but no zoom and no
     parallax. Windows "best performance" mode switches reduced motion on silently.
@@ -44,7 +44,6 @@ const src = (name: string, ext: "mp4" | "jpg") => `/videos/${name}.${ext}`;
 
 export function HeroVideo() {
   const [video, setVideo] = useState(0);
-  const [playing, setPlaying] = useState(true); // the visitor's pause / play choice
   const [stillOnly, setStillOnly] = useState(false); // Save-Data
   const [visible, setVisible] = useState(true);
   const rootRef = useRef<HTMLElement>(null);
@@ -57,10 +56,7 @@ export function HeroVideo() {
   // To also show stills for reduced motion, add `|| reduce` here.
   useEffect(() => {
     const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData === true;
-    if (saveData) {
-      setStillOnly(true);
-      setPlaying(false);
-    }
+    if (saveData) setStillOnly(true);
   }, []);
 
   // Pause everything while the hero is off screen or the tab is hidden.
@@ -100,7 +96,7 @@ export function HeroVideo() {
     };
   }, [stillOnly]);
 
-  const running = playing && visible && !stillOnly;
+  const running = visible && !stillOnly;
 
   // Play the current clip from the start, pause the rest, and preload the next one.
   useEffect(() => {
@@ -194,19 +190,9 @@ export function HeroVideo() {
         </div>
       </Container>
 
-      {/* Clip controls (bottom left; the WhatsApp button lives bottom right) */}
+      {/* Clip pills (bottom left; the WhatsApp button lives bottom right) */}
       <Container className="pointer-events-none absolute inset-x-0 bottom-0 pb-8">
-        <div className="pointer-events-auto flex items-center gap-4">
-          {!stillOnly ? (
-            <button
-              type="button"
-              onClick={() => setPlaying((p) => !p)}
-              aria-label={playing ? "Pause background video" : "Play background video"}
-              className="inline-flex size-9 items-center justify-center rounded-[8px] border border-white/30 text-white/85 transition-colors hover:border-white hover:text-white"
-            >
-              <Icon icon={playing ? Pause : Play} size={15} />
-            </button>
-          ) : null}
+        <div className="pointer-events-auto flex items-center">
           <div role="group" aria-label="Choose background video" className="flex items-center gap-1.5">
             {VIDEOS.map((name, i) => (
               <button

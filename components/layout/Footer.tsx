@@ -22,11 +22,11 @@ export function Footer() {
             <Link href="/" aria-label="SaaviGenAI home" className="inline-block rounded-full">
               <Logo size="xl" />
             </Link>
-            <p className="mt-5 text-[1.5rem] font-semibold tracking-[-0.03em] text-ink lg:mt-6 lg:text-[1.875rem]">{site.tagline}</p>
+            <p className="mt-5 text-[1.25rem] font-semibold tracking-[-0.025em] text-ink lg:mt-6 lg:text-[1.5rem]">{site.tagline}</p>
           </div>
 
           <nav aria-label="Footer" className="lg:col-span-2">
-            <ul className="space-y-3 text-[0.875rem]">
+            <ul className="space-y-3.5 text-[1rem] lg:text-[1.0625rem]">
               {footerNav.map((item) => (
                 <li key={item.href}>
                   <Link href={item.href} className="text-ink-muted transition-colors hover:text-ink">
@@ -37,7 +37,7 @@ export function Footer() {
             </ul>
           </nav>
 
-          <ul className="space-y-3 text-[0.875rem] md:col-start-2 lg:col-span-4 lg:col-start-auto">
+          <ul className="space-y-3.5 text-[1rem] md:col-start-2 lg:col-span-4 lg:col-start-auto lg:text-[1.0625rem]">
             {channels.map((c) => {
               const external = c.href.startsWith("http");
               return (
@@ -47,7 +47,7 @@ export function Footer() {
                     {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                     className="group inline-flex items-center gap-3 text-ink-muted transition-colors hover:text-ink"
                   >
-                    <Icon icon={c.icon} size={17} />
+                    <Icon icon={c.icon} size={19} />
                     <span className="sr-only">{c.label}: </span>
                     <span className="break-all">{c.value}</span>
                   </a>

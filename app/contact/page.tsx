@@ -2,7 +2,6 @@ import { ArrowUpRight, Linkedin, Mail, MapPin, MessageCircle } from "lucide-reac
 import { ContactForm } from "@/components/contact/ContactForm";
 import { Icon } from "@/components/ui/Icon";
 import { PageHero } from "@/components/ui/PageHero";
-import { Placeholder } from "@/components/ui/Placeholder";
 import { Section } from "@/components/ui/Section";
 import { site } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
@@ -70,13 +69,9 @@ export default function ContactPage() {
                   );
                 })}
               </ul>
-              <div className="mt-8 space-y-3 text-[0.9375rem]">
-                {/* Plan 8.2 response time line (confirmed: 3 days) */}
-                <p className="text-ink-soft">We reply within 3 days.</p>
-                <p>
-                  <Placeholder kind="TO CONFIRM" note="Registered company name, if you want it shown." />
-                </p>
-              </div>
+              {/* Plan 8.2 response time line (confirmed: 3 days). Plan 8.4 company
+                  details: SaaviGenAI chose not to show a registered company name. */}
+              <p className="mt-8 text-[0.9375rem] text-ink-soft">We reply within 3 days.</p>
             </div>
           </div>
 

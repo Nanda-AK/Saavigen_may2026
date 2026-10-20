@@ -326,7 +326,7 @@
      "Works with" logo carousel (components/ui/LogoCarousel.tsx)
      A row of logo cards drifting left in a seamless loop: the track holds
      --copies identical lists, so moving it by 100% / --copies lands exactly
-     where it started. Hover, keyboard focus or the pause button stop it.
+     where it started. Hover or keyboard focus pauses it.
      Marked .motion-ok, so it also moves for reduced-motion visitors.
      ======================================================================== */
   .logo-carousel {
@@ -339,8 +339,7 @@
     animation: logo-carousel var(--duration, 40s) linear infinite;
   }
   .logo-carousel:hover .logo-carousel-track,
-  .logo-carousel:focus-within .logo-carousel-track,
-  .logo-carousel[data-paused="true"] .logo-carousel-track {
+  .logo-carousel:focus-within .logo-carousel-track {
     animation-play-state: paused;
   }
   @keyframes logo-carousel {
@@ -770,6 +769,14 @@
   }
   .prose-legal > :first-child {
     margin-top: 0;
+  }
+  /* Document look: justified paragraphs and list items. No automatic hyphenation,
+     so words are never split with a dash at line ends. */
+  .prose-legal p,
+  .prose-legal li {
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: manual;
   }
   .prose-article img {
     width: 100%;
