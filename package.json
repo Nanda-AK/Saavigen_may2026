@@ -8,6 +8,7 @@
     "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc --noEmit",
     "postbuild": "next-sitemap && node -e \"require('fs').closeSync(require('fs').openSync('out/.nojekyll','w'))\"",
+    "build:preview": "node scripts/build-preview.mjs",
     "brand:assets": "node scripts/build-brand-assets.mjs",
     "check:contrast": "node scripts/check-contrast.mjs",
     "images": "node scripts/optimize-images.mjs",

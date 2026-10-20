@@ -8,6 +8,8 @@ function canonicalPath(path: string) {
   return `${basePath}${withSlash}`;
 }
 
+const PREVIEW = process.env.NEXT_PUBLIC_NOINDEX === "1";
+
 type Options = {
   /** Keep the page out of search results (style guide, redirect pages) */
   noindex?: boolean;
@@ -24,7 +26,8 @@ export function pageMetadata(title: string, description: string | undefined, pat
     title: { absolute: title },
     description,
     alternates: { canonical: url },
-    robots: options.noindex ? { index: false, follow: true } : undefined,
+    // Preview builds (npm run build:preview sets NEXT_PUBLIC_NOINDEX=1) keep every page out of search engines.
+    robots: PREVIEW ? { index: false, follow: false } : options.noindex ? { index: false, follow: true } : undefined,
     openGraph: {
       title,
       description,
