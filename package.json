@@ -10,7 +10,8 @@
     "postbuild": "next-sitemap && node -e \"require('fs').closeSync(require('fs').openSync('out/.nojekyll','w'))\"",
     "brand:assets": "node scripts/build-brand-assets.mjs",
     "check:contrast": "node scripts/check-contrast.mjs",
-    "images": "node scripts/optimize-images.mjs"
+    "images": "node scripts/optimize-images.mjs",
+    "product-shots": "node scripts/product-shots.mjs"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.13",

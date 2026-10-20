@@ -34,5 +34,5 @@ export const footerNav: NavItem[] = [...primaryNav, { label: "Contact", href: "/
 
 export const legalNav: NavItem[] = [
   { label: "Privacy Policy", href: "/privacy/" },
-  { label: "Terms of Use", href: "/terms/" },
+  { label: "Terms of Service", href: "/terms/" },
 ];

@@ -6,6 +6,8 @@ import { Icon } from "@/components/ui/Icon";
 import { vendors } from "@/content/vendors";
 
 // Plan 2.2 "Works with": logo cards drifting left in a seamless loop.
+// Each logo is painted in its vendor's brand colour (content/vendors.ts); on hover
+// the card picks up a soft tint of that colour and a coloured outline.
 // The list is repeated COPIES times so the loop never shows a gap; screen
 // readers only get the first copy. Hover / focus pause it, and there is a
 // pause button (auto-moving content must be pausable). CSS: ".logo-carousel".
@@ -16,7 +18,7 @@ export function LogoCarousel() {
 
   return (
     <div className="relative">
-      <div className="logo-carousel overflow-hidden py-2" data-paused={paused}>
+      <div className="logo-carousel overflow-hidden py-3" data-paused={paused}>
         <div
           className="logo-carousel-track motion-ok"
           style={{ "--copies": COPIES, "--duration": `${vendors.length * 8}s` } as React.CSSProperties}
@@ -31,11 +33,17 @@ export function LogoCarousel() {
               {vendors.map((v) => (
                 <li
                   key={`${copy}-${v.name}`}
-                  className="group/logo flex h-28 w-52 shrink-0 flex-col items-center justify-center gap-3 rounded-[1.125rem] bg-sunken text-ink-muted transition-[background-color,color,box-shadow] duration-300 hover:bg-raised hover:text-ink hover:shadow-[0_14px_34px_-18px_rgb(0_0_0/0.3)] sm:h-32 sm:w-60"
+                  style={{ "--brand-tint": v.tint } as React.CSSProperties}
+                  className="flex h-28 w-52 shrink-0 flex-col items-center justify-center gap-3 rounded-[1.125rem] bg-sunken text-ink ring-1 ring-transparent transition-[background-color,box-shadow] duration-300 hover:bg-[color-mix(in_srgb,var(--brand-tint)_10%,var(--raised))] hover:ring-[color-mix(in_srgb,var(--brand-tint)_45%,transparent)] sm:h-32 sm:w-60"
                 >
                   {v.logo ? (
-                    <span aria-hidden="true" className="logo-mask size-8 sm:size-9" style={{ "--logo": `url(${v.logo})` } as React.CSSProperties} />
-                  ) : null}
+                    <span aria-hidden="true" className="logo-mask size-8 sm:size-9" style={{ "--logo": `url(${v.logo})`, background: v.color } as React.CSSProperties} />
+                  ) : (
+                    // No logo yet: a monogram in the vendor colour
+                    <span aria-hidden="true" className="inline-flex size-8 items-center justify-center rounded-[8px] text-[0.8125rem] font-bold text-canvas sm:size-9" style={{ background: v.color }}>
+                      {v.name.slice(0, 2).toUpperCase()}
+                    </span>
+                  )}
                   <span className="text-[1rem] font-semibold tracking-[-0.02em]">{v.name}</span>
                 </li>
               ))}

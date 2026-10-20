@@ -4,7 +4,6 @@ import { ContactBand } from "@/components/sections/ContactBand";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { PageHero } from "@/components/ui/PageHero";
-import { Placeholder } from "@/components/ui/Placeholder";
 import { Section } from "@/components/ui/Section";
 import { site } from "@/content/site";
 import { authors } from "@/content/team";
@@ -37,9 +36,6 @@ export default function InsightsPage() {
         <h2 id="articles-title" className="sr-only">
           Articles
         </h2>
-        <p className="mb-6 text-[0.875rem]">
-          <Placeholder kind="TO CONFIRM" note="Final category names." />
-        </p>
         <CategoryFilter articles={articles} authorNames={authorNames} />
       </Section>
 

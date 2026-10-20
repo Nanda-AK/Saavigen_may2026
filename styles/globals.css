@@ -445,21 +445,19 @@
     }
   }
 
-  /* Floating WhatsApp button (components/layout/WhatsAppFloat.tsx):
-     the label slides out on hover / focus. */
-  .wa-label {
-    max-width: 0;
+  /* Floating WhatsApp button (components/layout/WhatsAppFloat.tsx): the button stays
+     round; its label slides in as a tooltip to the left on hover / keyboard focus. */
+  .wa-tip {
     opacity: 0;
+    transform: translateX(6px);
     transition:
-      max-width 420ms var(--ease-out-soft),
-      opacity 250ms ease,
-      padding 420ms var(--ease-out-soft);
+      opacity 200ms ease,
+      transform 300ms var(--ease-out-soft);
   }
-  .wa-float:hover .wa-label,
-  .wa-float:focus-visible .wa-label {
-    max-width: 16rem;
+  .wa-float:hover .wa-tip,
+  .wa-float:focus-visible .wa-tip {
     opacity: 1;
-    padding-right: 0.875rem;
+    transform: none;
   }
   /* Dark wash so white text always reads, strongest on the left where the text sits */
   .hero-scrim {
@@ -754,6 +752,24 @@
   }
   .prose-article li + li {
     margin-top: 0.5em;
+  }
+  /* Legal documents: slightly smaller, denser type than articles */
+  .prose-legal {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+  }
+  .prose-legal h2 {
+    margin-top: 2.6em;
+    font-size: 1.5rem;
+    letter-spacing: -0.025em;
+  }
+  .prose-legal h3 {
+    margin-top: 1.8em;
+    font-size: 1.125rem;
+    letter-spacing: -0.01em;
+  }
+  .prose-legal > :first-child {
+    margin-top: 0;
   }
   .prose-article img {
     width: 100%;

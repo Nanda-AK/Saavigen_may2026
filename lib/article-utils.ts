@@ -2,7 +2,7 @@
 // (lib/insights.ts reads files from disk, so it can only run at build time;
 // client components such as the Insights category filter import from here.)
 
-// Plan 5.2 categories ([TO CONFIRM] final names). The listing filter uses this order.
+// Plan 5.2 categories (confirmed by SaaviGenAI, Oct 2026). The listing filter uses this order.
 export const CATEGORIES = ["AI Agent Security", "AI Governance", "Industry Analysis", "Company News"] as const;
 export type Category = (typeof CATEGORIES)[number];
 

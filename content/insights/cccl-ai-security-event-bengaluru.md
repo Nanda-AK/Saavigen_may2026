@@ -3,7 +3,7 @@ title: "SaaviGenAI Sponsors Anthropic CCCL AI Security Event in Bengaluru"
 date: 2026-07-12
 author: saavigenai
 category: Company News
-summary: null
+summary: "More than 70 security professionals, engineers and AI enthusiasts spent a Sunday evening in Bengaluru learning about AI security. SaaviGenAI sponsored the Anthropic CCCL meetup and Nanda presented on Constitutional AI."
 cover: /images/insights/cccl-ai-security-event-bengaluru.webp
 source: null
 gallery:

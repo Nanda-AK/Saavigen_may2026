@@ -1,11 +1,26 @@
 import { cn } from "@/lib/utils";
 
-// A dark browser-window frame for product screenshots. Until real screenshots
-// (with sample data) are supplied, it shows a clearly marked [IMAGE] placeholder
-// with the plan's own description. To use a real screenshot, pass `src`.
-export function BrowserFrame({ label, src, alt = "", className }: { label: string; src?: string; alt?: string; className?: string }) {
+// A dark browser-window frame for product screenshots. Pass `src` (plus width /
+// height so the page reserves the space and doesn't jump while it loads).
+// Without `src` it shows a clearly marked [IMAGE] placeholder with the plan's
+// own description.
+export function BrowserFrame({
+  label,
+  src,
+  alt = "",
+  width,
+  height,
+  className,
+}: {
+  label?: string;
+  src?: string;
+  alt?: string;
+  width?: number;
+  height?: number;
+  className?: string;
+}) {
   return (
-    <figure className={cn("overflow-hidden rounded-[1.25rem] bg-[#1d1d1f] p-1.5 shadow-[0_40px_80px_-40px_rgb(0_0_0/0.45)] ring-1 ring-black/10", className)}>
+    <figure className={cn("w-full overflow-hidden rounded-[1.25rem] bg-[#1d1d1f] p-1.5 shadow-[0_40px_80px_-40px_rgb(0_0_0/0.45)] ring-1 ring-black/10", className)}>
       <div className="flex items-center gap-1.5 px-3 py-2.5" aria-hidden="true">
         <span className="size-2.5 rounded-full bg-white/20" />
         <span className="size-2.5 rounded-full bg-white/20" />
@@ -13,7 +28,7 @@ export function BrowserFrame({ label, src, alt = "", className }: { label: strin
       </div>
       {src ? (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={src} alt={alt} className="w-full rounded-[0.875rem]" />
+        <img src={src} alt={alt} width={width} height={height} loading="lazy" decoding="async" className="h-auto w-full rounded-[0.875rem]" />
       ) : (
         <div
           role="img"

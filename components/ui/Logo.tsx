@@ -6,20 +6,19 @@ import { cn } from "@/lib/utils";
 // over the video hero and in the footer.
 // To swap in the real logo: replace the two spans with an <img> or inline SVG.
 //
-// size "lg" = header (grows on desktop), "md" = footer.
-export function Logo({ className, size = "md", compact = false }: { className?: string; size?: "md" | "lg"; compact?: boolean }) {
+// Sizes: "md" = compact (menu panel), "lg" = header, "xl" = footer.
+const SIZES = {
+  md: { gap: "gap-2.5", mark: "h-7", name: "text-[1.1875rem]" },
+  lg: { gap: "gap-3", mark: "h-8 lg:h-10", name: "text-[1.3125rem] lg:text-[1.625rem]" },
+  xl: { gap: "gap-3 lg:gap-3.5", mark: "h-9 lg:h-12", name: "text-[1.5rem] lg:text-[2rem]" },
+} as const;
+
+export function Logo({ className, size = "md", compact = false }: { className?: string; size?: keyof typeof SIZES; compact?: boolean }) {
+  const s = SIZES[size];
   return (
-    <span className={cn("inline-flex items-center", size === "lg" ? "gap-3" : "gap-2.5", className)}>
-      <span aria-hidden="true" className={cn("key-mark shrink-0", size === "lg" ? "h-8 lg:h-10" : "h-7")} />
-      <span
-        className={cn(
-          "font-display font-semibold tracking-[-0.025em]",
-          size === "lg" ? "text-[1.3125rem] lg:text-[1.625rem]" : "text-[1.1875rem]",
-          compact && "max-[359px]:sr-only",
-        )}
-      >
-        SaaviGenAI
-      </span>
+    <span className={cn("inline-flex items-center", s.gap, className)}>
+      <span aria-hidden="true" className={cn("key-mark shrink-0", s.mark)} />
+      <span className={cn("font-display font-semibold tracking-[-0.025em]", s.name, compact && "max-[359px]:sr-only")}>SaaviGenAI</span>
     </span>
   );
 }

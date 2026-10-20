@@ -65,7 +65,7 @@ const CAPABILITIES = [
     title: "Behaviour analytics",
     body: "Baselines for each user and agent flag unusual tools, token spikes and changes in behaviour.",
     icon: <Icon icon={TrendingUp} size={28} />,
-    media: 2,
+    media: 3,
   },
   {
     title: "AI-assisted alert analysis",
@@ -81,11 +81,14 @@ const CAPABILITIES = [
   },
 ];
 
-// Plan 3.3 [IMAGE]: cropped product screenshots, sample data only (to be supplied).
+// Plan 3.3 [IMAGE]: cropped product screenshots. Made from SaaviGenAI's own dashboard
+// screenshot by `npm run product-shots` (team emails and names replaced with sample data).
+// Index = the `media` number on each capability above.
 const SCREENS = [
-  <BrowserFrame key="inv" label="The AI inventory view (sample data only)" />,
-  <BrowserFrame key="alert" label="An alert with its AI-assisted analysis (sample data only)" />,
-  <BrowserFrame key="session" label="The session or event view (sample data only)" />,
+  <BrowserFrame key="overview" src="/images/product/dashboard-overview.webp" width={1900} height={907} alt="SaaviAIDR overview dashboard with critical alerts, riskiest users and detection trend (sample data)" />,
+  <BrowserFrame key="alerts" src="/images/product/dashboard-alerts.webp" width={1086} height={396} alt="SaaviAIDR Needs attention table listing critical and high AI alerts by user and AI tool (sample data)" />,
+  <BrowserFrame key="users" src="/images/product/dashboard-users.webp" width={535} height={396} alt="SaaviAIDR Riskiest users panel ranking users by critical and high alerts (sample data)" />,
+  <BrowserFrame key="trend" src="/images/product/dashboard-trend.webp" width={1637} height={226} alt="SaaviAIDR detection trend chart of critical and high detections per day (sample data)" />,
 ];
 
 const HOW = [
@@ -151,7 +154,13 @@ export default function PlatformPage() {
       {/* 3.1 [IMAGE] main product screenshot: lifts into place as it scrolls in */}
       <section aria-label="Product screenshot" className="bg-canvas pt-20 md:pt-28">
         <Container>
-          <BrowserFrame className="lift-in motion-ok mx-auto max-w-6xl" label="The SaaviAIDR dashboard in a clean browser frame (sample data only)" />
+          <BrowserFrame
+            className="lift-in motion-ok mx-auto max-w-6xl"
+            src="/images/product/dashboard-overview.webp"
+            width={1900}
+            height={907}
+            alt="The SaaviAIDR overview dashboard: critical alerts needing review, riskiest users and the detection trend (sample data)"
+          />
         </Container>
       </section>
 

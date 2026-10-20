@@ -35,12 +35,17 @@ export function ChapterSection({ heading, chapters, media }: { heading: ReactNod
       <div className="lg:col-span-5">
         <div className="lg:sticky lg:top-28">
           {heading}
-          <div className="relative mt-10 hidden lg:block">
+          {/* Fixed-shape stage: screenshots of different shapes are centred inside it,
+              so switching between them never pushes or overlaps other content. */}
+          <div className="relative mt-10 hidden aspect-[5/4] lg:block">
             {media.map((m, i) => (
               <div
                 key={i}
                 aria-hidden={i !== current}
-                className={cn("transition-[opacity,transform] duration-700 ease-out", i === 0 ? "relative" : "absolute inset-0", i === current ? "opacity-100" : "pointer-events-none translate-y-3 opacity-0")}
+                className={cn(
+                  "absolute inset-0 flex items-center transition-[opacity,transform] duration-700 ease-out",
+                  i === current ? "opacity-100" : "pointer-events-none translate-y-3 opacity-0",
+                )}
               >
                 {m}
               </div>

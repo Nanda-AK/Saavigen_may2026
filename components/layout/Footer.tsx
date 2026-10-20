@@ -20,9 +20,9 @@ export function Footer() {
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-12">
           <div className="lg:col-span-6">
             <Link href="/" aria-label="SaaviGenAI home" className="inline-block rounded-full">
-              <Logo />
+              <Logo size="xl" />
             </Link>
-            <p className="mt-5 text-[1.5rem] font-semibold tracking-[-0.03em] text-ink">{site.tagline}</p>
+            <p className="mt-5 text-[1.5rem] font-semibold tracking-[-0.03em] text-ink lg:mt-6 lg:text-[1.875rem]">{site.tagline}</p>
           </div>
 
           <nav aria-label="Footer" className="lg:col-span-2">

@@ -106,10 +106,8 @@ export default function ManagedServicesPage() {
 
       {/* 4.3 What we do: bento (two large, three small) */}
       <Section tone="sunken" labelledBy="included-title">
+        {/* Service list confirmed by SaaviGenAI (Oct 2026). */}
         <SectionHeader id="included-title" title="What's included" />
-        <p className="mt-6 text-center">
-          <Placeholder kind="TO CONFIRM" note="Final service scope, coverage hours and reporting frequency." />
-        </p>
         <ul className="mt-14 grid gap-4 md:grid-cols-6 lg:mt-20 lg:gap-5">
           {INCLUDED.map((s, i) => (
             <li

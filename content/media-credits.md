@@ -28,6 +28,18 @@ site's dark-blue palette, and a measured motion score so none reads as a still.
 To replace a clip: keep the same file name (or update `VIDEOS` in
 components/home/HeroVideo.tsx), keep it under about 1.5 MB, and regenerate the poster.
 
+## Inner-page hero videos (public/videos/page-*.mp4)
+
+One fixed Pexels clip per page (same licence as above):
+
+| File | Page | Pexels ID |
+|---|---|---|
+| page-platform | Platform | 34129037 |
+| page-managed | Managed Services | 32288743 |
+| page-insights | Insights and articles | 3129576 |
+| page-company | Company | 39241228 |
+| page-contact-network | Contact | 36244496 |
+
 ## Home "Run it yourself / let us run it" photos (public/images/home/)
 
 Pexels photos, 1280x800 WebP, metadata stripped:

@@ -1,9 +1,14 @@
 import { LegalPage } from "@/components/ui/LegalPage";
+import { getLegalDoc } from "@/lib/legal";
 import { pageMetadata } from "@/lib/metadata";
 
-// Plan 9.2. No meta description is given in the plan ([PLACEHOLDER] until the terms exist).
-export const metadata = pageMetadata("Terms of Use | SaaviGenAI", undefined, "/terms/");
+// Plan 9.2 (titled "Terms of Service" in the text SaaviGenAI supplied): content/legal/terms.md.
+export const metadata = pageMetadata(
+  "Terms of Service | SaaviGenAI",
+  "The terms that apply when you use www.saavigen.ai, the SaaviAIDR platform or any SaaviGenAI service.",
+  "/terms/",
+);
 
 export default function TermsPage() {
-  return <LegalPage title="Terms of Use" placeholder="Full terms of use text, to be provided or reviewed by a legal adviser." />;
+  return <LegalPage doc={getLegalDoc("terms")} />;
 }
