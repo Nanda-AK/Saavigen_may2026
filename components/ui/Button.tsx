@@ -1,59 +1,108 @@
 import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-type Variant = "primary" | "gold" | "outline" | "teal";
+/*
+  Apple-classic buttons (chosen by SaaviGenAI from the style comparison):
+  - ONE solid button per group for the main action: softly rounded (8-12px), no arrow.
+  - Every secondary action is a TEXT LINK with a chevron; the underline draws in on
+    hover and the chevron nudges right (.link-cta in globals.css).
 
-const variants: Record<Variant, string> = {
-  primary:
-    "bg-navy text-white hover:bg-navy-light transition-colors duration-150",
-  gold: "bg-gold text-navy hover:opacity-90 transition-opacity duration-150",
-  outline:
-    "border border-navy text-navy hover:bg-navy hover:text-white transition-colors duration-150",
-  teal: "bg-teal text-white hover:bg-teal-dark transition-colors duration-150",
+  Variants (monochrome, Apple / OpenAI style)
+    primary     black fill (white in dark mode)  main action on light sections
+    light       white fill            main action on the dark video hero
+    contrast    flipped colours       main action on an inverse / black card
+    link        ink text + chevron    secondary action on light sections
+    link-light  white text + chevron  secondary action on dark backgrounds
+*/
+
+type Variant = "primary" | "light" | "contrast" | "link" | "link-light";
+type Size = "sm" | "md" | "lg";
+
+const fills: Record<"primary" | "light" | "contrast", string> = {
+  primary: "bg-accent-fill text-on-accent hover:bg-accent-fill-hover",
+  light: "bg-white text-[color:#1d1d1f] hover:bg-[#e8e8ed]",
+  contrast: "bg-on-inverse text-inverse hover:opacity-85",
 };
 
-const base =
-  "inline-flex items-center justify-center gap-2 rounded px-6 py-3 text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2";
+const solidSizes: Record<Size, string> = {
+  sm: "min-h-9 rounded-[8px] px-4 text-[0.875rem]",
+  md: "min-h-11 rounded-[10px] px-5 text-[0.9375rem]",
+  lg: "min-h-12 rounded-[12px] px-6 text-[1.0625rem]",
+};
 
-type ButtonAsLink = {
-  href: string;
+const linkSizes: Record<Size, string> = {
+  sm: "text-[0.9375rem]",
+  md: "text-[1.0625rem]",
+  lg: "text-[1.1875rem]",
+};
+
+type Common = {
   variant?: Variant;
+  size?: Size;
+  /** Let a long label wrap on narrow screens instead of overflowing (solid buttons) */
+  wrap?: boolean;
   className?: string;
   children: ReactNode;
-  onClick?: () => void;
 };
 
-type ButtonAsButton = Omit<
-  ButtonHTMLAttributes<HTMLButtonElement>,
-  "children"
-> & {
-  href?: undefined;
-  variant?: Variant;
-  children: ReactNode;
-};
+type AsLink = Common & { href: string; onClick?: () => void };
+type AsButton = Common & Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children" | "className"> & { href?: undefined };
 
-export type ButtonProps = ButtonAsLink | ButtonAsButton;
+// mailto:, tel: and https: links leave the site, so they use a plain <a>.
+const isExternal = (href: string) => /^(https?:|mailto:|tel:)/.test(href);
 
-export function Button({
-  variant = "primary",
-  className,
-  ...props
-}: ButtonProps) {
-  const classes = cn(base, variants[variant], className);
+export function Button(props: AsLink | AsButton) {
+  const { variant = "primary", size = "md", wrap = false, className, children } = props;
+  const isLink = variant === "link" || variant === "link-light";
 
-  if (props.href) {
+  // Links are inline text (not flex), so a long label wraps like a sentence and
+  // the chevron stays attached to the last word on narrow screens.
+  const classes = isLink
+    ? cn(
+        "link-cta group inline text-center font-medium tracking-[-0.01em]",
+        variant === "link" ? "text-accent-ink" : "text-white",
+        linkSizes[size],
+        className,
+      )
+    : cn(
+        "inline-flex items-center justify-center gap-2 font-medium tracking-[-0.01em] transition-[background-color,opacity] duration-200",
+        fills[variant as keyof typeof fills],
+        solidSizes[size],
+        wrap ? "whitespace-normal py-3 text-center sm:whitespace-nowrap" : "whitespace-nowrap",
+        className,
+      );
+
+  const content = isLink ? (
+    <>
+      <span className="link-cta-label">{children}</span>
+      <ChevronRight width={18} height={18} strokeWidth={2} aria-hidden="true" className="link-cta-chevron ml-0.5 inline-block align-[-3px]" />
+    </>
+  ) : (
+    children
+  );
+
+  if (props.href !== undefined) {
+    if (isExternal(props.href)) {
+      const newTab = props.href.startsWith("http");
+      return (
+        <a className={classes} href={props.href} onClick={props.onClick} {...(newTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
+          {content}
+        </a>
+      );
+    }
     return (
       <Link className={classes} href={props.href} onClick={props.onClick}>
-        {props.children}
+        {content}
       </Link>
     );
   }
 
-  const { href: _discardHref, ...buttonProps } = props;
+  const { variant: _v, size: _s, wrap: _w, className: _c, children: _ch, href: _h, type = "button", ...rest } = props;
   return (
-    <button className={classes} {...buttonProps}>
-      {buttonProps.children}
+    <button type={type} className={classes} {...rest}>
+      {content}
     </button>
   );
 }

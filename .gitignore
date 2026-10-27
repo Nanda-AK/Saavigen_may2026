@@ -50,3 +50,7 @@ features
 oldPhotos
 
 *.stackdump
+
+# Raw product screenshots contain real customer/team data. Only the anonymised
+# copies made by scripts/product-shots.mjs (public/images/product/) are committed.
+/assets/source/product/

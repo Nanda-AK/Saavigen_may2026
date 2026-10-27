@@ -1,57 +1,62 @@
-import type { Metadata } from "next";
-import { Inter, Playfair_Display, Roboto_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
 import { Footer } from "@/components/layout/Footer";
-import { Navbar } from "@/components/layout/Navbar";
-import { logoPath } from "@/lib/site";
+import { Header } from "@/components/layout/Header";
+import { THEME_INIT_SCRIPT } from "@/components/layout/ThemeSwitch";
+import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
+import { RevealObserver } from "@/components/motion/RevealObserver";
+import { siteUrl } from "@/lib/site";
 import "@/styles/globals.css";
 
-const inter = Inter({
+// next/font downloads these at build time and serves them from saavigen.ai.
+// It also generates size-matched fallback fonts, so text doesn't jump when
+// the real font loads (no layout shift).
+// Geist: one variable font for headings and body (Apple / OpenAI-style look).
+const sans = Geist({
   subsets: ["latin"],
-  weight: ["400", "600", "700"],
-  variable: "--font-sans",
+  variable: "--font-geist",
   display: "swap",
 });
-const playfair = Playfair_Display({
+const mono = Geist_Mono({
   subsets: ["latin"],
-  variable: "--font-display",
+  variable: "--font-geist-mono",
   display: "swap",
-});
-const robotoMono = Roboto_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-  display: "swap",
+  preload: false, // only used for small labels; not worth a preload
 });
 
+// Defaults = Home page values from the content plan. Each page overrides them via lib/metadata.ts.
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://saavigen.ai",
-  ),
-  title: {
-    default: "SaaviGenAI | Securing the AI-Powered Enterprise",
-    template: "%s | SaaviGenAI",
-  },
+  metadataBase: new URL(siteUrl),
+  title: "SaaviAIDR | AI Detection and Response | SaaviGenAI",
   description:
-    "Practitioner-led managed security and AI governance for teams adopting intelligent systems.",
-  icons: {
-    icon: logoPath,
-  },
+    "SaaviAIDR gives security teams visibility, detection and response across the AI agents and chatbots in their organisation. Self-hosted, with managed service options.",
+  // Temporary copies of the site (NEXT_PUBLIC_NOINDEX=1, e.g. set in Vercel) must never be indexed.
+  ...(process.env.NEXT_PUBLIC_NOINDEX === "1" ? { robots: { index: false, follow: false } } : {}),
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0c" },
+  ],
+};
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en"
-      className={`${inter.variable} ${playfair.variable} ${robotoMono.variable}`}
-    >
+    // suppressHydrationWarning: the theme script may add data-theme before React loads.
+    <html lang="en" className={`${sans.variable} ${mono.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      </head>
       <body>
         <a className="skip-link" href="#main-content">
           Skip to content
         </a>
-        <Navbar />
+        <Header />
         <main id="main-content">{children}</main>
         <Footer />
+        <WhatsAppFloat />
+        <RevealObserver />
       </body>
     </html>
   );
