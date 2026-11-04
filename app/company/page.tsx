@@ -108,7 +108,7 @@ export default function CompanyPage() {
       {/* 7.5 Founding members */}
       <Section labelledBy="members-title">
         <SectionHeader id="members-title" title="Founding members" />
-        <ul className="mt-14 grid gap-5 sm:grid-cols-2 lg:mt-20 lg:grid-cols-4">
+        <ul className="mt-14 grid gap-5 sm:grid-cols-2 lg:mt-20 lg:grid-cols-5">
           {foundingMembers.map((m, i) => (
             <li key={m.id} id={m.id} data-reveal style={{ "--reveal-index": i } as React.CSSProperties} className="portrait group scroll-mt-28">
               <div className="overflow-hidden rounded-[1.25rem] bg-tint">

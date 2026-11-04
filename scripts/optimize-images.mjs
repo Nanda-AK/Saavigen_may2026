@@ -20,6 +20,7 @@ const JOBS = [
   team("atharv_chouhan.jpeg", "atharv-chouhan"),
   team("tulasi_patil.jpeg", "tulasi-patil"),
   team("yasar.png", "yasar-ameen"),
+  team("thejaswani.jpg", "thejaswani"),
   // CCCL event article gallery
   event("blog3imag.jpeg", "audience-session"),
   event("blog3imag2.jpg", "dr-chinmay-presenting"),
