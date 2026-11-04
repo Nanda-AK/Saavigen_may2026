@@ -1,87 +1,820 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   SaaviGenAI design tokens (Apple / OpenAI-style monochrome: white and
+   light-grey surfaces, near-black text and accents, amber only for alerts)
+   --------------------------------------------------------------------------
+   Every colour is written once with light-dark(LIGHT, DARK). The browser
+   picks the value from `color-scheme`:
+     - default: follows the visitor's OS setting (prefers-color-scheme)
+     - html[data-theme="light" | "dark"]: forced by the temporary theme switch
+       in the footer (components/layout/ThemeSwitch.tsx)
+   To ship ONE theme permanently later: set `color-scheme: light` (or dark)
+   on :root below and delete the ThemeSwitch.
+
+   Contrast (checked by `npm run check:contrast`):
+     - accent-ink is the accent for TEXT and links (passes on white and grey).
+     - accent-fill is the main BUTTON background; on-accent is its text.
+     - field is the input border colour (at least 3:1).
+   ========================================================================== */
 :root {
-    --bg-base: #ffffff;
-    --bg-surface: #f8faff;
-    --color-navy: #1b2a4a;
-    --color-navy-light: #2d3f6b;
-    --color-gold: #c9a84c;
-    --color-gold-dim: rgba(201, 168, 76, 0.15);
-    --color-teal: #2d7d9a;
-    --color-teal-dark: #1f5a73;
-    --text-primary: #1b2a4a;
-    --text-secondary: #546480;
-    --text-muted: #8fa0b8;
-    --text-on-dark: #c4cedc;
-    --border-default: #e0e6ef;
-    --border-subtle: #eef1f7;
-    --state-error: #dc2626;
-    --state-success: #16a34a;
+  color-scheme: light dark;
+
+  --canvas: light-dark(#ffffff, #0a0a0c); /* page background */
+  --sunken: light-dark(#f5f5f7, #161618); /* grey bands, cards on white */
+  --raised: light-dark(#ffffff, #1d1d1f); /* cards on grey bands */
+  --tint: light-dark(#e8e8ed, #232326); /* image wells, article covers */
+  --ink: light-dark(#1d1d1f, #f5f5f7); /* headings and body text */
+  --ink-soft: light-dark(#424245, #d2d2d7); /* supporting text */
+  --ink-muted: light-dark(#6e6e73, #a1a1a6); /* dates, captions, meta */
+  --line: light-dark(#d2d2d7, #2c2c2e); /* hairlines */
+  --line-strong: light-dark(#b8b8bf, #3a3a3c); /* diagram lines, dividers */
+  --field: light-dark(#86868b, #6e6e73); /* form input borders */
+  /* Accent = black (white in dark mode), Apple / OpenAI monochrome. No blue. */
+  --accent: light-dark(#1d1d1f, #f5f5f7); /* lines, dots, active states */
+  --accent-ink: light-dark(#1d1d1f, #f5f5f7); /* accent as text and links */
+  --accent-fill: light-dark(#1d1d1f, #f5f5f7); /* primary button background */
+  --accent-fill-hover: light-dark(#3a3a3c, #d2d2d7);
+  --on-accent: light-dark(#ffffff, #1d1d1f); /* text / icons on accent-fill */
+  --alert: light-dark(#ff9f0a, #ffb340); /* threat / alert moments (decoration) */
+  --alert-ink: light-dark(#b25000, #ffb340); /* alert as text */
+  --danger: light-dark(#d70015, #ff6961); /* form errors */
+  --inverse: light-dark(#1d1d1f, #f5f5f7); /* high-contrast card / button */
+  --inverse-hover: light-dark(#333336, #e8e8ed);
+  --on-inverse: light-dark(#ffffff, #1d1d1f); /* text on inverse */
+
+  --focus: var(--accent-ink);
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Registered custom property, so it can be animated and inherited:
+   --p is the pipeline's scroll progress (defaults to 1 = fully drawn, so
+   browsers without scroll-driven animations show everything). */
+@property --p {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+/* Tailwind utilities generated from the tokens above, e.g. bg-canvas, text-ink,
+   bg-accent-fill, text-display, rounded-box, max-w-page. */
 @theme inline {
-    --color-base: var(--bg-base);
-    --color-surface: var(--bg-surface);
-    --color-navy: #1b2a4a;
-    --color-navy-light: #2d3f6b;
-    --color-gold: #c9a84c;
-    --color-gold-dim: rgba(201, 168, 76, 0.15);
-    --color-teal: #2d7d9a;
-    --color-teal-dark: #1f5a73;
-    --color-primary: var(--text-primary);
-    --color-secondary: var(--text-secondary);
-    --color-muted: var(--text-muted);
-    --color-on-dark: var(--text-on-dark);
-    --color-default: var(--border-default);
-    --color-subtle: var(--border-subtle);
-    --color-error: var(--state-error);
-    --color-success: var(--state-success);
-    --font-display: "Playfair Display", serif;
-    --font-sans: Inter, system-ui, sans-serif;
-    --font-mono: "Roboto Mono", monospace;
+  --color-canvas: var(--canvas);
+  --color-sunken: var(--sunken);
+  --color-raised: var(--raised);
+  --color-tint: var(--tint);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-muted: var(--ink-muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-field: var(--field);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-fill: var(--accent-fill);
+  --color-accent-fill-hover: var(--accent-fill-hover);
+  --color-on-accent: var(--on-accent);
+  --color-alert: var(--alert);
+  --color-alert-ink: var(--alert-ink);
+  --color-danger: var(--danger);
+  --color-inverse: var(--inverse);
+  --color-inverse-hover: var(--inverse-hover);
+  --color-on-inverse: var(--on-inverse);
+
+  /* Geist (set by next/font in app/layout.tsx): closest free match to the
+     SF Pro / Söhne look of Apple and OpenAI. */
+  --font-display: var(--font-geist), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
 }
 
-* {
+@theme {
+  /* Type scale: fluid between mobile (375px) and desktop (1440px).
+     Display fits "Do you know what it's doing?" on one line at 1280px+. */
+  --text-display: clamp(2.6rem, 1.2rem + 4.4vw, 4.75rem);
+  --text-display--line-height: 1.02;
+  --text-display--letter-spacing: -0.045em;
+  --text-h2: clamp(2.25rem, 1.55rem + 2.4vw, 3.75rem);
+  --text-h2--line-height: 1.05;
+  --text-h2--letter-spacing: -0.035em;
+  --text-h3: clamp(1.25rem, 1.16rem + 0.35vw, 1.5rem);
+  --text-h3--line-height: 1.2;
+  --text-h3--letter-spacing: -0.02em;
+  --text-lead: clamp(1.125rem, 1.04rem + 0.38vw, 1.375rem);
+  --text-lead--line-height: 1.45;
+  --text-lead--letter-spacing: -0.01em;
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.6;
+  --text-label: 0.75rem;
+  --text-label--line-height: 1.4;
+  --text-label--letter-spacing: 0.06em;
+
+  /* Shape rule: cards and panels 20px, buttons and small chips fully round. */
+  --radius-box: 1.25rem;
+
+  --container-page: 80rem;
+  --container-prose: 42rem;
+
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ==========================================================================
+   Base
+   IMPORTANT: everything below lives in @layer base / @layer components.
+   Unlayered CSS beats ALL Tailwind utilities, so a plain `a { color: inherit }`
+   would silently override classes like text-on-inverse on links.
+   ========================================================================== */
+@layer base {
+  * {
     box-sizing: border-box;
-}
+  }
 
-html {
-    scroll-behavior: smooth;
-}
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
 
-body {
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
     margin: 0;
-    background: var(--bg-base);
-    color: var(--text-primary);
-    font-family: var(--font-sans), system-ui, sans-serif;
+    background: var(--canvas);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: 1.6;
+    letter-spacing: -0.005em;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-}
+  }
 
-a {
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  a {
+    color: inherit;
     text-decoration: none;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--accent) 22%, transparent);
+    color: var(--ink);
+  }
+
+  /* One visible focus style for every interactive element (2px, 3:1+ contrast) */
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+  }
 }
 
-::selection {
-    background: var(--color-gold-dim);
-    color: var(--text-primary);
-}
-
-.skip-link {
+@layer components {
+  .skip-link {
     position: absolute;
     left: 1rem;
-    top: 1rem;
-    z-index: 50;
-    transform: translateY(-150%);
-    border-radius: 0.25rem;
-    background: var(--color-gold);
-    color: var(--color-navy);
-    padding: 0.75rem 1rem;
+    top: 0.75rem;
+    z-index: 60;
+    transform: translateY(-160%);
+    border-radius: 999px;
+    background: var(--inverse);
+    color: var(--on-inverse);
+    padding: 0.75rem 1.125rem;
     font-size: 0.875rem;
-    font-weight: 700;
+    font-weight: 500;
     transition: transform 150ms ease;
-}
+  }
 
-.skip-link:focus {
+  .skip-link:focus {
     transform: translateY(0);
-}
+  }
+
+  /* Logo key mark: a transparency mask painted with the current text colour, so it
+     follows light/dark and turns white over the video hero. Source: scripts/build-brand-assets.mjs */
+  .key-mark {
+    display: inline-block;
+    aspect-ratio: 172 / 160;
+    background-color: currentColor;
+    -webkit-mask: url("/brand/key-mark.png") center / contain no-repeat;
+    mask: url("/brand/key-mark.png") center / contain no-repeat;
+  }
+
+  /* ========================================================================
+     Scroll reveal (components/motion/RevealObserver.tsx)
+     Elements opt in with data-reveal; optional stagger via --reveal-index.
+     Content is only hidden once the observer runs (html.reveal-ready),
+     so if JavaScript fails nothing stays invisible.
+     ======================================================================== */
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal-ready [data-reveal] {
+      transition:
+        opacity 700ms var(--ease-out-soft),
+        transform 700ms var(--ease-out-soft);
+      transition-delay: calc(var(--reveal-index, 0) * 80ms);
+    }
+
+    .reveal-ready [data-reveal]:not(.is-revealed) {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+  }
+
+  /* Safety net: nothing animates for people who ask for less motion,
+     EXCEPT elements marked .motion-ok. SaaviGenAI asked for these to move for
+     everyone (Windows "best performance" mode turns reduced motion on silently):
+       - the "Works with" logo carousel (has a pause button)
+       - the scroll pipeline (only moves when the visitor scrolls)
+       - the hero video progress bar
+     To make everything respect reduced motion again, remove `:not(.motion-ok)`. */
+  @media (prefers-reduced-motion: reduce) {
+    *:not(.motion-ok),
+    *:not(.motion-ok)::before,
+    *:not(.motion-ok)::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+  @keyframes dash-flow {
+    to {
+      stroke-dashoffset: -12;
+    }
+  }
+
+  /* ========================================================================
+     Text-link CTAs (Button variant "link" / "link-light", Apple style):
+     the underline draws in from the left on hover, the chevron nudges right.
+     ======================================================================== */
+  .link-cta-label {
+    background: linear-gradient(currentColor, currentColor) left bottom / 0 1px no-repeat;
+    padding-bottom: 1px;
+    transition: background-size 350ms var(--ease-out-soft);
+  }
+  .link-cta:hover .link-cta-label,
+  .link-cta:focus-visible .link-cta-label {
+    background-size: 100% 1px;
+  }
+  .link-cta-chevron {
+    transition: transform 300ms var(--ease-out-soft);
+  }
+  .link-cta:hover .link-cta-chevron {
+    transform: translateX(3px);
+  }
+
+  /* ========================================================================
+     Home hero: rotating videos + titles (components/home/HeroVideo.tsx)
+     ======================================================================== */
+  /* Pointer parallax: HeroVideo sets --mx / --my (-1..1) on this layer. */
+  .hero-media {
+    transform: translate3d(calc(var(--mx, 0) * -14px), calc(var(--my, 0) * -10px), 0) scale(1.06);
+    transition: transform 900ms var(--ease-out-soft);
+  }
+  /* Slow zoom so even calm footage keeps moving. Every clip carries the animation
+     but only the visible one runs; the others freeze where they are, so a clip
+     never snaps back to normal size while it is fading out. */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-video {
+      animation: hero-zoom 7s ease-in-out infinite alternate paused;
+    }
+    .hero-video[data-active="true"] {
+      animation-play-state: running;
+    }
+  }
+  @keyframes hero-zoom {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.1);
+    }
+  }
+
+  /* ========================================================================
+     "Works with" logo carousel (components/ui/LogoCarousel.tsx)
+     A row of logo cards drifting left in a seamless loop: the track holds
+     --copies identical lists, so moving it by 100% / --copies lands exactly
+     where it started. Hover or keyboard focus pauses it.
+     Marked .motion-ok, so it also moves for reduced-motion visitors.
+     ======================================================================== */
+  .logo-carousel {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .logo-carousel-track {
+    display: flex;
+    width: max-content;
+    animation: logo-carousel var(--duration, 40s) linear infinite;
+  }
+  .logo-carousel:hover .logo-carousel-track,
+  .logo-carousel:focus-within .logo-carousel-track {
+    animation-play-state: paused;
+  }
+  @keyframes logo-carousel {
+    to {
+      transform: translateX(calc(-100% / var(--copies, 4)));
+    }
+  }
+
+  /* Monochrome logo: the SVG is used as a mask and painted with the text colour,
+     so any vendor logo file matches the theme. */
+  .logo-mask {
+    display: inline-block;
+    background-color: currentColor;
+    -webkit-mask: var(--logo) center / contain no-repeat;
+    mask: var(--logo) center / contain no-repeat;
+  }
+
+  /* ========================================================================
+     Scroll-driven pipeline (components/ui/ScrollPipeline.tsx)
+     On desktop, in browsers with scroll-driven animations, the section is
+     taller than the screen and its content sticks; scrolling through it moves
+     --p from 0 to 1, which fills the line and lights each step in turn.
+     Everywhere else (mobile, Firefox, reduced motion) --p stays 1: everything
+     is simply shown, fully lit.
+     ======================================================================== */
+  .pipeline-step {
+    /* 0..1: how "on" this step is, from the scroll progress */
+    --on: clamp(0, (var(--p) * (var(--n) - 1) - var(--i)) * 6 + 1, 1);
+  }
+  .pipeline-node {
+    border-color: color-mix(in srgb, var(--accent) calc(var(--on) * 100%), var(--line));
+    background: color-mix(in srgb, var(--accent-fill) calc(var(--on) * 100%), var(--raised));
+    color: color-mix(in srgb, var(--on-accent) calc(var(--on) * 100%), var(--ink-muted));
+    transition: transform 300ms var(--ease-out-soft);
+  }
+  .pipeline-step[data-tone="alert"] .pipeline-node {
+    border-color: color-mix(in srgb, var(--alert) calc(var(--on) * 100%), var(--line));
+    background: color-mix(in srgb, var(--alert) calc(var(--on) * 100%), var(--raised));
+    color: color-mix(in srgb, #1d1d1f calc(var(--on) * 100%), var(--ink-muted));
+  }
+  .pipeline-step:hover .pipeline-node {
+    transform: scale(1.08);
+  }
+  .pipeline-text {
+    opacity: calc(0.3 + 0.7 * var(--on));
+    transform: translateY(calc((1 - var(--on)) * 10px));
+  }
+  .pipeline-track {
+    position: absolute;
+    left: 28px;
+    top: 28px;
+    height: 1px;
+    width: calc((100% + 2rem) * (var(--n) - 1) / var(--n)); /* first to last node centre (gap-8) */
+    background: var(--line-strong);
+  }
+  .pipeline-fill {
+    position: absolute;
+    inset: 0;
+    background: var(--accent);
+    transform: scaleX(var(--p));
+    transform-origin: left;
+  }
+  .pipeline-head {
+    position: absolute;
+    top: -4px;
+    left: calc(var(--p) * 100% - 4.5px);
+    width: 9px;
+    height: 9px;
+    border-radius: 999px;
+    background: var(--accent);
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 18%, transparent);
+  }
+  /* Scroll-linked, so it only moves when the visitor scrolls: enabled for everyone
+     (also reduced motion), as agreed with SaaviGenAI. */
+  @supports (animation-timeline: view()) {
+    @media (min-width: 768px) {
+      .pipeline {
+        height: 230vh;
+        view-timeline-name: --pipeline;
+        view-timeline-axis: block;
+      }
+      .pipeline-sticky {
+        position: sticky;
+        top: 0;
+        min-height: 100dvh;
+        display: flex;
+        align-items: center;
+      }
+      .pipeline-progress {
+        animation: pipeline-progress linear both;
+        animation-timeline: --pipeline;
+        animation-range: contain 5% contain 90%;
+      }
+    }
+  }
+  @keyframes pipeline-progress {
+    from {
+      --p: 0;
+    }
+    to {
+      --p: 1;
+    }
+  }
+
+  /* Floating WhatsApp button (components/layout/WhatsAppFloat.tsx): the button stays
+     round; its label slides in as a tooltip to the left on hover / keyboard focus. */
+  .wa-tip {
+    opacity: 0;
+    transform: translateX(6px);
+    transition:
+      opacity 200ms ease,
+      transform 300ms var(--ease-out-soft);
+  }
+  .wa-float:hover .wa-tip,
+  .wa-float:focus-visible .wa-tip {
+    opacity: 1;
+    transform: none;
+  }
+  /* Dark wash so white text always reads, strongest on the left where the text sits */
+  .hero-scrim {
+    background:
+      linear-gradient(100deg, rgb(5 7 11 / 0.9) 0%, rgb(5 7 11 / 0.72) 34%, rgb(5 7 11 / 0.28) 64%, rgb(5 7 11 / 0.18) 100%),
+      linear-gradient(0deg, rgb(5 7 11 / 0.7) 0%, transparent 32%);
+  }
+  @media (max-width: 767px) {
+    .hero-scrim {
+      background:
+        linear-gradient(0deg, rgb(5 7 11 / 0.92) 0%, rgb(5 7 11 / 0.6) 55%, rgb(5 7 11 / 0.45) 100%);
+    }
+  }
+
+  /* Titles are stacked in one grid cell; only the active one is visible.
+     Each line rises in with a short stagger; the old title leaves faster. */
+  .hero-title .hero-line {
+    display: block;
+    opacity: 0;
+    transform: translateY(0.35em);
+    transition:
+      opacity 380ms ease,
+      transform 380ms ease;
+  }
+  .hero-title[data-active="true"] .hero-line {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 900ms var(--ease-out-soft),
+      transform 900ms var(--ease-out-soft);
+    transition-delay: calc(var(--line, 0) * 110ms + 160ms);
+  }
+
+  .hero-video {
+    opacity: 0;
+    transition: opacity 1200ms ease;
+  }
+  .hero-video[data-active="true"] {
+    opacity: 1;
+  }
+
+  /* Active slide indicator fills over the slide duration */
+  .hero-progress {
+    transform-origin: left;
+    transform: scaleX(0);
+  }
+  .hero-progress[data-running="true"] {
+    animation: hero-progress var(--slide-ms) linear forwards;
+  }
+  .hero-progress[data-running="false"] {
+    transform: scaleX(1);
+  }
+  @keyframes hero-progress {
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  /* ========================================================================
+     Diagram connectors: a 1px line with blue dashes moving along it (data flow)
+     ======================================================================== */
+  .flow-line {
+    position: relative;
+    display: block;
+    background: var(--line-strong);
+  }
+  .flow-line-x {
+    height: 1px;
+    min-width: 1.5rem;
+  }
+  .flow-line-y {
+    width: 1px;
+  }
+  .flow-line::after {
+    content: "";
+    position: absolute;
+    inset: -1px 0;
+    background-image: linear-gradient(90deg, var(--accent) 0 4px, transparent 4px 14px);
+    background-size: 14px 3px;
+  }
+  .flow-line-y::after {
+    inset: 0 -1px;
+    background-image: linear-gradient(180deg, var(--accent) 0 4px, transparent 4px 14px);
+    background-size: 3px 14px;
+  }
+  .dash-flow {
+    stroke-dasharray: 3 9;
+  }
+  .path-link {
+    stroke-dasharray: 3 5;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .flow-line-x::after {
+      animation: flow-x 0.9s linear infinite;
+    }
+    .flow-line-y::after {
+      animation: flow-y 0.9s linear infinite;
+    }
+    .dash-flow {
+      animation: dash-flow 1.2s linear infinite;
+    }
+    .why-diagram {
+      animation: fade-up 500ms var(--ease-out-soft) both;
+    }
+    .why-progress {
+      width: 100%;
+      transform-origin: left;
+      animation: why-progress var(--why-ms) linear forwards;
+    }
+    .path-card:hover .path-link {
+      animation: dash-flow 0.9s linear infinite;
+    }
+  }
+  @keyframes flow-x {
+    to {
+      background-position: 14px 0;
+    }
+  }
+  @keyframes flow-y {
+    to {
+      background-position: 0 14px;
+    }
+  }
+  @keyframes why-progress {
+    from {
+      transform: scaleX(0);
+    }
+  }
+
+  /* ========================================================================
+     Inner-page hero (components/ui/PageHero.tsx): text rises in on load
+     ======================================================================== */
+  .rise-in > * {
+    animation: fade-up 900ms var(--ease-out-soft) both;
+  }
+  .rise-in > :nth-child(2) {
+    animation-delay: 120ms;
+  }
+  .rise-in > :nth-child(3) {
+    animation-delay: 240ms;
+  }
+  .rise-in > :nth-child(4) {
+    animation-delay: 360ms;
+  }
+
+  /* ========================================================================
+     Scroll-filled statement (components/ui/FillText.tsx), OpenAI-style:
+     each word goes from grey to full ink as it scrolls through the screen.
+     Scroll-linked (only moves when the visitor scrolls), so marked .motion-ok.
+     Browsers without scroll-driven animations show the text fully inked.
+     ======================================================================== */
+  .fill-word {
+    color: var(--ink);
+  }
+  @supports (animation-timeline: view()) {
+    .fill-word {
+      color: color-mix(in srgb, var(--ink) 22%, transparent);
+      animation: word-fill linear both;
+      animation-timeline: view();
+      animation-range: entry 80% cover 42%;
+    }
+  }
+  @keyframes word-fill {
+    to {
+      color: var(--ink);
+    }
+  }
+
+  /* Big media "lifts into place" as it scrolls in (Apple / OpenAI product shots) */
+  @supports (animation-timeline: view()) {
+    .lift-in {
+      animation: lift-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 35%;
+    }
+  }
+  @keyframes lift-in {
+    from {
+      transform: scale(0.9) translateY(40px);
+      opacity: 0.4;
+    }
+  }
+
+  /* Article reading progress: a hairline under the header that fills as you read */
+  .read-progress {
+    transform-origin: left;
+    transform: scaleX(0);
+  }
+  @supports (animation-timeline: scroll()) {
+    .read-progress {
+      animation: read-progress linear both;
+      animation-timeline: scroll(root);
+    }
+  }
+  @keyframes read-progress {
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  /* Team photos: greyscale at rest, full colour on hover / focus */
+  .portrait img {
+    filter: grayscale(1) contrast(1.05);
+    transition:
+      filter 700ms var(--ease-out-soft),
+      transform 900ms var(--ease-out-soft);
+  }
+  .portrait:hover img,
+  .portrait:focus-within img {
+    filter: none;
+    transform: scale(1.03);
+  }
+
+  /* Sticky chapter list (components/ui/ChapterList.tsx): the item nearest the
+     middle of the screen is "active"; the rest fade back */
+  .chapter {
+    opacity: 0.38;
+    transition: opacity 500ms var(--ease-out-soft);
+  }
+  .chapter[data-active="true"] {
+    opacity: 1;
+  }
+  .chapter-bar {
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 600ms var(--ease-out-soft);
+  }
+  .chapter[data-active="true"] .chapter-bar {
+    transform: scaleY(1);
+  }
+
+  /* Architecture diagram: the SaaviAIDR stages light up in turn (Collect,
+     Unify, Detect, Respond) on a 6 s loop; Detect lights amber */
+  @media (prefers-reduced-motion: no-preference) {
+    .arch-stage {
+      animation: arch-stage 6s linear infinite;
+      animation-delay: calc(var(--i) * 1.5s);
+    }
+  }
+  @keyframes arch-stage {
+    0%,
+    22% {
+      background-color: var(--stage-on, var(--inverse));
+      color: var(--stage-on-text, var(--on-inverse));
+    }
+    27%,
+    100% {
+      background-color: transparent;
+      color: inherit;
+    }
+  }
+
+  /* Long-form article typography (components/insights/ArticleBody.tsx) */
+  .prose-article {
+    font-size: 1.1875rem;
+    line-height: 1.7;
+    color: var(--ink-soft);
+  }
+  .prose-article > * + * {
+    margin-top: 1.25em;
+  }
+  .prose-article h2 {
+    margin-top: 2.2em;
+    font-size: clamp(1.625rem, 1.4rem + 0.9vw, 2.125rem);
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+  .prose-article h3 {
+    margin-top: 1.8em;
+    font-size: 1.375rem;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .prose-article a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--line-strong);
+    text-underline-offset: 4px;
+    transition: text-decoration-color 200ms ease;
+  }
+  .prose-article a:hover {
+    text-decoration-color: var(--ink);
+  }
+  .prose-article strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .prose-article ul {
+    list-style: disc;
+    padding-left: 1.25em;
+  }
+  .prose-article li + li {
+    margin-top: 0.5em;
+  }
+  /* Legal documents: slightly smaller, denser type than articles */
+  .prose-legal {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+  }
+  .prose-legal h2 {
+    margin-top: 2.6em;
+    font-size: 1.5rem;
+    letter-spacing: -0.025em;
+  }
+  .prose-legal h3 {
+    margin-top: 1.8em;
+    font-size: 1.125rem;
+    letter-spacing: -0.01em;
+  }
+  .prose-legal > :first-child {
+    margin-top: 0;
+  }
+  /* Document look: justified paragraphs and list items from tablet width up.
+     On phones the column is too narrow for justified text (it leaves big gaps
+     between words), so it stays left-aligned there. No automatic hyphenation,
+     so words are never split with a dash at line ends. */
+  @media (min-width: 768px) {
+    .prose-legal p,
+    .prose-legal li {
+      text-align: justify;
+      text-justify: inter-word;
+      hyphens: manual;
+    }
+  }
+  .prose-article img {
+    width: 100%;
+    border-radius: 1.25rem;
+    margin-block: 2em;
+  }
+  .prose-article blockquote {
+    margin-block: 2em;
+    border-left: 2px solid var(--ink);
+    padding-left: 1.25em;
+    font-size: 1.5rem;
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+
+  /* Faint dot grid (diagram panels) */
+  .dot-grid {
+    background-image: radial-gradient(circle at 1px 1px, var(--line) 1px, transparent 0);
+    background-size: 22px 22px;
+  }
+
+  /* Translucent header bar (Apple-style). Falls back to solid when the
+     visitor asks for reduced transparency. */
+  .header-glass {
+    background: color-mix(in srgb, var(--canvas) 82%, transparent);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .header-glass {
+      background: var(--canvas);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
+} /* end @layer components */

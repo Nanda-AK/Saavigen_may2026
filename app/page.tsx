@@ -1,102 +1,87 @@
-import { ShieldCheck, Sparkles, Users } from "lucide-react";
-import { FooterCTABand } from "@/components/sections/FooterCTABand";
-import { HeroSection } from "@/components/sections/HeroSection";
-import { DifferentiatorCard } from "@/components/ui/DifferentiatorCard";
-import { SectionLabel } from "@/components/ui/SectionLabel";
-import { ServiceCard } from "@/components/ui/ServiceCard";
+import { Activity, ScanSearch, ShieldCheck, TriangleAlert } from "lucide-react";
+import { HeroVideo } from "@/components/home/HeroVideo";
+import { PathCards } from "@/components/home/PathCards";
+import { WhySaaviAidr } from "@/components/home/WhySaaviAidr";
+import { ContactBand } from "@/components/sections/ContactBand";
+import { WhatWeSecure } from "@/components/sections/WhatWeSecure";
+import { ArticleCard } from "@/components/ui/ArticleCard";
+import { Button } from "@/components/ui/Button";
+import { Icon } from "@/components/ui/Icon";
+import { ScrollPipeline } from "@/components/ui/ScrollPipeline";
+import { Section, SectionHeader } from "@/components/ui/Section";
+import { getFeaturedArticles } from "@/lib/insights";
 import { pageMetadata } from "@/lib/metadata";
-import { basePath, services } from "@/lib/site";
 
+// All copy on this page comes from SaaviGenAI_Website_Content_Plan.md section 2.
+// Sections alternate white / light grey (Apple-style) after the full-screen video hero.
 export const metadata = pageMetadata(
-  "Securing the AI-Powered Enterprise | SaaviGenAI",
-  "SaaviGenAI delivers practitioner-led managed SOC, AI detection and response, and enterprise AI upskilling — so teams can adopt intelligent systems without increasing risk.",
+  "SaaviAIDR | AI Detection and Response | SaaviGenAI",
+  "SaaviAIDR gives security teams visibility, detection and response across the AI agents and chatbots in their organisation. Self-hosted, with managed service options.",
+  "/",
 );
 
+const STEPS = [
+  { title: "Discover", body: "Find every AI agent, model and user in use.", icon: <Icon icon={ScanSearch} size={24} /> },
+  { title: "Monitor", body: "See prompts, responses and tool calls in one place.", icon: <Icon icon={Activity} size={24} /> },
+  {
+    title: "Detect",
+    body: "Catch prompt injection, jailbreaks and data leakage as they happen.",
+    icon: <Icon icon={TriangleAlert} size={24} />,
+    tone: "alert" as const, // amber: the alert moment
+  },
+  { title: "Respond", body: "Stop risky sessions automatically, or hand off to your SOC.", icon: <Icon icon={ShieldCheck} size={24} /> },
+];
+
 export default function HomePage() {
+  const [lead, ...rest] = getFeaturedArticles();
+
   return (
     <>
-      <HeroSection
-        label="Managed Security + AI Governance"
-        heading="Securing the AI-powered enterprise."
-        subheading="SaaviGenAI combines practitioner-led cyber operations with pragmatic AI governance so teams can adopt intelligent systems without increasing risk. Always on. Always watching."
-        image={`${basePath}/images/newHome.png`}
-      />
+      {/* 2.1 Hero: rotating videos and titles */}
+      <HeroVideo />
 
-      <section className="bg-base py-12 md:py-16">
-        <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
-          <SectionLabel
-            label="What We Do"
-            heading="Three services. One partnership."
-            subheading="Focused capabilities for organisations that need security outcomes and AI governance — without the overhead of building it all in-house."
-          />
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {services.map((service) => (
-              <ServiceCard key={service.href} {...service} />
+      {/* 2.2 What we secure + Works with (white) */}
+      <WhatWeSecure headline="One platform for every AI in your enterprise" />
+
+      {/* 2.3 How it works (grey): pinned while you scroll; the line fills and steps light up */}
+      <ScrollPipeline id="how-title" title="From blind spot to control" steps={STEPS} />
+
+      {/* 2.4 Why SaaviAIDR (white) */}
+      <Section labelledBy="why-title">
+        <SectionHeader id="why-title" title="Built for how security teams work" />
+        <WhySaaviAidr />
+      </Section>
+
+      {/* 2.5 Platform or managed service (grey) */}
+      <Section tone="sunken" labelledBy="paths-title">
+        <SectionHeader id="paths-title" title="Run it yourself, or let us run it" />
+        <PathCards />
+      </Section>
+
+      {/* 2.6 Insights (white) */}
+      <Section labelledBy="insights-title">
+        <SectionHeader id="insights-title" title="Insights on AI security" />
+        <div className="mt-14 grid gap-5 lg:mt-20 lg:grid-cols-12">
+          {lead ? (
+            <div className="lg:col-span-7">
+              <ArticleCard article={lead} layout="feature" />
+            </div>
+          ) : null}
+          <div className="grid gap-5 lg:col-span-5">
+            {rest.map((a, i) => (
+              <ArticleCard key={a.slug} article={a} layout="row" index={i + 1} />
             ))}
           </div>
         </div>
-      </section>
-
-      <section className="bg-surface py-12 md:py-16">
-        <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
-          <SectionLabel
-            label="Why SaaviGenAI"
-            heading="Built for pragmatic operators."
-            subheading="We help teams move quickly while keeping security, governance, and executive clarity in view."
-          />
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            <DifferentiatorCard
-              icon={<ShieldCheck className="h-6 w-6" />}
-              title="Security-first"
-              description="Operational controls and response practices designed around real attacker behaviour and business context — not generic frameworks."
-            />
-            <DifferentiatorCard
-              icon={<Sparkles className="h-6 w-6" />}
-              title="AI-aware"
-              description="Detection, governance, and training practices that account for the new risks introduced by models, copilots, agents, and automation — because your existing stack wasn't built for this."
-            />
-            <DifferentiatorCard
-              icon={<Users className="h-6 w-6" />}
-              title="Practitioner-led"
-              description="Every engagement is shaped by hands-on security experience across real enterprise environments — not generic advisory playbooks repackaged as outcomes."
-            />
-          </div>
+        <div className="mt-12 flex justify-center">
+          <Button href="/insights/" variant="link">
+            View all insights
+          </Button>
         </div>
-      </section>
+      </Section>
 
-      <section className="bg-base py-12 md:py-16">
-        <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
-          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-            <SectionLabel
-              label="Approach"
-              heading="Clarity first, then execution."
-              subheading="We start with the risks, responsibilities, and operating model your business actually needs. From there, we build repeatable security motions that your teams can trust and your executives can explain."
-            />
-            <div className="rounded-2xl border border-default bg-surface p-6 md:p-8">
-              {[
-                "Understand your current exposure, operating constraints, and compliance obligations.",
-                "Prioritise the highest-value security and AI governance outcomes.",
-                "Build manageable workflows for monitoring, response, and enablement.",
-                "Keep the operating model lightweight so it evolves with your business.",
-              ].map((item, index) => (
-                <div
-                  key={item}
-                  className={`rounded-xl p-4 text-sm leading-relaxed text-secondary ${
-                    index % 2 === 0 ? "bg-base" : "bg-surface"
-                  }`}
-                >
-                  <span className="mr-3 font-mono text-xs text-gold">
-                    0{index + 1}
-                  </span>
-                  {item}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <FooterCTABand />
+      {/* 2.7 Contact band (grey) */}
+      <ContactBand />
     </>
   );
 }
