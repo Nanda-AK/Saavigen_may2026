@@ -37,6 +37,7 @@ export const foundingMembers: Person[] = [
   { id: "atharv-chouhan", name: "Atharv Chouhan", photo: "/images/team/atharv-chouhan.webp", linkedin: "https://www.linkedin.com/in/atharv-chouhan-94a074384" },
   { id: "tulasi-patil", name: "Tulasi Patil", photo: "/images/team/tulasi-patil.webp", linkedin: "https://www.linkedin.com/in/tulasi-patil-728216441" },
   { id: "yasar-ameen", name: "Yasar Ameen H N", photo: "/images/team/yasar-ameen.webp", linkedin: "https://www.linkedin.com/in/yasar-ameen-965385201" },
+  { id: "thejaswani", name: "Thejaswani", photo: "/images/team/thejaswani.webp", linkedin: "https://www.linkedin.com/in/thejaswani2607" },
 ];
 
 // Article authors (plan 6 author box). Keys match `author:` in content/insights/*.md.
